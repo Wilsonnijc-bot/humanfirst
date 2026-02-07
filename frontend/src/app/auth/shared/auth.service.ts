@@ -31,6 +31,10 @@ export class AuthService {
     return this.httpClient.post(`${this.apiBaseUrl}/api/auth/signup`, signupRequestPayload, { responseType: 'text' });
   }
 
+  verifyAccount(token: string): Observable<string> {
+    return this.httpClient.get(`${this.apiBaseUrl}/api/auth/accountVerification/${token}`, { responseType: 'text' });
+  }
+
   login(loginRequestPayload: LoginRequestPayload): Observable<boolean> {
     return this.httpClient.post<LoginResponse>(`${this.apiBaseUrl}/api/auth/login`,
       loginRequestPayload).pipe(map(data => {

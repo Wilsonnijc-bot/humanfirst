@@ -10,11 +10,13 @@ public class SpaForwardController {
             "/",
             "/login",
             "/sign-up",
+            "/signup",
             "/list-subreddits",
             "/create-post",
             "/create-subreddit",
             "/view-post/{id}",
-            "/user-profile/{name}"
+            "/user-profile/{name}",
+            "/account-verification/{token}"
     })
     public String forwardToIndex() {
         return "forward:/index.html";
