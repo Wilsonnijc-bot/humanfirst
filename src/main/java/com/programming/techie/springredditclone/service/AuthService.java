@@ -1,6 +1,5 @@
 package com.programming.techie.springredditclone.service;
 
-import com.programming.techie.springredditclone.config.AppConfig;
 import com.programming.techie.springredditclone.dto.AuthenticationResponse;
 import com.programming.techie.springredditclone.dto.LoginRequest;
 import com.programming.techie.springredditclone.dto.RefreshTokenRequest;
@@ -13,6 +12,7 @@ import com.programming.techie.springredditclone.repository.UserRepository;
 import com.programming.techie.springredditclone.repository.VerificationTokenRepository;
 import com.programming.techie.springredditclone.security.JwtProvider;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -39,7 +39,8 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
     private final RefreshTokenService refreshTokenService;
-    private final AppConfig appConfig;
+    @Value("${app.url:https://redditmvp-19af7fe1e209.herokuapp.com}")
+    private String appUrl;
 
 
     public void signup(RegisterRequest registerRequest) {
@@ -53,10 +54,11 @@ public class AuthService {
         userRepository.save(user);
 
         String token = generateVerificationToken(user);
+        String activationBaseUrl = normalizeBaseUrl(appUrl);
         mailService.sendMail(new NotificationEmail("Please Activate your Account",
                 user.getEmail(), "Thank you for signing up to Spring Reddit, " +
                 "please click on the below url to activate your account : " +
-                appConfig.getAppUrl() + "/api/auth/accountVerification/" + token));
+                activationBaseUrl + "/api/auth/accountVerification/" + token));
     }
 
     @Transactional(readOnly = true)
@@ -116,5 +118,12 @@ public class AuthService {
     public boolean isLoggedIn() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
+    }
+
+    private String normalizeBaseUrl(String rawBaseUrl) {
+        if (rawBaseUrl == null || rawBaseUrl.isBlank()) {
+            return "https://redditmvp-19af7fe1e209.herokuapp.com";
+        }
+        return rawBaseUrl.endsWith("/") ? rawBaseUrl.substring(0, rawBaseUrl.length() - 1) : rawBaseUrl;
     }
 }
