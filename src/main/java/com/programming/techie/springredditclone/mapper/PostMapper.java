@@ -3,12 +3,17 @@ package com.programming.techie.springredditclone.mapper;
 import com.github.marlonlom.utilities.timeago.TimeAgo;
 import com.programming.techie.springredditclone.dto.PostRequest;
 import com.programming.techie.springredditclone.dto.PostResponse;
-import com.programming.techie.springredditclone.model.*;
+import com.programming.techie.springredditclone.model.Post;
+import com.programming.techie.springredditclone.model.Subreddit;
+import com.programming.techie.springredditclone.model.User;
+import com.programming.techie.springredditclone.model.Vote;
+import com.programming.techie.springredditclone.model.VoteType;
 import com.programming.techie.springredditclone.repository.CommentRepository;
 import com.programming.techie.springredditclone.repository.VoteRepository;
 import com.programming.techie.springredditclone.service.AuthService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
@@ -16,27 +21,34 @@ import java.util.Optional;
 import static com.programming.techie.springredditclone.model.VoteType.DOWNVOTE;
 import static com.programming.techie.springredditclone.model.VoteType.UPVOTE;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public abstract class PostMapper {
 
     @Autowired
-    private CommentRepository commentRepository;
+    protected CommentRepository commentRepository;
     @Autowired
-    private VoteRepository voteRepository;
+    protected VoteRepository voteRepository;
     @Autowired
-    private AuthService authService;
+    protected AuthService authService;
 
 
+    @Mapping(target = "postId", ignore = true)
     @Mapping(target = "createdDate", expression = "java(java.time.Instant.now())")
     @Mapping(target = "description", source = "postRequest.description")
+    @Mapping(target = "postName", source = "postRequest.postName")
+    @Mapping(target = "url", source = "postRequest.url")
     @Mapping(target = "subreddit", source = "subreddit")
     @Mapping(target = "voteCount", constant = "0")
     @Mapping(target = "user", source = "user")
     public abstract Post map(PostRequest postRequest, Subreddit subreddit, User user);
 
     @Mapping(target = "id", source = "postId")
+    @Mapping(target = "postName", source = "postName")
+    @Mapping(target = "url", source = "url")
+    @Mapping(target = "description", source = "description")
     @Mapping(target = "subredditName", source = "subreddit.name")
     @Mapping(target = "userName", source = "user.username")
+    @Mapping(target = "voteCount", source = "voteCount")
     @Mapping(target = "commentCount", expression = "java(commentCount(post))")
     @Mapping(target = "duration", expression = "java(getDuration(post))")
     @Mapping(target = "upVote", expression = "java(isPostUpVoted(post))")

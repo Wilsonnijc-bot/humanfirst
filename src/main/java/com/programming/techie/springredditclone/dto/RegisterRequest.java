@@ -1,5 +1,7 @@
 package com.programming.techie.springredditclone.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,8 +10,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterRequest {
+    @Email
+    @NotBlank
     private String email;
-    private String username;
-    private String password;
 
+    @NotBlank
+    private String username;
+
+    @NotBlank
+    private String password;
 }
