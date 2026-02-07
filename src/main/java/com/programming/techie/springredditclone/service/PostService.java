@@ -64,7 +64,7 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public List<PostResponse> getPostsByUsername(String username) {
-        User user = userRepository.findByUsername(username)
+        User user = userRepository.findFirstByUsernameAndEnabledTrueOrderByUserIdDesc(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
         return postRepository.findByUser(user)
                 .stream()

@@ -3,6 +3,7 @@ package com.programming.techie.springredditclone.service;
 import com.programming.techie.springredditclone.model.User;
 import com.programming.techie.springredditclone.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,10 +25,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) {
-        Optional<User> userOptional = userRepository.findByUsername(username);
-        User user = userOptional
-                .orElseThrow(() -> new UsernameNotFoundException("No user " +
-                        "Found with username : " + username));
+        Optional<User> userOptional = userRepository.findFirstByUsernameAndEnabledTrueOrderByUserIdDesc(username);
+        if (userOptional.isEmpty() && userRepository.existsByUsername(username)) {
+            throw new DisabledException("Account is not activated");
+        }
+        User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("No user " +
+                "Found with username : " + username));
 
         return new org.springframework.security
                 .core.userdetails.User(user.getUsername(), user.getPassword(),

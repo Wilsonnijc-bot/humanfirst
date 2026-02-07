@@ -52,7 +52,7 @@ public class CommentService {
     }
 
     public List<CommentsDto> getAllCommentsForUser(String userName) {
-        User user = userRepository.findByUsername(userName)
+        User user = userRepository.findFirstByUsernameAndEnabledTrueOrderByUserIdDesc(userName)
                 .orElseThrow(() -> new UsernameNotFoundException(userName));
         return commentRepository.findAllByUser(user)
                 .stream()
