@@ -27,22 +27,40 @@ public class DataSourceConfig {
         String username = environment.getProperty("JDBC_DATABASE_USERNAME");
         String password = environment.getProperty("JDBC_DATABASE_PASSWORD");
 
-        if (jdbcUrl == null || jdbcUrl.isBlank()) {
+        if (isBlank(jdbcUrl)) {
             String databaseUrl = environment.getProperty("DATABASE_URL");
-            if (databaseUrl != null && !databaseUrl.isBlank()) {
+            if (!isBlank(databaseUrl)) {
                 ParsedDbUrl parsed = parseHerokuUrl(databaseUrl.trim());
                 jdbcUrl = parsed.jdbcUrl;
-                if (username == null || username.isBlank()) {
+                if (isBlank(username)) {
                     username = parsed.username;
                 }
-                if (password == null || password.isBlank()) {
+                if (isBlank(password)) {
                     password = parsed.password;
                 }
             }
         }
 
-        if (jdbcUrl == null || jdbcUrl.isBlank()) {
-            throw new IllegalStateException("No JDBC URL could be determined from env vars DATABASE_URL/JDBC_DATABASE_URL");
+        // Fallback: pick the first HEROKU_POSTGRESQL_*_URL if present
+        if (isBlank(jdbcUrl)) {
+            for (var entry : System.getenv().entrySet()) {
+                String key = entry.getKey();
+                if (key.startsWith("HEROKU_POSTGRESQL_") && key.endsWith("_URL")) {
+                    ParsedDbUrl parsed = parseHerokuUrl(entry.getValue());
+                    jdbcUrl = parsed.jdbcUrl;
+                    if (isBlank(username)) {
+                        username = parsed.username;
+                    }
+                    if (isBlank(password)) {
+                        password = parsed.password;
+                    }
+                    break;
+                }
+            }
+        }
+
+        if (isBlank(jdbcUrl)) {
+            throw new IllegalStateException("No JDBC URL found; please ensure DATABASE_URL or JDBC_DATABASE_URL is set");
         }
 
         return DataSourceBuilder.create()
@@ -73,4 +91,8 @@ public class DataSourceConfig {
     }
 
     private record ParsedDbUrl(String jdbcUrl, String username, String password) {}
+
+    private boolean isBlank(String value) {
+        return value == null || value.isBlank();
+    }
 }
