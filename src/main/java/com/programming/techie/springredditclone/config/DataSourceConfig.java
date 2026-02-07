@@ -1,9 +1,10 @@
 package com.programming.techie.springredditclone.config;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 
 import javax.sql.DataSource;
@@ -11,53 +12,48 @@ import java.net.URI;
 
 /**
  * Converts Heroku's DATABASE_URL (postgres://user:pass@host:port/db) into a JDBC URL
- * when JDBC_DATABASE_URL is not provided by the environment.
+ * when JDBC_DATABASE_URL is not already provided. Ensures Spring always gets a JDBC URL.
  */
 @Configuration
 public class DataSourceConfig {
 
-    private final Environment environment;
-    private final String defaultJdbcUrl;
-
-    public DataSourceConfig(Environment environment,
-                            @Value("${JDBC_DATABASE_URL:}") String defaultJdbcUrl) {
-        this.environment = environment;
-        this.defaultJdbcUrl = defaultJdbcUrl;
-    }
+    @Autowired
+    private Environment environment;
 
     @Bean
-    public DataSource dataSource(DataSourceProperties properties) {
-        String jdbcUrl = defaultJdbcUrl;
+    @Primary
+    public DataSource dataSource() {
+        String jdbcUrl = environment.getProperty("JDBC_DATABASE_URL");
+        String username = environment.getProperty("JDBC_DATABASE_USERNAME");
+        String password = environment.getProperty("JDBC_DATABASE_PASSWORD");
+
         if (jdbcUrl == null || jdbcUrl.isBlank()) {
             String databaseUrl = environment.getProperty("DATABASE_URL");
             if (databaseUrl != null && !databaseUrl.isBlank()) {
-                jdbcUrl = convertHerokuUrl(databaseUrl.trim());
-            }
-        }
-
-        if (jdbcUrl != null && !jdbcUrl.isBlank()) {
-            properties.setUrl(jdbcUrl);
-        }
-        // username/password may be embedded in DATABASE_URL; set only if present
-        if (properties.getUsername() == null || properties.getUsername().isBlank()) {
-            String databaseUrl = environment.getProperty("DATABASE_URL");
-            if (databaseUrl != null) {
-                try {
-                    URI uri = new URI(databaseUrl);
-                    if (uri.getUserInfo() != null && uri.getUserInfo().contains(":")) {
-                        String[] userInfo = uri.getUserInfo().split(":", 2);
-                        properties.setUsername(userInfo[0]);
-                        properties.setPassword(userInfo[1]);
-                    }
-                } catch (Exception ignored) {
-                    // If parsing fails, leave defaults; Spring will surface proper errors.
+                ParsedDbUrl parsed = parseHerokuUrl(databaseUrl.trim());
+                jdbcUrl = parsed.jdbcUrl;
+                if (username == null || username.isBlank()) {
+                    username = parsed.username;
+                }
+                if (password == null || password.isBlank()) {
+                    password = parsed.password;
                 }
             }
         }
-        return properties.initializeDataSourceBuilder().build();
+
+        if (jdbcUrl == null || jdbcUrl.isBlank()) {
+            throw new IllegalStateException("No JDBC URL could be determined from env vars DATABASE_URL/JDBC_DATABASE_URL");
+        }
+
+        return DataSourceBuilder.create()
+                .driverClassName("org.postgresql.Driver")
+                .url(jdbcUrl)
+                .username(username)
+                .password(password)
+                .build();
     }
 
-    private String convertHerokuUrl(String databaseUrl) {
+    private ParsedDbUrl parseHerokuUrl(String databaseUrl) {
         try {
             URI uri = new URI(databaseUrl);
             String userInfo = uri.getUserInfo();
@@ -68,14 +64,13 @@ public class DataSourceConfig {
                 username = parts[0];
                 password = parts[1];
             }
-
             int port = uri.getPort() == -1 ? 5432 : uri.getPort();
             String jdbc = "jdbc:postgresql://" + uri.getHost() + ":" + port + uri.getPath() + "?sslmode=require";
-
-            // populate username/password via DataSourceProperties later
-            return jdbc;
+            return new ParsedDbUrl(jdbc, username, password);
         } catch (Exception e) {
-            return databaseUrl; // fallback to raw value; Spring will report if invalid
+            return new ParsedDbUrl(databaseUrl, null, null);
         }
     }
+
+    private record ParsedDbUrl(String jdbcUrl, String username, String password) {}
 }
