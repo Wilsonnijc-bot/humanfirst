@@ -33,6 +33,7 @@ public class SecurityConfig {
                         .requestMatchers("/login", "/sign-up", "/list-subreddits",
                                 "/create-post", "/create-subreddit", "/view-post/**", "/user-profile/**").permitAll()
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                        .requestMatchers("/*.js", "/*.css", "/*.map").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/error").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/subreddit", "/api/subreddit/**").permitAll()
