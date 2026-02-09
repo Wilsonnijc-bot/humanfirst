@@ -151,7 +151,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<header>\n    <nav class=\"navbar fixed-top navbar-expand-lg navbar-light bg-light\">\n        <div class=\"flex-grow-1\">\n            <a aria-label=\"Home\" class=\"logo\" routerLink=\"/\">\n                <span class=\"reddit-text\">\n                    Humanfirst\n                </span>\n            </a>\n        </div>\n        <div class=\"flex-grow-1 float-right\">\n            <div *ngIf=\"isLoggedIn\" ngbDropdown class=\"float-right\">\n                <div ngbDropdownMenu aria-labelledby=\"dropdownBasic1\">\n                    <button (click)=\"goToUserProfile()\" ngbDropdownItem>Profile</button>\n                    <button (click)=\"logout()\" ngbDropdownItem>Logout</button>\n                </div>\n                <button class=\"userdetails\" id=\"dropdownBasic1\" ngbDropdownToggle>\n                    <img class=\"account-icon\" src=\"https://www.redditstatic.com/avatars/avatar_default_08_D4E815.png\">\n                    {{username}}\n                </button>\n            </div>            \n            <div *ngIf=\"!isLoggedIn\">\n                <a routerLink=\"/sign-up\" class=\"float-right sign-up mr-2\">Sign up</a>\n                <a routerLink=\"/login\" class=\"float-right login mr-2\">Login</a>\n            </div>\n        </div>\n    </nav>\n</header>\n";
+    __webpack_exports__["default"] = "<header>\n    <nav class=\"navbar fixed-top navbar-expand-lg navbar-light bg-light hf-navbar\">\n        <div class=\"hf-navbar-inner\">\n            <a aria-label=\"Home\" class=\"logo\" routerLink=\"/\">\n                <span class=\"reddit-text\">\n                    Humanfirst\n                </span>\n            </a>\n\n            <div class=\"hf-nav-actions\">\n                <a aria-label=\"Create post\" class=\"create-link\" routerLink=\"/create\">\n                    <fa-icon [icon]=\"faPlus\"></fa-icon>\n                    <span>Create</span>\n                </a>\n\n                <div *ngIf=\"isLoggedIn\" ngbDropdown class=\"user-menu\">\n                    <div ngbDropdownMenu aria-labelledby=\"dropdownBasic1\">\n                        <button (click)=\"goToUserProfile()\" ngbDropdownItem>Profile</button>\n                        <button (click)=\"logout()\" ngbDropdownItem>Logout</button>\n                    </div>\n                    <button class=\"userdetails\" id=\"dropdownBasic1\" ngbDropdownToggle>\n                        <img class=\"account-icon\" src=\"https://www.redditstatic.com/avatars/avatar_default_08_D4E815.png\">\n                        {{username}}\n                    </button>\n                </div>\n\n                <div *ngIf=\"!isLoggedIn\" class=\"auth-links\">\n                    <a routerLink=\"/sign-up\" class=\"sign-up\">Sign up</a>\n                    <a routerLink=\"/login\" class=\"login\">Login</a>\n                </div>\n            </div>\n        </div>\n    </nav>\n</header>\n";
     /***/
   },
 
@@ -171,7 +171,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div class=\"humanfirst-body\">\n  <div class=\"container-fluid\">\n    <div class=\"row\">\n      <div class=\"col-lg-3 col-xl-2\">\n        <aside class=\"hf-sidebar\">\n          <div class=\"hf-brand\">Humanfirst</div>\n\n          <nav class=\"hf-nav\">\n            <button\n              *ngFor=\"let item of primaryNavItems\"\n              type=\"button\"\n              class=\"hf-row\"\n              [class.active]=\"isItemActive(item)\"\n              (click)=\"handlePrimaryNavClick(item)\">\n              <fa-icon class=\"hf-icon\" [icon]=\"item.icon\"></fa-icon>\n              <span>{{item.label}}</span>\n            </button>\n          </nav>\n\n          <hr class=\"hf-divider\" />\n\n          <button type=\"button\" class=\"hf-row hf-action-row\" (click)=\"goToCreateSubreddit()\">\n            <fa-icon class=\"hf-icon\" [icon]=\"faPlus\"></fa-icon>\n            <span>Start a community</span>\n          </button>\n\n          <hr class=\"hf-divider\" />\n\n          <section class=\"hf-section\">\n            <div class=\"hf-section-header\">\n              <span>COMMUNITIES</span>\n              <fa-icon [icon]=\"faChevronDown\"></fa-icon>\n            </div>\n            <button\n              *ngFor=\"let item of communityItems\"\n              type=\"button\"\n              class=\"hf-row\"\n              [class.active]=\"isItemActive(item)\"\n              (click)=\"handleCommunityClick(item)\">\n              <fa-icon class=\"hf-icon\" [icon]=\"item.icon\"></fa-icon>\n              <span>{{item.label}}</span>\n            </button>\n          </section>\n\n          <section class=\"hf-section\">\n            <div class=\"hf-section-header\">\n              <span>CUSTOM FEEDS</span>\n              <fa-icon [icon]=\"faChevronDown\"></fa-icon>\n            </div>\n            <button type=\"button\" class=\"hf-row\">\n              <fa-icon class=\"hf-icon\" [icon]=\"faPlus\"></fa-icon>\n              <span>Create Custom Feed</span>\n            </button>\n          </section>\n        </aside>\n      </div>\n\n      <div class=\"col-lg-6 col-xl-7\">\n        <app-post-tile [posts]=\"posts\"></app-post-tile>\n      </div>\n\n      <div class=\"col-lg-3 col-xl-3\">\n        <app-subreddit-side-bar></app-subreddit-side-bar>\n      </div>\n    </div>\n  </div>\n</div>\n";
+    __webpack_exports__["default"] = "<div class=\"humanfirst-body\">\n  <div class=\"container-fluid\">\n    <div class=\"row\">\n      <div class=\"col-lg-3 col-xl-2\">\n        <aside class=\"hf-sidebar\">\n          <div class=\"hf-brand\">Humanfirst</div>\n\n          <nav class=\"hf-nav\">\n            <button\n              *ngFor=\"let item of primaryNavItems\"\n              type=\"button\"\n              class=\"hf-row\"\n              [class.active]=\"isItemActive(item)\"\n              (click)=\"handlePrimaryNavClick(item)\">\n              <fa-icon class=\"hf-icon\" [icon]=\"item.icon\"></fa-icon>\n              <span>{{item.label}}</span>\n            </button>\n          </nav>\n\n          <hr class=\"hf-divider\" />\n\n          <button type=\"button\" class=\"hf-row hf-action-row\" (click)=\"goToCreateSubreddit()\">\n            <fa-icon class=\"hf-icon\" [icon]=\"faPlus\"></fa-icon>\n            <span>Start a community</span>\n          </button>\n\n          <hr class=\"hf-divider\" />\n\n          <section class=\"hf-section\">\n            <div class=\"hf-section-header\">\n              <span>COMMUNITIES</span>\n              <fa-icon [icon]=\"faChevronDown\"></fa-icon>\n            </div>\n            <button\n              *ngFor=\"let item of communityItems\"\n              type=\"button\"\n              class=\"hf-row\"\n              [class.active]=\"isItemActive(item)\"\n              (click)=\"handleCommunityClick(item)\">\n              <fa-icon class=\"hf-icon\" [icon]=\"item.icon\"></fa-icon>\n              <span>{{item.label}}</span>\n            </button>\n          </section>\n\n          <section class=\"hf-section\">\n            <div class=\"hf-section-header\">\n              <span>CUSTOM FEEDS</span>\n              <fa-icon [icon]=\"faChevronDown\"></fa-icon>\n            </div>\n            <button type=\"button\" class=\"hf-row\">\n              <fa-icon class=\"hf-icon\" [icon]=\"faPlus\"></fa-icon>\n              <span>Create Custom Feed</span>\n            </button>\n          </section>\n        </aside>\n      </div>\n\n      <div class=\"col-lg-9 col-xl-10 hf-main-col\">\n        <div class=\"hf-main-feed\">\n          <app-post-tile [posts]=\"posts\"></app-post-tile>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n";
     /***/
   },
 
@@ -191,7 +191,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div class=\"container\">\n    <div class=\"row\">\n      <hr />\n      <div class=\"create-post-container col-md-9\">\n        <form class=\"post-form\" [formGroup]=\"createPostForm\" (ngSubmit)=\"createPost()\">\n          <div class=\"form-group\">\n            <div class=\"create-post-heading\">Create Post</div>\n            <hr />\n            <input type=\"text\" [formControlName]=\"'postName'\" class=\"form-control\" style=\"margin-top: 5px\"\n              placeholder=\"Title\">\n  \n            <input type=\"text\" class=\"form-control\" [formControlName]=\"'url'\" style=\"margin-top: 5px\" placeholder=\"URL (optional)\">\n\n            <div style=\"margin-top: 10px;\">\n              <input\n                type=\"file\"\n                class=\"form-control\"\n                accept=\"video/*\"\n                (change)=\"onVideoSelected($event)\">\n              <small *ngIf=\"isUploadingVideo\">Uploading video...</small>\n              <small *ngIf=\"!isUploadingVideo && uploadedVideoFileName\">Uploaded: {{uploadedVideoFileName}}</small>\n            </div>\n  \n            <select class=\"form-control\" style=\"margin-top: 10px\" [formControlName]=\"'subredditName'\">\n              <option *ngFor=\"let domain of domainOptions\" [value]=\"domain.value\">{{domain.label}}</option>\n            </select>\n  \n            <editor [formControlName]=\"'description'\" [init]=\"{\n                        height: 500,\n                        menubar: false,\n                        plugins: [\n                          'advlist autolink lists link image charmap print preview anchor',\n                          'searchreplace visualblocks code fullscreen',\n                          'insertdatetime media table paste code help wordcount'\n                        ],\n                        toolbar:\n                          'undo redo | formatselect | bold italic backcolor | \\\n                          alignleft aligncenter alignright alignjustify | \\\n                          bullist numlist outdent indent | removeformat | help'\n                      }\"></editor>\n            <span>\n              <div style=\"margin-top: 5px\" class=\"float-right\">\n                <button type=\"button\" (click)=\"discardPost()\" class=\"btnDiscard\">Discard</button>\n                <button type=\"submit\" class=\"btnCreatePost\" [disabled]=\"isUploadingVideo\">Post</button>\n              </div>\n            </span>\n          </div>\n        </form>\n      </div>\n    </div>\n  </div>\n";
+    __webpack_exports__["default"] = "<div class=\"container\">\n    <div class=\"row\">\n      <hr />\n      <div class=\"col-12 create-post-main\">\n        <div class=\"create-post-container\">\n          <form class=\"post-form\" [formGroup]=\"createPostForm\" (ngSubmit)=\"createPost()\">\n            <div class=\"form-group\">\n              <div class=\"create-post-heading\">Create Post</div>\n              <hr />\n              <input type=\"text\" [formControlName]=\"'postName'\" class=\"form-control\" style=\"margin-top: 5px\"\n                placeholder=\"Title\">\n\n              <input type=\"text\" class=\"form-control\" [formControlName]=\"'url'\" style=\"margin-top: 5px\" placeholder=\"URL (optional)\">\n\n              <div style=\"margin-top: 10px;\">\n                <input\n                  type=\"file\"\n                  class=\"form-control\"\n                  accept=\"video/*\"\n                  (change)=\"onVideoSelected($event)\">\n                <small *ngIf=\"isUploadingVideo\">Uploading video...</small>\n                <small *ngIf=\"!isUploadingVideo && uploadedVideoFileName\">Uploaded: {{uploadedVideoFileName}}</small>\n              </div>\n\n              <select class=\"form-control\" style=\"margin-top: 10px\" [formControlName]=\"'subredditName'\">\n                <option *ngFor=\"let domain of domainOptions\" [value]=\"domain.value\">{{domain.label}}</option>\n              </select>\n\n              <editor [formControlName]=\"'description'\" [init]=\"{\n                          height: 500,\n                          menubar: false,\n                          plugins: [\n                            'advlist autolink lists link image charmap print preview anchor',\n                            'searchreplace visualblocks code fullscreen',\n                            'insertdatetime media table paste code help wordcount'\n                          ],\n                          toolbar:\n                            'undo redo | formatselect | bold italic backcolor | \\\n                            alignleft aligncenter alignright alignjustify | \\\n                            bullist numlist outdent indent | removeformat | help'\n                        }\"></editor>\n              <span>\n                <div style=\"margin-top: 5px\" class=\"float-right\">\n                  <button type=\"button\" (click)=\"discardPost()\" class=\"btnDiscard\">Discard</button>\n                  <button type=\"submit\" class=\"btnCreatePost\" [disabled]=\"isUploadingVideo\">Post</button>\n                </div>\n              </span>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n";
     /***/
   },
 
@@ -211,7 +211,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div class=\"container\">\n  <div class=\"row\">\n    <hr />\n    <div class=\"col-md-9\">\n      <div class=\"row post\">\n        <div class=\"col-md-12\">\n          <span>\n            <span class=\"subreddit-text\"><a class=\"post-url\" href=\"\">{{post.subredditName}}</a></span>\n            <span> . Posted\n              <span> {{post.duration}} </span>\n              by              \n              <a class=\"username\" href=\"\">{{post.userName}}</a>\n            </span>\n          </span>\n          <hr />\n          <a *ngIf=\"post.url; else postTitleNoUrl\" class=\"post-title post-url\" [href]=\"post.url\" target=\"_blank\" rel=\"noopener noreferrer\">{{post.postName}}</a>\n          <ng-template #postTitleNoUrl>\n            <span class=\"post-title\">{{post.postName}}</span>\n          </ng-template>\n          <div *ngIf=\"post.videoUrl\">\n            <video class=\"post-video\" controls preload=\"metadata\" [src]=\"post.videoUrl\"></video>\n          </div>\n          <div>\n            <p class=\"post-text\" [innerHtml]=\"post.description\"></p>\n          </div>\n          <div class=\"post-actions\">\n            <app-vote-button [post]=\"post\"></app-vote-button>\n          </div>\n          <div class=\"post-comment\">\n            <form [formGroup]=\"commentForm\" (ngSubmit)=\"postComment()\">\n              <div class=\"form-group\">\n                <textarea class=\"form-control\" [formControlName]=\"'text'\" placeholder=\"Your Thoughts?\"></textarea>\n              </div>\n              <button type=\"submit\" class=\"login float-right\">Comment</button>\n            </form>\n          </div>\n          <div style=\"margin-top: 60px;\" *ngFor=\"let comment of comments\">\n            <div class=\"comment\">\n              <div class=\"username\">\n                <a routerLink=\"/user/comment.username\">{{comment.userName}}</a>\n              </div>\n              <div>\n                <p>{{comment.duration}}</p>\n              </div>\n              <b>{{comment.text}}</b>\n            </div>\n            <hr />\n          </div>\n        </div>\n      </div>\n    </div>\n    <div class=\"col-md-3\">\n      <app-side-bar></app-side-bar>\n      <app-subreddit-side-bar></app-subreddit-side-bar>\n    </div>\n  </div>\n</div>\n";
+    __webpack_exports__["default"] = "<div class=\"container\">\n  <div class=\"row\">\n    <hr />\n    <div class=\"col-12 view-post-main\">\n      <div class=\"row post\">\n        <div class=\"col-md-12\">\n          <span>\n            <span class=\"subreddit-text\"><a class=\"post-url\" href=\"\">{{post.subredditName}}</a></span>\n            <span> . Posted\n              <span> {{post.duration}} </span>\n              by\n              <a class=\"username\" href=\"\">{{post.userName}}</a>\n            </span>\n          </span>\n          <hr />\n          <a *ngIf=\"post.url; else postTitleNoUrl\" class=\"post-title post-url\" [href]=\"post.url\" target=\"_blank\" rel=\"noopener noreferrer\">{{post.postName}}</a>\n          <ng-template #postTitleNoUrl>\n            <span class=\"post-title\">{{post.postName}}</span>\n          </ng-template>\n          <div *ngIf=\"post.videoUrl\">\n            <video class=\"post-video\" controls preload=\"metadata\" [src]=\"post.videoUrl\"></video>\n          </div>\n          <div>\n            <p class=\"post-text\" [innerHtml]=\"post.description\"></p>\n          </div>\n          <div class=\"post-actions\">\n            <app-vote-button [post]=\"post\"></app-vote-button>\n          </div>\n          <div class=\"post-comment\">\n            <form [formGroup]=\"commentForm\" (ngSubmit)=\"postComment()\">\n              <div class=\"form-group\">\n                <textarea class=\"form-control\" [formControlName]=\"'text'\" placeholder=\"Your Thoughts?\"></textarea>\n              </div>\n              <button type=\"submit\" class=\"login float-right\">Comment</button>\n            </form>\n          </div>\n          <div style=\"margin-top: 60px;\" *ngFor=\"let comment of comments\">\n            <div class=\"comment\">\n              <div class=\"username\">\n                <a routerLink=\"/user/comment.username\">{{comment.userName}}</a>\n              </div>\n              <div>\n                <p>{{comment.duration}}</p>\n              </div>\n              <b>{{comment.text}}</b>\n            </div>\n            <hr />\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n";
     /***/
   },
 
@@ -232,46 +232,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 
     __webpack_exports__["default"] = "<div class=\"hf-post-card\" *ngFor=\"let post of posts\">\n  <div class=\"hf-post-header\">\n    <div class=\"hf-post-meta\">\n      <span class=\"hf-community\">h/{{post.subredditName}}</span>\n      <span class=\"hf-dot\">•</span>\n      <span>{{post.duration}}</span>\n    </div>\n    <button type=\"button\" class=\"hf-overflow-btn\" aria-label=\"Post actions\">\n      <fa-icon [icon]=\"faEllipsisH\"></fa-icon>\n    </button>\n  </div>\n\n  <div class=\"hf-post-title\">\n    <a *ngIf=\"isExternalLinkPost(post); else noExternalPostLink\" class=\"hf-post-title-link\" [href]=\"post.url\" target=\"_blank\" rel=\"noopener noreferrer\">{{post.postName}}</a>\n    <ng-template #noExternalPostLink>\n      <span>{{post.postName}}</span>\n    </ng-template>\n  </div>\n\n  <ng-container *ngIf=\"isMediaPost(post); else textPostBlock\">\n    <div *ngIf=\"isVideoPost(post); else imagePostBlock\" class=\"hf-media-wrap\">\n      <video class=\"hf-media-content\" controls preload=\"metadata\" [src]=\"post.videoUrl\"></video>\n      <div class=\"hf-media-badge\">\n        <fa-icon [icon]=\"faPlay\"></fa-icon>\n        <fa-icon [icon]=\"faVolumeMute\"></fa-icon>\n      </div>\n    </div>\n    <ng-template #imagePostBlock>\n      <div class=\"hf-media-wrap\" *ngIf=\"getImageUrl(post) as imageUrl\">\n        <img class=\"hf-media-content\" [src]=\"imageUrl\" [alt]=\"post.postName\">\n      </div>\n    </ng-template>\n  </ng-container>\n\n  <ng-template #textPostBlock>\n    <p *ngIf=\"post.description\" class=\"hf-text-preview\" [innerHtml]=\"post.description\"></p>\n  </ng-template>\n\n  <div class=\"hf-post-footer\">\n    <app-vote-button [post]=\"post\"></app-vote-button>\n\n    <button type=\"button\" class=\"hf-action-btn\" (click)=\"goToPost(post.id)\">\n      <fa-icon [icon]=\"faComments\"></fa-icon>\n      <span>{{post.commentCount}}</span>\n    </button>\n\n    <button type=\"button\" class=\"hf-action-btn\">\n      <fa-icon [icon]=\"faHeart\"></fa-icon>\n      <span>{{post.voteCount}}</span>\n    </button>\n\n    <button type=\"button\" class=\"hf-action-btn\" (click)=\"sharePost(post)\">\n      <fa-icon [icon]=\"faShare\"></fa-icon>\n      <span>Share</span>\n    </button>\n  </div>\n</div>\n";
-    /***/
-  },
-
-  /***/
-  "./node_modules/raw-loader/dist/cjs.js!./src/app/shared/side-bar/side-bar.component.html":
-  /*!***********************************************************************************************!*\
-    !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/shared/side-bar/side-bar.component.html ***!
-    \***********************************************************************************************/
-
-  /*! exports provided: default */
-
-  /***/
-  function node_modulesRawLoaderDistCjsJsSrcAppSharedSideBarSideBarComponentHtml(module, __webpack_exports__, __webpack_require__) {
-    "use strict";
-
-    __webpack_require__.r(__webpack_exports__);
-    /* harmony default export */
-
-
-    __webpack_exports__["default"] = "<div class=\"sidebar\">\n    <div class=\"sidebar-banner\">Humanfirst</div>\n    <div style=\"text-align: center; font-size: 1em\">Welcome to Humanfirst home page. Come here to\n        check in with your favorite subreddits.</div>\n    <div style=\"text-align: center\">\n        <button class=\"btnCreatePost\" (click)=\"goToCreatePost()\">Create Post</button>\n    </div>\n    <div style=\"text-align: center\">\n        <button class=\"btnCreateSubreddit\" (click)=\"goToCreateSubreddit()\">Create Subreddit</button>\n    </div>\n</div>\n";
-    /***/
-  },
-
-  /***/
-  "./node_modules/raw-loader/dist/cjs.js!./src/app/shared/subreddit-side-bar/subreddit-side-bar.component.html":
-  /*!*******************************************************************************************************************!*\
-    !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/shared/subreddit-side-bar/subreddit-side-bar.component.html ***!
-    \*******************************************************************************************************************/
-
-  /*! exports provided: default */
-
-  /***/
-  function node_modulesRawLoaderDistCjsJsSrcAppSharedSubredditSideBarSubredditSideBarComponentHtml(module, __webpack_exports__, __webpack_require__) {
-    "use strict";
-
-    __webpack_require__.r(__webpack_exports__);
-    /* harmony default export */
-
-
-    __webpack_exports__["default"] = "<div class=\"sidebar-view-subreddit\">\n    <div style=\"color: black; font-weight: bold\">Browse Subreddits</div>\n    <hr />\n    <span *ngFor=\"let subreddit of subreddits\">\n        <span class=\"subreddit-text\"><a href=\"/view-subreddit/{{subreddit.id}}\">{{subreddit.name}}</a></span>\n        <hr />\n    </span>\n    <div style=\"text-align: center\" *ngIf=\"displayViewAll\">\n        <a style=\"font-weight: bold\" routerLink=\"/list-subreddits\">View All</a>\n    </div>\n</div>";
     /***/
   },
 
@@ -311,7 +271,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div class=\"container\">\n    <div class=\"row\">\n      <div class=\"create-subreddit-container\">\n        <form class=\"post-form\" [formGroup]=\"createSubredditForm\" (ngSubmit)=\"createSubreddit()\">\n          <div class=\"form-group\">\n            <div class=\"create-subreddit-heading\">Create Subreddit</div>\n            <hr />\n            <input type=\"text\" [formControlName]=\"'title'\" class=\"form-control\" style=\"margin-top: 5px\"\n              placeholder=\"Title\">\n            <textarea type=\"text\" [formControlName]=\"'description'\" style=\"width: 100%; margin-top: 5px\"\n              placeholder=\"Description\"></textarea>\n            <div>\n              <div style=\"margin-top: 5px\" class=\"float-right\">\n                <button (click)=\"discard()\" class=\"btnDiscard\">Discard</button>\n                <button class=\"btnCreateSubreddit\">Create</button>\n              </div>\n            </div>\n          </div>\n        </form>\n      </div>\n      <div class=\"col-md-3\">\n        <div class=\"sidebar\">\n          <h5 class=\"guidelines\">Posting to Humanfirst</h5>\n          <hr />\n          <ul>\n            <li>Remember the human</li>\n            <hr />\n            <li>Behave like you would in real life</li>\n            <hr />\n            <li>Don't spam</li>\n            <hr />\n          </ul>\n        </div>\n      </div>\n    </div>\n  </div>\n";
+    __webpack_exports__["default"] = "<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-12 create-subreddit-main\">\n      <div class=\"create-subreddit-container\">\n        <form class=\"post-form\" [formGroup]=\"createSubredditForm\" (ngSubmit)=\"createSubreddit()\">\n          <div class=\"form-group\">\n            <div class=\"create-subreddit-heading\">Create Subreddit</div>\n            <hr />\n            <input type=\"text\" [formControlName]=\"'title'\" class=\"form-control\" style=\"margin-top: 5px\"\n              placeholder=\"Title\">\n            <textarea type=\"text\" [formControlName]=\"'description'\" style=\"width: 100%; margin-top: 5px\"\n              placeholder=\"Description\"></textarea>\n            <div>\n              <div style=\"margin-top: 5px\" class=\"float-right\">\n                <button (click)=\"discard()\" class=\"btnDiscard\">Discard</button>\n                <button class=\"btnCreateSubreddit\">Create</button>\n              </div>\n            </div>\n          </div>\n        </form>\n      </div>\n    </div>\n  </div>\n</div>\n";
     /***/
   },
 
@@ -331,7 +291,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div class=\"container\">\n    <div class=\"row\">\n      <hr />\n      <div class=\"col-md-9\">\n        <h2>List of Subreddits</h2>\n        <ul>\n          <li *ngFor=\"let subreddit of subreddits\">\n              <a routerLink=\"/view-subreddit/{{subreddit.id}}\">{{subreddit.name}}</a>\n          </li>\n        </ul>\n      </div>\n      <div class=\"col-md-3\">\n        <app-side-bar></app-side-bar>\n      </div>\n    </div>\n  </div>";
+    __webpack_exports__["default"] = "<div class=\"container\">\n    <div class=\"row\">\n      <hr />\n      <div class=\"col-12 list-subreddits-main\">\n        <h2>List of Subreddits</h2>\n        <ul>\n          <li *ngFor=\"let subreddit of subreddits\">\n              <a routerLink=\"/view-subreddit/{{subreddit.id}}\">{{subreddit.name}}</a>\n          </li>\n        </ul>\n      </div>\n    </div>\n  </div>\n";
     /***/
   },
 
@@ -1040,9 +1000,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       path: 'list-subreddits',
       component: _subreddit_list_subreddits_list_subreddits_component__WEBPACK_IMPORTED_MODULE_8__["ListSubredditsComponent"]
     }, {
-      path: 'create-post',
+      path: 'create',
       component: _post_create_post_create_post_component__WEBPACK_IMPORTED_MODULE_6__["CreatePostComponent"],
       canActivate: [_auth_auth_guard__WEBPACK_IMPORTED_MODULE_11__["AuthGuard"]]
+    }, {
+      path: 'create-post',
+      redirectTo: '/create',
+      pathMatch: 'full'
     }, {
       path: 'create-subreddit',
       component: _subreddit_create_subreddit_create_subreddit_component__WEBPACK_IMPORTED_MODULE_7__["CreateSubredditComponent"],
@@ -1273,61 +1237,49 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony import */
 
 
-    var _shared_side_bar_side_bar_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(
-    /*! ./shared/side-bar/side-bar.component */
-    "./src/app/shared/side-bar/side-bar.component.ts");
-    /* harmony import */
-
-
-    var _shared_subreddit_side_bar_subreddit_side_bar_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(
-    /*! ./shared/subreddit-side-bar/subreddit-side-bar.component */
-    "./src/app/shared/subreddit-side-bar/subreddit-side-bar.component.ts");
-    /* harmony import */
-
-
-    var _subreddit_create_subreddit_create_subreddit_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(
+    var _subreddit_create_subreddit_create_subreddit_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(
     /*! ./subreddit/create-subreddit/create-subreddit.component */
     "./src/app/subreddit/create-subreddit/create-subreddit.component.ts");
     /* harmony import */
 
 
-    var _post_create_post_create_post_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(
+    var _post_create_post_create_post_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(
     /*! ./post/create-post/create-post.component */
     "./src/app/post/create-post/create-post.component.ts");
     /* harmony import */
 
 
-    var _subreddit_list_subreddits_list_subreddits_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(
+    var _subreddit_list_subreddits_list_subreddits_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(
     /*! ./subreddit/list-subreddits/list-subreddits.component */
     "./src/app/subreddit/list-subreddits/list-subreddits.component.ts");
     /* harmony import */
 
 
-    var _tinymce_tinymce_angular__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(
+    var _tinymce_tinymce_angular__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(
     /*! @tinymce/tinymce-angular */
     "./node_modules/@tinymce/tinymce-angular/__ivy_ngcc__/fesm2015/tinymce-tinymce-angular.js");
     /* harmony import */
 
 
-    var _post_view_post_view_post_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(
+    var _post_view_post_view_post_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(
     /*! ./post/view-post/view-post.component */
     "./src/app/post/view-post/view-post.component.ts");
     /* harmony import */
 
 
-    var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(
+    var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(
     /*! @ng-bootstrap/ng-bootstrap */
     "./node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/ng-bootstrap.js");
     /* harmony import */
 
 
-    var _auth_user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(
+    var _auth_user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(
     /*! ./auth/user-profile/user-profile.component */
     "./src/app/auth/user-profile/user-profile.component.ts");
     /* harmony import */
 
 
-    var _auth_account_verification_account_verification_component__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(
+    var _auth_account_verification_account_verification_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(
     /*! ./auth/account-verification/account-verification.component */
     "./src/app/auth/account-verification/account-verification.component.ts");
 
@@ -1336,10 +1288,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     };
 
     AppModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["NgModule"])({
-      declarations: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"], _header_header_component__WEBPACK_IMPORTED_MODULE_5__["HeaderComponent"], _auth_signup_signup_component__WEBPACK_IMPORTED_MODULE_6__["SignupComponent"], _auth_login_login_component__WEBPACK_IMPORTED_MODULE_9__["LoginComponent"], _home_home_component__WEBPACK_IMPORTED_MODULE_14__["HomeComponent"], _shared_post_tile_post_tile_component__WEBPACK_IMPORTED_MODULE_16__["PostTileComponent"], _shared_vote_button_vote_button_component__WEBPACK_IMPORTED_MODULE_17__["VoteButtonComponent"], _shared_side_bar_side_bar_component__WEBPACK_IMPORTED_MODULE_18__["SideBarComponent"], _shared_subreddit_side_bar_subreddit_side_bar_component__WEBPACK_IMPORTED_MODULE_19__["SubredditSideBarComponent"], _subreddit_create_subreddit_create_subreddit_component__WEBPACK_IMPORTED_MODULE_20__["CreateSubredditComponent"], _post_create_post_create_post_component__WEBPACK_IMPORTED_MODULE_21__["CreatePostComponent"], _subreddit_list_subreddits_list_subreddits_component__WEBPACK_IMPORTED_MODULE_22__["ListSubredditsComponent"], _post_view_post_view_post_component__WEBPACK_IMPORTED_MODULE_24__["ViewPostComponent"], _auth_user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_26__["UserProfileComponent"], _auth_account_verification_account_verification_component__WEBPACK_IMPORTED_MODULE_27__["AccountVerificationComponent"]],
-      imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["ReactiveFormsModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_8__["HttpClientModule"], ngx_webstorage__WEBPACK_IMPORTED_MODULE_10__["NgxWebstorageModule"].forRoot(), _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_11__["BrowserAnimationsModule"], ngx_toastr__WEBPACK_IMPORTED_MODULE_12__["ToastrModule"].forRoot(), _fortawesome_angular_fontawesome__WEBPACK_IMPORTED_MODULE_15__["FontAwesomeModule"], _tinymce_tinymce_angular__WEBPACK_IMPORTED_MODULE_23__["EditorModule"], _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_25__["NgbModule"]],
+      declarations: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"], _header_header_component__WEBPACK_IMPORTED_MODULE_5__["HeaderComponent"], _auth_signup_signup_component__WEBPACK_IMPORTED_MODULE_6__["SignupComponent"], _auth_login_login_component__WEBPACK_IMPORTED_MODULE_9__["LoginComponent"], _home_home_component__WEBPACK_IMPORTED_MODULE_14__["HomeComponent"], _shared_post_tile_post_tile_component__WEBPACK_IMPORTED_MODULE_16__["PostTileComponent"], _shared_vote_button_vote_button_component__WEBPACK_IMPORTED_MODULE_17__["VoteButtonComponent"], _subreddit_create_subreddit_create_subreddit_component__WEBPACK_IMPORTED_MODULE_18__["CreateSubredditComponent"], _post_create_post_create_post_component__WEBPACK_IMPORTED_MODULE_19__["CreatePostComponent"], _subreddit_list_subreddits_list_subreddits_component__WEBPACK_IMPORTED_MODULE_20__["ListSubredditsComponent"], _post_view_post_view_post_component__WEBPACK_IMPORTED_MODULE_22__["ViewPostComponent"], _auth_user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_24__["UserProfileComponent"], _auth_account_verification_account_verification_component__WEBPACK_IMPORTED_MODULE_25__["AccountVerificationComponent"]],
+      imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["ReactiveFormsModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_8__["HttpClientModule"], ngx_webstorage__WEBPACK_IMPORTED_MODULE_10__["NgxWebstorageModule"].forRoot(), _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_11__["BrowserAnimationsModule"], ngx_toastr__WEBPACK_IMPORTED_MODULE_12__["ToastrModule"].forRoot(), _fortawesome_angular_fontawesome__WEBPACK_IMPORTED_MODULE_15__["FontAwesomeModule"], _tinymce_tinymce_angular__WEBPACK_IMPORTED_MODULE_21__["EditorModule"], _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_23__["NgbModule"]],
       providers: [{
-        provide: _tinymce_tinymce_angular__WEBPACK_IMPORTED_MODULE_23__["TINYMCE_SCRIPT_SRC"],
+        provide: _tinymce_tinymce_angular__WEBPACK_IMPORTED_MODULE_21__["TINYMCE_SCRIPT_SRC"],
         useValue: 'tinymce/tinymce.min.js'
       }, {
         provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_8__["HTTP_INTERCEPTORS"],
@@ -2282,7 +2234,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "header{\n    border-radius: 1px solid;\n}\n.reddit-text{        \n    font-weight: 700;\n    font-size: 32px;\n    line-height: 1.1;\n    color: #1c1c1c;\n}\n.logo{\n    text-decoration: none;\n    display: inline-flex;\n    align-items: center;\n    padding-left: 6px;\n}\n.login, .sign-up{    \n    background-color: transparent;\n    border-color: #0079D3;\n    color: #0079D3;\n    fill: #0079D3;\n    border: 1px solid;\n    border-radius: 4px;\n    box-sizing: border-box;\n    text-align: center;\n    letter-spacing: 1px;\n    text-decoration: none;\n    font-size: 12px;\n    font-weight: 700;\n    letter-spacing: .5px;\n    line-height: 24px;\n    text-transform: uppercase;\n    padding: 3px 16px;\n    opacity: 1;  \n}\n.sign-up{\n    background-color: #0079D3;\n    border-color: #0079D3;\n    color: aliceblue;\n}\n.sign-up:hover{\n    opacity: 0.6;\n}\n.userdetails{    \n    background-color: transparent;\n    border-color: #0079D3;\n    color: #0079D3;\n    fill: #0079D3;\n    border: 1px solid;\n    border-radius: 4px;\n    box-sizing: border-box;\n    text-align: center;\n    letter-spacing: 1px;\n    text-decoration: none;\n    font-size: 12px;\n    font-weight: 700;\n    letter-spacing: .5px;\n    line-height: 24px;\n    text-transform: uppercase;\n    padding: 3px 16px;\n    opacity: 1;\n    border: 0px;\n}\n.userdetails:hover{\n    border: 1px solid;\n}\n.dropdown-item{\n    background-color: #f8f9fa;\n    font-size: 14px;\n    font-weight: 500;\n    line-height: 18px;\n    display: inline-block;\n    vertical-align: middle;\n}\n.dropdown-item:hover{\n    background-color: #0079D3;\n}\n.dropdown-menu{\n    background-color: #f8f9fa;\n}\n.account-icon{\n    border-radius: 4px;\n    float: left;\n    margin-right: 5px;\n    max-height: 24px;\n    max-width: 24px;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvaGVhZGVyL2hlYWRlci5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0lBQ0ksd0JBQXdCO0FBQzVCO0FBQ0E7SUFDSSxnQkFBZ0I7SUFDaEIsZUFBZTtJQUNmLGdCQUFnQjtJQUNoQixjQUFjO0FBQ2xCO0FBQ0E7SUFDSSxxQkFBcUI7SUFDckIsb0JBQW9CO0lBQ3BCLG1CQUFtQjtJQUNuQixpQkFBaUI7QUFDckI7QUFFQTtJQUNJLDZCQUE2QjtJQUM3QixxQkFBcUI7SUFDckIsY0FBYztJQUNkLGFBQWE7SUFDYixpQkFBaUI7SUFDakIsa0JBQWtCO0lBQ2xCLHNCQUFzQjtJQUN0QixrQkFBa0I7SUFDbEIsbUJBQW1CO0lBQ25CLHFCQUFxQjtJQUNyQixlQUFlO0lBQ2YsZ0JBQWdCO0lBQ2hCLG9CQUFvQjtJQUNwQixpQkFBaUI7SUFDakIseUJBQXlCO0lBQ3pCLGlCQUFpQjtJQUNqQixVQUFVO0FBQ2Q7QUFFQTtJQUNJLHlCQUF5QjtJQUN6QixxQkFBcUI7SUFDckIsZ0JBQWdCO0FBQ3BCO0FBRUE7SUFDSSxZQUFZO0FBQ2hCO0FBRUE7SUFDSSw2QkFBNkI7SUFDN0IscUJBQXFCO0lBQ3JCLGNBQWM7SUFDZCxhQUFhO0lBQ2IsaUJBQWlCO0lBQ2pCLGtCQUFrQjtJQUNsQixzQkFBc0I7SUFDdEIsa0JBQWtCO0lBQ2xCLG1CQUFtQjtJQUNuQixxQkFBcUI7SUFDckIsZUFBZTtJQUNmLGdCQUFnQjtJQUNoQixvQkFBb0I7SUFDcEIsaUJBQWlCO0lBQ2pCLHlCQUF5QjtJQUN6QixpQkFBaUI7SUFDakIsVUFBVTtJQUNWLFdBQVc7QUFDZjtBQUVBO0lBQ0ksaUJBQWlCO0FBQ3JCO0FBRUE7SUFDSSx5QkFBeUI7SUFDekIsZUFBZTtJQUNmLGdCQUFnQjtJQUNoQixpQkFBaUI7SUFDakIscUJBQXFCO0lBQ3JCLHNCQUFzQjtBQUMxQjtBQUVBO0lBQ0kseUJBQXlCO0FBQzdCO0FBRUE7SUFDSSx5QkFBeUI7QUFDN0I7QUFFQTtJQUNJLGtCQUFrQjtJQUNsQixXQUFXO0lBQ1gsaUJBQWlCO0lBQ2pCLGdCQUFnQjtJQUNoQixlQUFlO0FBQ25CIiwiZmlsZSI6InNyYy9hcHAvaGVhZGVyL2hlYWRlci5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaGVhZGVye1xuICAgIGJvcmRlci1yYWRpdXM6IDFweCBzb2xpZDtcbn1cbi5yZWRkaXQtdGV4dHsgICAgICAgIFxuICAgIGZvbnQtd2VpZ2h0OiA3MDA7XG4gICAgZm9udC1zaXplOiAzMnB4O1xuICAgIGxpbmUtaGVpZ2h0OiAxLjE7XG4gICAgY29sb3I6ICMxYzFjMWM7XG59XG4ubG9nb3tcbiAgICB0ZXh0LWRlY29yYXRpb246IG5vbmU7XG4gICAgZGlzcGxheTogaW5saW5lLWZsZXg7XG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgICBwYWRkaW5nLWxlZnQ6IDZweDtcbn1cblxuLmxvZ2luLCAuc2lnbi11cHsgICAgXG4gICAgYmFja2dyb3VuZC1jb2xvcjogdHJhbnNwYXJlbnQ7XG4gICAgYm9yZGVyLWNvbG9yOiAjMDA3OUQzO1xuICAgIGNvbG9yOiAjMDA3OUQzO1xuICAgIGZpbGw6ICMwMDc5RDM7XG4gICAgYm9yZGVyOiAxcHggc29saWQ7XG4gICAgYm9yZGVyLXJhZGl1czogNHB4O1xuICAgIGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIGxldHRlci1zcGFjaW5nOiAxcHg7XG4gICAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICAgIGZvbnQtc2l6ZTogMTJweDtcbiAgICBmb250LXdlaWdodDogNzAwO1xuICAgIGxldHRlci1zcGFjaW5nOiAuNXB4O1xuICAgIGxpbmUtaGVpZ2h0OiAyNHB4O1xuICAgIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XG4gICAgcGFkZGluZzogM3B4IDE2cHg7XG4gICAgb3BhY2l0eTogMTsgIFxufVxuXG4uc2lnbi11cHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjMDA3OUQzO1xuICAgIGJvcmRlci1jb2xvcjogIzAwNzlEMztcbiAgICBjb2xvcjogYWxpY2VibHVlO1xufVxuXG4uc2lnbi11cDpob3ZlcntcbiAgICBvcGFjaXR5OiAwLjY7XG59XG5cbi51c2VyZGV0YWlsc3sgICAgXG4gICAgYmFja2dyb3VuZC1jb2xvcjogdHJhbnNwYXJlbnQ7XG4gICAgYm9yZGVyLWNvbG9yOiAjMDA3OUQzO1xuICAgIGNvbG9yOiAjMDA3OUQzO1xuICAgIGZpbGw6ICMwMDc5RDM7XG4gICAgYm9yZGVyOiAxcHggc29saWQ7XG4gICAgYm9yZGVyLXJhZGl1czogNHB4O1xuICAgIGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIGxldHRlci1zcGFjaW5nOiAxcHg7XG4gICAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICAgIGZvbnQtc2l6ZTogMTJweDtcbiAgICBmb250LXdlaWdodDogNzAwO1xuICAgIGxldHRlci1zcGFjaW5nOiAuNXB4O1xuICAgIGxpbmUtaGVpZ2h0OiAyNHB4O1xuICAgIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XG4gICAgcGFkZGluZzogM3B4IDE2cHg7XG4gICAgb3BhY2l0eTogMTtcbiAgICBib3JkZXI6IDBweDtcbn1cblxuLnVzZXJkZXRhaWxzOmhvdmVye1xuICAgIGJvcmRlcjogMXB4IHNvbGlkO1xufVxuXG4uZHJvcGRvd24taXRlbXtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZjhmOWZhO1xuICAgIGZvbnQtc2l6ZTogMTRweDtcbiAgICBmb250LXdlaWdodDogNTAwO1xuICAgIGxpbmUtaGVpZ2h0OiAxOHB4O1xuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbiAgICB2ZXJ0aWNhbC1hbGlnbjogbWlkZGxlO1xufVxuXG4uZHJvcGRvd24taXRlbTpob3ZlcntcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjMDA3OUQzO1xufVxuXG4uZHJvcGRvd24tbWVudXtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZjhmOWZhO1xufVxuXG4uYWNjb3VudC1pY29ue1xuICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICBmbG9hdDogbGVmdDtcbiAgICBtYXJnaW4tcmlnaHQ6IDVweDtcbiAgICBtYXgtaGVpZ2h0OiAyNHB4O1xuICAgIG1heC13aWR0aDogMjRweDtcbn1cbiJdfQ== */";
+    __webpack_exports__["default"] = "header {\n    border-radius: 1px solid;\n}\n\n.hf-navbar {\n    border-bottom: 1px solid #edeff1;\n}\n\n.hf-navbar-inner {\n    width: 100%;\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    gap: 16px;\n}\n\n.reddit-text {\n    font-weight: 700;\n    font-size: 32px;\n    line-height: 1.1;\n    color: #1c1c1c;\n}\n\n.logo {\n    text-decoration: none;\n    display: inline-flex;\n    align-items: center;\n    padding-left: 6px;\n}\n\n.hf-nav-actions {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n    margin-left: auto;\n}\n\n.auth-links {\n    display: flex;\n    align-items: center;\n    gap: 8px;\n}\n\n.create-link {\n    display: inline-flex;\n    align-items: center;\n    gap: 8px;\n    height: 34px;\n    padding: 0 14px;\n    border-radius: 999px;\n    border: 1px solid #0079d3;\n    background-color: #0079d3;\n    color: #ffffff;\n    font-size: 13px;\n    font-weight: 700;\n    text-decoration: none;\n    cursor: pointer;\n}\n\n.create-link:hover,\n.create-link:focus {\n    color: #ffffff;\n    text-decoration: none;\n    opacity: 0.9;\n}\n\n.create-link:focus {\n    outline: 2px solid #80bdff;\n    outline-offset: 2px;\n}\n\n.login,\n.sign-up {\n    background-color: transparent;\n    border-color: #0079D3;\n    color: #0079D3;\n    fill: #0079D3;\n    border: 1px solid;\n    border-radius: 4px;\n    box-sizing: border-box;\n    text-align: center;\n    text-decoration: none;\n    font-size: 12px;\n    font-weight: 700;\n    letter-spacing: .5px;\n    line-height: 24px;\n    text-transform: uppercase;\n    padding: 3px 16px;\n    opacity: 1;\n}\n\n.sign-up {\n    background-color: #0079D3;\n    border-color: #0079D3;\n    color: aliceblue;\n}\n\n.sign-up:hover {\n    opacity: 0.6;\n}\n\n.userdetails {\n    background-color: transparent;\n    border-color: #0079D3;\n    color: #0079D3;\n    fill: #0079D3;\n    border: 1px solid;\n    border-radius: 4px;\n    box-sizing: border-box;\n    text-align: center;\n    text-decoration: none;\n    font-size: 12px;\n    font-weight: 700;\n    letter-spacing: .5px;\n    line-height: 24px;\n    text-transform: uppercase;\n    padding: 3px 16px;\n    opacity: 1;\n    border: 0;\n}\n\n.userdetails:hover {\n    border: 1px solid;\n}\n\n.dropdown-item {\n    background-color: #f8f9fa;\n    font-size: 14px;\n    font-weight: 500;\n    line-height: 18px;\n    display: inline-block;\n    vertical-align: middle;\n}\n\n.dropdown-item:hover {\n    background-color: #0079D3;\n}\n\n.dropdown-menu {\n    background-color: #f8f9fa;\n}\n\n.account-icon {\n    border-radius: 4px;\n    margin-right: 5px;\n    max-height: 24px;\n    max-width: 24px;\n}\n\n@media (max-width: 767px) {\n    .reddit-text {\n        font-size: 24px;\n    }\n\n    .create-link {\n        padding: 0 10px;\n    }\n\n    .create-link span {\n        display: none;\n    }\n\n    .login,\n    .sign-up {\n        padding: 3px 10px;\n    }\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvaGVhZGVyL2hlYWRlci5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0lBQ0ksd0JBQXdCO0FBQzVCOztBQUVBO0lBQ0ksZ0NBQWdDO0FBQ3BDOztBQUVBO0lBQ0ksV0FBVztJQUNYLGFBQWE7SUFDYixtQkFBbUI7SUFDbkIsOEJBQThCO0lBQzlCLFNBQVM7QUFDYjs7QUFFQTtJQUNJLGdCQUFnQjtJQUNoQixlQUFlO0lBQ2YsZ0JBQWdCO0lBQ2hCLGNBQWM7QUFDbEI7O0FBRUE7SUFDSSxxQkFBcUI7SUFDckIsb0JBQW9CO0lBQ3BCLG1CQUFtQjtJQUNuQixpQkFBaUI7QUFDckI7O0FBRUE7SUFDSSxhQUFhO0lBQ2IsbUJBQW1CO0lBQ25CLFNBQVM7SUFDVCxpQkFBaUI7QUFDckI7O0FBRUE7SUFDSSxhQUFhO0lBQ2IsbUJBQW1CO0lBQ25CLFFBQVE7QUFDWjs7QUFFQTtJQUNJLG9CQUFvQjtJQUNwQixtQkFBbUI7SUFDbkIsUUFBUTtJQUNSLFlBQVk7SUFDWixlQUFlO0lBQ2Ysb0JBQW9CO0lBQ3BCLHlCQUF5QjtJQUN6Qix5QkFBeUI7SUFDekIsY0FBYztJQUNkLGVBQWU7SUFDZixnQkFBZ0I7SUFDaEIscUJBQXFCO0lBQ3JCLGVBQWU7QUFDbkI7O0FBRUE7O0lBRUksY0FBYztJQUNkLHFCQUFxQjtJQUNyQixZQUFZO0FBQ2hCOztBQUVBO0lBQ0ksMEJBQTBCO0lBQzFCLG1CQUFtQjtBQUN2Qjs7QUFFQTs7SUFFSSw2QkFBNkI7SUFDN0IscUJBQXFCO0lBQ3JCLGNBQWM7SUFDZCxhQUFhO0lBQ2IsaUJBQWlCO0lBQ2pCLGtCQUFrQjtJQUNsQixzQkFBc0I7SUFDdEIsa0JBQWtCO0lBQ2xCLHFCQUFxQjtJQUNyQixlQUFlO0lBQ2YsZ0JBQWdCO0lBQ2hCLG9CQUFvQjtJQUNwQixpQkFBaUI7SUFDakIseUJBQXlCO0lBQ3pCLGlCQUFpQjtJQUNqQixVQUFVO0FBQ2Q7O0FBRUE7SUFDSSx5QkFBeUI7SUFDekIscUJBQXFCO0lBQ3JCLGdCQUFnQjtBQUNwQjs7QUFFQTtJQUNJLFlBQVk7QUFDaEI7O0FBRUE7SUFDSSw2QkFBNkI7SUFDN0IscUJBQXFCO0lBQ3JCLGNBQWM7SUFDZCxhQUFhO0lBQ2IsaUJBQWlCO0lBQ2pCLGtCQUFrQjtJQUNsQixzQkFBc0I7SUFDdEIsa0JBQWtCO0lBQ2xCLHFCQUFxQjtJQUNyQixlQUFlO0lBQ2YsZ0JBQWdCO0lBQ2hCLG9CQUFvQjtJQUNwQixpQkFBaUI7SUFDakIseUJBQXlCO0lBQ3pCLGlCQUFpQjtJQUNqQixVQUFVO0lBQ1YsU0FBUztBQUNiOztBQUVBO0lBQ0ksaUJBQWlCO0FBQ3JCOztBQUVBO0lBQ0kseUJBQXlCO0lBQ3pCLGVBQWU7SUFDZixnQkFBZ0I7SUFDaEIsaUJBQWlCO0lBQ2pCLHFCQUFxQjtJQUNyQixzQkFBc0I7QUFDMUI7O0FBRUE7SUFDSSx5QkFBeUI7QUFDN0I7O0FBRUE7SUFDSSx5QkFBeUI7QUFDN0I7O0FBRUE7SUFDSSxrQkFBa0I7SUFDbEIsaUJBQWlCO0lBQ2pCLGdCQUFnQjtJQUNoQixlQUFlO0FBQ25COztBQUVBO0lBQ0k7UUFDSSxlQUFlO0lBQ25COztJQUVBO1FBQ0ksZUFBZTtJQUNuQjs7SUFFQTtRQUNJLGFBQWE7SUFDakI7O0lBRUE7O1FBRUksaUJBQWlCO0lBQ3JCO0FBQ0oiLCJmaWxlIjoic3JjL2FwcC9oZWFkZXIvaGVhZGVyLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJoZWFkZXIge1xuICAgIGJvcmRlci1yYWRpdXM6IDFweCBzb2xpZDtcbn1cblxuLmhmLW5hdmJhciB7XG4gICAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkICNlZGVmZjE7XG59XG5cbi5oZi1uYXZiYXItaW5uZXIge1xuICAgIHdpZHRoOiAxMDAlO1xuICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XG4gICAgZ2FwOiAxNnB4O1xufVxuXG4ucmVkZGl0LXRleHQge1xuICAgIGZvbnQtd2VpZ2h0OiA3MDA7XG4gICAgZm9udC1zaXplOiAzMnB4O1xuICAgIGxpbmUtaGVpZ2h0OiAxLjE7XG4gICAgY29sb3I6ICMxYzFjMWM7XG59XG5cbi5sb2dvIHtcbiAgICB0ZXh0LWRlY29yYXRpb246IG5vbmU7XG4gICAgZGlzcGxheTogaW5saW5lLWZsZXg7XG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgICBwYWRkaW5nLWxlZnQ6IDZweDtcbn1cblxuLmhmLW5hdi1hY3Rpb25zIHtcbiAgICBkaXNwbGF5OiBmbGV4O1xuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gICAgZ2FwOiAxMHB4O1xuICAgIG1hcmdpbi1sZWZ0OiBhdXRvO1xufVxuXG4uYXV0aC1saW5rcyB7XG4gICAgZGlzcGxheTogZmxleDtcbiAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgIGdhcDogOHB4O1xufVxuXG4uY3JlYXRlLWxpbmsge1xuICAgIGRpc3BsYXk6IGlubGluZS1mbGV4O1xuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gICAgZ2FwOiA4cHg7XG4gICAgaGVpZ2h0OiAzNHB4O1xuICAgIHBhZGRpbmc6IDAgMTRweDtcbiAgICBib3JkZXItcmFkaXVzOiA5OTlweDtcbiAgICBib3JkZXI6IDFweCBzb2xpZCAjMDA3OWQzO1xuICAgIGJhY2tncm91bmQtY29sb3I6ICMwMDc5ZDM7XG4gICAgY29sb3I6ICNmZmZmZmY7XG4gICAgZm9udC1zaXplOiAxM3B4O1xuICAgIGZvbnQtd2VpZ2h0OiA3MDA7XG4gICAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbn1cblxuLmNyZWF0ZS1saW5rOmhvdmVyLFxuLmNyZWF0ZS1saW5rOmZvY3VzIHtcbiAgICBjb2xvcjogI2ZmZmZmZjtcbiAgICB0ZXh0LWRlY29yYXRpb246IG5vbmU7XG4gICAgb3BhY2l0eTogMC45O1xufVxuXG4uY3JlYXRlLWxpbms6Zm9jdXMge1xuICAgIG91dGxpbmU6IDJweCBzb2xpZCAjODBiZGZmO1xuICAgIG91dGxpbmUtb2Zmc2V0OiAycHg7XG59XG5cbi5sb2dpbixcbi5zaWduLXVwIHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiB0cmFuc3BhcmVudDtcbiAgICBib3JkZXItY29sb3I6ICMwMDc5RDM7XG4gICAgY29sb3I6ICMwMDc5RDM7XG4gICAgZmlsbDogIzAwNzlEMztcbiAgICBib3JkZXI6IDFweCBzb2xpZDtcbiAgICBib3JkZXItcmFkaXVzOiA0cHg7XG4gICAgYm94LXNpemluZzogYm9yZGVyLWJveDtcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICAgIGZvbnQtc2l6ZTogMTJweDtcbiAgICBmb250LXdlaWdodDogNzAwO1xuICAgIGxldHRlci1zcGFjaW5nOiAuNXB4O1xuICAgIGxpbmUtaGVpZ2h0OiAyNHB4O1xuICAgIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XG4gICAgcGFkZGluZzogM3B4IDE2cHg7XG4gICAgb3BhY2l0eTogMTtcbn1cblxuLnNpZ24tdXAge1xuICAgIGJhY2tncm91bmQtY29sb3I6ICMwMDc5RDM7XG4gICAgYm9yZGVyLWNvbG9yOiAjMDA3OUQzO1xuICAgIGNvbG9yOiBhbGljZWJsdWU7XG59XG5cbi5zaWduLXVwOmhvdmVyIHtcbiAgICBvcGFjaXR5OiAwLjY7XG59XG5cbi51c2VyZGV0YWlscyB7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogdHJhbnNwYXJlbnQ7XG4gICAgYm9yZGVyLWNvbG9yOiAjMDA3OUQzO1xuICAgIGNvbG9yOiAjMDA3OUQzO1xuICAgIGZpbGw6ICMwMDc5RDM7XG4gICAgYm9yZGVyOiAxcHggc29saWQ7XG4gICAgYm9yZGVyLXJhZGl1czogNHB4O1xuICAgIGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcbiAgICBmb250LXNpemU6IDEycHg7XG4gICAgZm9udC13ZWlnaHQ6IDcwMDtcbiAgICBsZXR0ZXItc3BhY2luZzogLjVweDtcbiAgICBsaW5lLWhlaWdodDogMjRweDtcbiAgICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlO1xuICAgIHBhZGRpbmc6IDNweCAxNnB4O1xuICAgIG9wYWNpdHk6IDE7XG4gICAgYm9yZGVyOiAwO1xufVxuXG4udXNlcmRldGFpbHM6aG92ZXIge1xuICAgIGJvcmRlcjogMXB4IHNvbGlkO1xufVxuXG4uZHJvcGRvd24taXRlbSB7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogI2Y4ZjlmYTtcbiAgICBmb250LXNpemU6IDE0cHg7XG4gICAgZm9udC13ZWlnaHQ6IDUwMDtcbiAgICBsaW5lLWhlaWdodDogMThweDtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gICAgdmVydGljYWwtYWxpZ246IG1pZGRsZTtcbn1cblxuLmRyb3Bkb3duLWl0ZW06aG92ZXIge1xuICAgIGJhY2tncm91bmQtY29sb3I6ICMwMDc5RDM7XG59XG5cbi5kcm9wZG93bi1tZW51IHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZjhmOWZhO1xufVxuXG4uYWNjb3VudC1pY29uIHtcbiAgICBib3JkZXItcmFkaXVzOiA0cHg7XG4gICAgbWFyZ2luLXJpZ2h0OiA1cHg7XG4gICAgbWF4LWhlaWdodDogMjRweDtcbiAgICBtYXgtd2lkdGg6IDI0cHg7XG59XG5cbkBtZWRpYSAobWF4LXdpZHRoOiA3NjdweCkge1xuICAgIC5yZWRkaXQtdGV4dCB7XG4gICAgICAgIGZvbnQtc2l6ZTogMjRweDtcbiAgICB9XG5cbiAgICAuY3JlYXRlLWxpbmsge1xuICAgICAgICBwYWRkaW5nOiAwIDEwcHg7XG4gICAgfVxuXG4gICAgLmNyZWF0ZS1saW5rIHNwYW4ge1xuICAgICAgICBkaXNwbGF5OiBub25lO1xuICAgIH1cblxuICAgIC5sb2dpbixcbiAgICAuc2lnbi11cCB7XG4gICAgICAgIHBhZGRpbmc6IDNweCAxMHB4O1xuICAgIH1cbn1cbiJdfQ== */";
     /***/
   },
 
@@ -2342,7 +2294,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         this.authService = authService;
         this.router = router;
-        this.faUser = _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faUser"];
+        this.faPlus = _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faPlus"];
       }
 
       _createClass(HeaderComponent, [{
@@ -2412,7 +2364,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = ".humanfirst-body {\n  padding-top: 10px;\n}\n\n.hf-sidebar {\n  border: 1px solid #edeff1;\n  border-radius: 12px;\n  background: #ffffff;\n  padding: 14px 10px;\n  position: -webkit-sticky;\n  position: sticky;\n  top: 12px;\n}\n\n.hf-brand {\n  font-size: 20px;\n  font-weight: 700;\n  color: #1c1c1c;\n  margin-bottom: 10px;\n  padding: 0 8px;\n}\n\n.hf-nav,\n.hf-section {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n}\n\n.hf-divider {\n  border: 0;\n  border-top: 1px solid #edeff1;\n  margin: 10px 0;\n}\n\n.hf-section {\n  margin-bottom: 10px;\n}\n\n.hf-section-header {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  color: #7c7f84;\n  font-size: 11px;\n  font-weight: 700;\n  letter-spacing: 0.06em;\n  text-transform: uppercase;\n  padding: 6px 8px;\n}\n\n.hf-row {\n  width: 100%;\n  border: 0;\n  border-radius: 18px;\n  background: transparent;\n  color: #1c1c1c;\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  text-align: left;\n  padding: 9px 10px;\n  font-size: 14px;\n  font-weight: 500;\n  cursor: pointer;\n}\n\n.hf-row:hover {\n  background: #f6f7f8;\n}\n\n.hf-row.active {\n  background: #f2f4f5;\n  font-weight: 600;\n}\n\n.hf-icon {\n  width: 16px;\n  color: #6a6d72;\n}\n\n.hf-action-row {\n  margin: 2px 0;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvaG9tZS9ob21lLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxpQkFBaUI7QUFDbkI7O0FBRUE7RUFDRSx5QkFBeUI7RUFDekIsbUJBQW1CO0VBQ25CLG1CQUFtQjtFQUNuQixrQkFBa0I7RUFDbEIsd0JBQWdCO0VBQWhCLGdCQUFnQjtFQUNoQixTQUFTO0FBQ1g7O0FBRUE7RUFDRSxlQUFlO0VBQ2YsZ0JBQWdCO0VBQ2hCLGNBQWM7RUFDZCxtQkFBbUI7RUFDbkIsY0FBYztBQUNoQjs7QUFFQTs7RUFFRSxhQUFhO0VBQ2Isc0JBQXNCO0VBQ3RCLFFBQVE7QUFDVjs7QUFFQTtFQUNFLFNBQVM7RUFDVCw2QkFBNkI7RUFDN0IsY0FBYztBQUNoQjs7QUFFQTtFQUNFLG1CQUFtQjtBQUNyQjs7QUFFQTtFQUNFLGFBQWE7RUFDYiw4QkFBOEI7RUFDOUIsbUJBQW1CO0VBQ25CLGNBQWM7RUFDZCxlQUFlO0VBQ2YsZ0JBQWdCO0VBQ2hCLHNCQUFzQjtFQUN0Qix5QkFBeUI7RUFDekIsZ0JBQWdCO0FBQ2xCOztBQUVBO0VBQ0UsV0FBVztFQUNYLFNBQVM7RUFDVCxtQkFBbUI7RUFDbkIsdUJBQXVCO0VBQ3ZCLGNBQWM7RUFDZCxhQUFhO0VBQ2IsbUJBQW1CO0VBQ25CLFNBQVM7RUFDVCxnQkFBZ0I7RUFDaEIsaUJBQWlCO0VBQ2pCLGVBQWU7RUFDZixnQkFBZ0I7RUFDaEIsZUFBZTtBQUNqQjs7QUFFQTtFQUNFLG1CQUFtQjtBQUNyQjs7QUFFQTtFQUNFLG1CQUFtQjtFQUNuQixnQkFBZ0I7QUFDbEI7O0FBRUE7RUFDRSxXQUFXO0VBQ1gsY0FBYztBQUNoQjs7QUFFQTtFQUNFLGFBQWE7QUFDZiIsImZpbGUiOiJzcmMvYXBwL2hvbWUvaG9tZS5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmh1bWFuZmlyc3QtYm9keSB7XG4gIHBhZGRpbmctdG9wOiAxMHB4O1xufVxuXG4uaGYtc2lkZWJhciB7XG4gIGJvcmRlcjogMXB4IHNvbGlkICNlZGVmZjE7XG4gIGJvcmRlci1yYWRpdXM6IDEycHg7XG4gIGJhY2tncm91bmQ6ICNmZmZmZmY7XG4gIHBhZGRpbmc6IDE0cHggMTBweDtcbiAgcG9zaXRpb246IHN0aWNreTtcbiAgdG9wOiAxMnB4O1xufVxuXG4uaGYtYnJhbmQge1xuICBmb250LXNpemU6IDIwcHg7XG4gIGZvbnQtd2VpZ2h0OiA3MDA7XG4gIGNvbG9yOiAjMWMxYzFjO1xuICBtYXJnaW4tYm90dG9tOiAxMHB4O1xuICBwYWRkaW5nOiAwIDhweDtcbn1cblxuLmhmLW5hdixcbi5oZi1zZWN0aW9uIHtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcbiAgZ2FwOiAycHg7XG59XG5cbi5oZi1kaXZpZGVyIHtcbiAgYm9yZGVyOiAwO1xuICBib3JkZXItdG9wOiAxcHggc29saWQgI2VkZWZmMTtcbiAgbWFyZ2luOiAxMHB4IDA7XG59XG5cbi5oZi1zZWN0aW9uIHtcbiAgbWFyZ2luLWJvdHRvbTogMTBweDtcbn1cblxuLmhmLXNlY3Rpb24taGVhZGVyIHtcbiAgZGlzcGxheTogZmxleDtcbiAganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xuICBhbGlnbi1pdGVtczogY2VudGVyO1xuICBjb2xvcjogIzdjN2Y4NDtcbiAgZm9udC1zaXplOiAxMXB4O1xuICBmb250LXdlaWdodDogNzAwO1xuICBsZXR0ZXItc3BhY2luZzogMC4wNmVtO1xuICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlO1xuICBwYWRkaW5nOiA2cHggOHB4O1xufVxuXG4uaGYtcm93IHtcbiAgd2lkdGg6IDEwMCU7XG4gIGJvcmRlcjogMDtcbiAgYm9yZGVyLXJhZGl1czogMThweDtcbiAgYmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XG4gIGNvbG9yOiAjMWMxYzFjO1xuICBkaXNwbGF5OiBmbGV4O1xuICBhbGlnbi1pdGVtczogY2VudGVyO1xuICBnYXA6IDEwcHg7XG4gIHRleHQtYWxpZ246IGxlZnQ7XG4gIHBhZGRpbmc6IDlweCAxMHB4O1xuICBmb250LXNpemU6IDE0cHg7XG4gIGZvbnQtd2VpZ2h0OiA1MDA7XG4gIGN1cnNvcjogcG9pbnRlcjtcbn1cblxuLmhmLXJvdzpob3ZlciB7XG4gIGJhY2tncm91bmQ6ICNmNmY3Zjg7XG59XG5cbi5oZi1yb3cuYWN0aXZlIHtcbiAgYmFja2dyb3VuZDogI2YyZjRmNTtcbiAgZm9udC13ZWlnaHQ6IDYwMDtcbn1cblxuLmhmLWljb24ge1xuICB3aWR0aDogMTZweDtcbiAgY29sb3I6ICM2YTZkNzI7XG59XG5cbi5oZi1hY3Rpb24tcm93IHtcbiAgbWFyZ2luOiAycHggMDtcbn1cbiJdfQ== */";
+    __webpack_exports__["default"] = ".humanfirst-body {\n  padding-top: 10px;\n}\n\n.hf-sidebar {\n  border: 1px solid #edeff1;\n  border-radius: 12px;\n  background: #ffffff;\n  padding: 14px 10px;\n  position: -webkit-sticky;\n  position: sticky;\n  top: 12px;\n}\n\n.hf-main-col {\n  padding-bottom: 12px;\n}\n\n.hf-main-feed {\n  max-width: 980px;\n  margin: 0 auto;\n}\n\n.hf-brand {\n  font-size: 20px;\n  font-weight: 700;\n  color: #1c1c1c;\n  margin-bottom: 10px;\n  padding: 0 8px;\n}\n\n.hf-nav,\n.hf-section {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n}\n\n.hf-divider {\n  border: 0;\n  border-top: 1px solid #edeff1;\n  margin: 10px 0;\n}\n\n.hf-section {\n  margin-bottom: 10px;\n}\n\n.hf-section-header {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  color: #7c7f84;\n  font-size: 11px;\n  font-weight: 700;\n  letter-spacing: 0.06em;\n  text-transform: uppercase;\n  padding: 6px 8px;\n}\n\n.hf-row {\n  width: 100%;\n  border: 0;\n  border-radius: 18px;\n  background: transparent;\n  color: #1c1c1c;\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  text-align: left;\n  padding: 9px 10px;\n  font-size: 14px;\n  font-weight: 500;\n  cursor: pointer;\n}\n\n.hf-row:hover {\n  background: #f6f7f8;\n}\n\n.hf-row.active {\n  background: #f2f4f5;\n  font-weight: 600;\n}\n\n.hf-icon {\n  width: 16px;\n  color: #6a6d72;\n}\n\n.hf-action-row {\n  margin: 2px 0;\n}\n\n@media (max-width: 991px) {\n  .hf-sidebar {\n    position: static;\n    margin-bottom: 12px;\n  }\n\n  .hf-main-feed {\n    max-width: 100%;\n  }\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvaG9tZS9ob21lLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxpQkFBaUI7QUFDbkI7O0FBRUE7RUFDRSx5QkFBeUI7RUFDekIsbUJBQW1CO0VBQ25CLG1CQUFtQjtFQUNuQixrQkFBa0I7RUFDbEIsd0JBQWdCO0VBQWhCLGdCQUFnQjtFQUNoQixTQUFTO0FBQ1g7O0FBRUE7RUFDRSxvQkFBb0I7QUFDdEI7O0FBRUE7RUFDRSxnQkFBZ0I7RUFDaEIsY0FBYztBQUNoQjs7QUFFQTtFQUNFLGVBQWU7RUFDZixnQkFBZ0I7RUFDaEIsY0FBYztFQUNkLG1CQUFtQjtFQUNuQixjQUFjO0FBQ2hCOztBQUVBOztFQUVFLGFBQWE7RUFDYixzQkFBc0I7RUFDdEIsUUFBUTtBQUNWOztBQUVBO0VBQ0UsU0FBUztFQUNULDZCQUE2QjtFQUM3QixjQUFjO0FBQ2hCOztBQUVBO0VBQ0UsbUJBQW1CO0FBQ3JCOztBQUVBO0VBQ0UsYUFBYTtFQUNiLDhCQUE4QjtFQUM5QixtQkFBbUI7RUFDbkIsY0FBYztFQUNkLGVBQWU7RUFDZixnQkFBZ0I7RUFDaEIsc0JBQXNCO0VBQ3RCLHlCQUF5QjtFQUN6QixnQkFBZ0I7QUFDbEI7O0FBRUE7RUFDRSxXQUFXO0VBQ1gsU0FBUztFQUNULG1CQUFtQjtFQUNuQix1QkFBdUI7RUFDdkIsY0FBYztFQUNkLGFBQWE7RUFDYixtQkFBbUI7RUFDbkIsU0FBUztFQUNULGdCQUFnQjtFQUNoQixpQkFBaUI7RUFDakIsZUFBZTtFQUNmLGdCQUFnQjtFQUNoQixlQUFlO0FBQ2pCOztBQUVBO0VBQ0UsbUJBQW1CO0FBQ3JCOztBQUVBO0VBQ0UsbUJBQW1CO0VBQ25CLGdCQUFnQjtBQUNsQjs7QUFFQTtFQUNFLFdBQVc7RUFDWCxjQUFjO0FBQ2hCOztBQUVBO0VBQ0UsYUFBYTtBQUNmOztBQUVBO0VBQ0U7SUFDRSxnQkFBZ0I7SUFDaEIsbUJBQW1CO0VBQ3JCOztFQUVBO0lBQ0UsZUFBZTtFQUNqQjtBQUNGIiwiZmlsZSI6InNyYy9hcHAvaG9tZS9ob21lLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuaHVtYW5maXJzdC1ib2R5IHtcbiAgcGFkZGluZy10b3A6IDEwcHg7XG59XG5cbi5oZi1zaWRlYmFyIHtcbiAgYm9yZGVyOiAxcHggc29saWQgI2VkZWZmMTtcbiAgYm9yZGVyLXJhZGl1czogMTJweDtcbiAgYmFja2dyb3VuZDogI2ZmZmZmZjtcbiAgcGFkZGluZzogMTRweCAxMHB4O1xuICBwb3NpdGlvbjogc3RpY2t5O1xuICB0b3A6IDEycHg7XG59XG5cbi5oZi1tYWluLWNvbCB7XG4gIHBhZGRpbmctYm90dG9tOiAxMnB4O1xufVxuXG4uaGYtbWFpbi1mZWVkIHtcbiAgbWF4LXdpZHRoOiA5ODBweDtcbiAgbWFyZ2luOiAwIGF1dG87XG59XG5cbi5oZi1icmFuZCB7XG4gIGZvbnQtc2l6ZTogMjBweDtcbiAgZm9udC13ZWlnaHQ6IDcwMDtcbiAgY29sb3I6ICMxYzFjMWM7XG4gIG1hcmdpbi1ib3R0b206IDEwcHg7XG4gIHBhZGRpbmc6IDAgOHB4O1xufVxuXG4uaGYtbmF2LFxuLmhmLXNlY3Rpb24ge1xuICBkaXNwbGF5OiBmbGV4O1xuICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuICBnYXA6IDJweDtcbn1cblxuLmhmLWRpdmlkZXIge1xuICBib3JkZXI6IDA7XG4gIGJvcmRlci10b3A6IDFweCBzb2xpZCAjZWRlZmYxO1xuICBtYXJnaW46IDEwcHggMDtcbn1cblxuLmhmLXNlY3Rpb24ge1xuICBtYXJnaW4tYm90dG9tOiAxMHB4O1xufVxuXG4uaGYtc2VjdGlvbi1oZWFkZXIge1xuICBkaXNwbGF5OiBmbGV4O1xuICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gIGNvbG9yOiAjN2M3Zjg0O1xuICBmb250LXNpemU6IDExcHg7XG4gIGZvbnQtd2VpZ2h0OiA3MDA7XG4gIGxldHRlci1zcGFjaW5nOiAwLjA2ZW07XG4gIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XG4gIHBhZGRpbmc6IDZweCA4cHg7XG59XG5cbi5oZi1yb3cge1xuICB3aWR0aDogMTAwJTtcbiAgYm9yZGVyOiAwO1xuICBib3JkZXItcmFkaXVzOiAxOHB4O1xuICBiYWNrZ3JvdW5kOiB0cmFuc3BhcmVudDtcbiAgY29sb3I6ICMxYzFjMWM7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gIGdhcDogMTBweDtcbiAgdGV4dC1hbGlnbjogbGVmdDtcbiAgcGFkZGluZzogOXB4IDEwcHg7XG4gIGZvbnQtc2l6ZTogMTRweDtcbiAgZm9udC13ZWlnaHQ6IDUwMDtcbiAgY3Vyc29yOiBwb2ludGVyO1xufVxuXG4uaGYtcm93OmhvdmVyIHtcbiAgYmFja2dyb3VuZDogI2Y2ZjdmODtcbn1cblxuLmhmLXJvdy5hY3RpdmUge1xuICBiYWNrZ3JvdW5kOiAjZjJmNGY1O1xuICBmb250LXdlaWdodDogNjAwO1xufVxuXG4uaGYtaWNvbiB7XG4gIHdpZHRoOiAxNnB4O1xuICBjb2xvcjogIzZhNmQ3Mjtcbn1cblxuLmhmLWFjdGlvbi1yb3cge1xuICBtYXJnaW46IDJweCAwO1xufVxuXG5AbWVkaWEgKG1heC13aWR0aDogOTkxcHgpIHtcbiAgLmhmLXNpZGViYXIge1xuICAgIHBvc2l0aW9uOiBzdGF0aWM7XG4gICAgbWFyZ2luLWJvdHRvbTogMTJweDtcbiAgfVxuXG4gIC5oZi1tYWluLWZlZWQge1xuICAgIG1heC13aWR0aDogMTAwJTtcbiAgfVxufVxuIl19 */";
     /***/
   },
 
@@ -2688,7 +2640,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = ".btnCreatePost,\n.btnCreateSubreddit {\n  margin-top: 5px;\n}\n\n.post-form {\n  margin: 2px;\n}\n\n.comment-notification {\n  margin-top: 5px;\n}\n\n.create-post-container {\n  margin-top: 10px;\n  --post-line-color: #ccc;\n  border: 1px solid #ccc;\n  margin-top: 10px;\n  margin-bottom: 10px;\n  overflow: hidden;\n  background-color: rgba(255, 255, 255, 0.8);\n  color: #878A8C;\n  position: relative;\n  border-radius: 4px;\n  padding: 5px;\n}\n\n.btnDiscard {\n    fill: #0079D3;\n    border: 1px solid;\n    border-radius: 4px;\n    text-align: center;\n    letter-spacing: 1px;\n    text-decoration: none;\n    font-size: 12px;\n    font-weight: 700;\n    letter-spacing: .5px;\n    line-height: 24px;\n    text-transform: uppercase;\n    padding: 3px 16px;\n    opacity: 1;\n    width: 288px;\n    height: 34px;\n    margin-top: 5px;\n    color: #0079D3;\n    background-color: transparent;\n  }\n\n.create-post-heading {\n  font-size: 18px;\n  font-weight: 500;\n  line-height: 22px;\n  color: #1c1c1c;\n  flex: 1;\n}\n\n.btnCreatePost {\n    background-color: #0079D3;\n    border-color: #0079D3;\n    color: aliceblue;\n    fill: #0079D3;\n    border: 1px solid;\n    border-radius: 4px;\n    text-align: center;\n    letter-spacing: 1px;\n    text-decoration: none;\n    font-size: 12px;\n    font-weight: 700;\n    letter-spacing: .5px;\n    line-height: 24px;\n    text-transform: uppercase;\n    padding: 3px 16px;\n    opacity: 1;\n    width: 288px;\n    height: 34px;\n  }\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcG9zdC9jcmVhdGUtcG9zdC9jcmVhdGUtcG9zdC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztFQUVFLGVBQWU7QUFDakI7O0FBRUE7RUFDRSxXQUFXO0FBQ2I7O0FBRUE7RUFDRSxlQUFlO0FBQ2pCOztBQUVBO0VBQ0UsZ0JBQWdCO0VBQ2hCLHVCQUF1QjtFQUN2QixzQkFBc0I7RUFDdEIsZ0JBQWdCO0VBQ2hCLG1CQUFtQjtFQUNuQixnQkFBZ0I7RUFDaEIsMENBQTBDO0VBQzFDLGNBQWM7RUFDZCxrQkFBa0I7RUFDbEIsa0JBQWtCO0VBQ2xCLFlBQVk7QUFDZDs7QUFFQTtJQUNJLGFBQWE7SUFDYixpQkFBaUI7SUFDakIsa0JBQWtCO0lBQ2xCLGtCQUFrQjtJQUNsQixtQkFBbUI7SUFDbkIscUJBQXFCO0lBQ3JCLGVBQWU7SUFDZixnQkFBZ0I7SUFDaEIsb0JBQW9CO0lBQ3BCLGlCQUFpQjtJQUNqQix5QkFBeUI7SUFDekIsaUJBQWlCO0lBQ2pCLFVBQVU7SUFDVixZQUFZO0lBQ1osWUFBWTtJQUNaLGVBQWU7SUFDZixjQUFjO0lBQ2QsNkJBQTZCO0VBQy9COztBQUVGO0VBQ0UsZUFBZTtFQUNmLGdCQUFnQjtFQUNoQixpQkFBaUI7RUFDakIsY0FBYztFQUVkLE9BQU87QUFDVDs7QUFFQTtJQUNJLHlCQUF5QjtJQUN6QixxQkFBcUI7SUFDckIsZ0JBQWdCO0lBQ2hCLGFBQWE7SUFDYixpQkFBaUI7SUFDakIsa0JBQWtCO0lBQ2xCLGtCQUFrQjtJQUNsQixtQkFBbUI7SUFDbkIscUJBQXFCO0lBQ3JCLGVBQWU7SUFDZixnQkFBZ0I7SUFDaEIsb0JBQW9CO0lBQ3BCLGlCQUFpQjtJQUNqQix5QkFBeUI7SUFDekIsaUJBQWlCO0lBQ2pCLFVBQVU7SUFDVixZQUFZO0lBQ1osWUFBWTtFQUNkIiwiZmlsZSI6InNyYy9hcHAvcG9zdC9jcmVhdGUtcG9zdC9jcmVhdGUtcG9zdC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmJ0bkNyZWF0ZVBvc3QsXG4uYnRuQ3JlYXRlU3VicmVkZGl0IHtcbiAgbWFyZ2luLXRvcDogNXB4O1xufVxuXG4ucG9zdC1mb3JtIHtcbiAgbWFyZ2luOiAycHg7XG59XG5cbi5jb21tZW50LW5vdGlmaWNhdGlvbiB7XG4gIG1hcmdpbi10b3A6IDVweDtcbn1cblxuLmNyZWF0ZS1wb3N0LWNvbnRhaW5lciB7XG4gIG1hcmdpbi10b3A6IDEwcHg7XG4gIC0tcG9zdC1saW5lLWNvbG9yOiAjY2NjO1xuICBib3JkZXI6IDFweCBzb2xpZCAjY2NjO1xuICBtYXJnaW4tdG9wOiAxMHB4O1xuICBtYXJnaW4tYm90dG9tOiAxMHB4O1xuICBvdmVyZmxvdzogaGlkZGVuO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuOCk7XG4gIGNvbG9yOiAjODc4QThDO1xuICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgcGFkZGluZzogNXB4O1xufVxuXG4uYnRuRGlzY2FyZCB7XG4gICAgZmlsbDogIzAwNzlEMztcbiAgICBib3JkZXI6IDFweCBzb2xpZDtcbiAgICBib3JkZXItcmFkaXVzOiA0cHg7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIGxldHRlci1zcGFjaW5nOiAxcHg7XG4gICAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICAgIGZvbnQtc2l6ZTogMTJweDtcbiAgICBmb250LXdlaWdodDogNzAwO1xuICAgIGxldHRlci1zcGFjaW5nOiAuNXB4O1xuICAgIGxpbmUtaGVpZ2h0OiAyNHB4O1xuICAgIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XG4gICAgcGFkZGluZzogM3B4IDE2cHg7XG4gICAgb3BhY2l0eTogMTtcbiAgICB3aWR0aDogMjg4cHg7XG4gICAgaGVpZ2h0OiAzNHB4O1xuICAgIG1hcmdpbi10b3A6IDVweDtcbiAgICBjb2xvcjogIzAwNzlEMztcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiB0cmFuc3BhcmVudDtcbiAgfVxuXG4uY3JlYXRlLXBvc3QtaGVhZGluZyB7XG4gIGZvbnQtc2l6ZTogMThweDtcbiAgZm9udC13ZWlnaHQ6IDUwMDtcbiAgbGluZS1oZWlnaHQ6IDIycHg7XG4gIGNvbG9yOiAjMWMxYzFjO1xuICAtbXMtZmxleDogMTtcbiAgZmxleDogMTtcbn1cblxuLmJ0bkNyZWF0ZVBvc3Qge1xuICAgIGJhY2tncm91bmQtY29sb3I6ICMwMDc5RDM7XG4gICAgYm9yZGVyLWNvbG9yOiAjMDA3OUQzO1xuICAgIGNvbG9yOiBhbGljZWJsdWU7XG4gICAgZmlsbDogIzAwNzlEMztcbiAgICBib3JkZXI6IDFweCBzb2xpZDtcbiAgICBib3JkZXItcmFkaXVzOiA0cHg7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIGxldHRlci1zcGFjaW5nOiAxcHg7XG4gICAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICAgIGZvbnQtc2l6ZTogMTJweDtcbiAgICBmb250LXdlaWdodDogNzAwO1xuICAgIGxldHRlci1zcGFjaW5nOiAuNXB4O1xuICAgIGxpbmUtaGVpZ2h0OiAyNHB4O1xuICAgIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XG4gICAgcGFkZGluZzogM3B4IDE2cHg7XG4gICAgb3BhY2l0eTogMTtcbiAgICB3aWR0aDogMjg4cHg7XG4gICAgaGVpZ2h0OiAzNHB4O1xuICB9Il19 */";
+    __webpack_exports__["default"] = ".btnCreatePost,\n.btnCreateSubreddit {\n  margin-top: 5px;\n}\n\n.post-form {\n  margin: 2px;\n}\n\n.comment-notification {\n  margin-top: 5px;\n}\n\n.create-post-main {\n  max-width: 980px;\n  margin: 0 auto;\n}\n\n.create-post-container {\n  margin-top: 10px;\n  --post-line-color: #ccc;\n  border: 1px solid #ccc;\n  margin-bottom: 10px;\n  overflow: hidden;\n  background-color: rgba(255, 255, 255, 0.8);\n  color: #878A8C;\n  position: relative;\n  border-radius: 4px;\n  padding: 5px;\n}\n\n.btnDiscard {\n    fill: #0079D3;\n    border: 1px solid;\n    border-radius: 4px;\n    text-align: center;\n    letter-spacing: 1px;\n    text-decoration: none;\n    font-size: 12px;\n    font-weight: 700;\n    letter-spacing: .5px;\n    line-height: 24px;\n    text-transform: uppercase;\n    padding: 3px 16px;\n    opacity: 1;\n    width: 288px;\n    height: 34px;\n    margin-top: 5px;\n    color: #0079D3;\n    background-color: transparent;\n  }\n\n.create-post-heading {\n  font-size: 18px;\n  font-weight: 500;\n  line-height: 22px;\n  color: #1c1c1c;\n  flex: 1;\n}\n\n.btnCreatePost {\n    background-color: #0079D3;\n    border-color: #0079D3;\n    color: aliceblue;\n    fill: #0079D3;\n    border: 1px solid;\n    border-radius: 4px;\n    text-align: center;\n    letter-spacing: 1px;\n    text-decoration: none;\n    font-size: 12px;\n    font-weight: 700;\n    letter-spacing: .5px;\n    line-height: 24px;\n    text-transform: uppercase;\n    padding: 3px 16px;\n    opacity: 1;\n    width: 288px;\n    height: 34px;\n  }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcG9zdC9jcmVhdGUtcG9zdC9jcmVhdGUtcG9zdC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztFQUVFLGVBQWU7QUFDakI7O0FBRUE7RUFDRSxXQUFXO0FBQ2I7O0FBRUE7RUFDRSxlQUFlO0FBQ2pCOztBQUVBO0VBQ0UsZ0JBQWdCO0VBQ2hCLGNBQWM7QUFDaEI7O0FBRUE7RUFDRSxnQkFBZ0I7RUFDaEIsdUJBQXVCO0VBQ3ZCLHNCQUFzQjtFQUN0QixtQkFBbUI7RUFDbkIsZ0JBQWdCO0VBQ2hCLDBDQUEwQztFQUMxQyxjQUFjO0VBQ2Qsa0JBQWtCO0VBQ2xCLGtCQUFrQjtFQUNsQixZQUFZO0FBQ2Q7O0FBRUE7SUFDSSxhQUFhO0lBQ2IsaUJBQWlCO0lBQ2pCLGtCQUFrQjtJQUNsQixrQkFBa0I7SUFDbEIsbUJBQW1CO0lBQ25CLHFCQUFxQjtJQUNyQixlQUFlO0lBQ2YsZ0JBQWdCO0lBQ2hCLG9CQUFvQjtJQUNwQixpQkFBaUI7SUFDakIseUJBQXlCO0lBQ3pCLGlCQUFpQjtJQUNqQixVQUFVO0lBQ1YsWUFBWTtJQUNaLFlBQVk7SUFDWixlQUFlO0lBQ2YsY0FBYztJQUNkLDZCQUE2QjtFQUMvQjs7QUFFRjtFQUNFLGVBQWU7RUFDZixnQkFBZ0I7RUFDaEIsaUJBQWlCO0VBQ2pCLGNBQWM7RUFFZCxPQUFPO0FBQ1Q7O0FBRUE7SUFDSSx5QkFBeUI7SUFDekIscUJBQXFCO0lBQ3JCLGdCQUFnQjtJQUNoQixhQUFhO0lBQ2IsaUJBQWlCO0lBQ2pCLGtCQUFrQjtJQUNsQixrQkFBa0I7SUFDbEIsbUJBQW1CO0lBQ25CLHFCQUFxQjtJQUNyQixlQUFlO0lBQ2YsZ0JBQWdCO0lBQ2hCLG9CQUFvQjtJQUNwQixpQkFBaUI7SUFDakIseUJBQXlCO0lBQ3pCLGlCQUFpQjtJQUNqQixVQUFVO0lBQ1YsWUFBWTtJQUNaLFlBQVk7RUFDZCIsImZpbGUiOiJzcmMvYXBwL3Bvc3QvY3JlYXRlLXBvc3QvY3JlYXRlLXBvc3QuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5idG5DcmVhdGVQb3N0LFxuLmJ0bkNyZWF0ZVN1YnJlZGRpdCB7XG4gIG1hcmdpbi10b3A6IDVweDtcbn1cblxuLnBvc3QtZm9ybSB7XG4gIG1hcmdpbjogMnB4O1xufVxuXG4uY29tbWVudC1ub3RpZmljYXRpb24ge1xuICBtYXJnaW4tdG9wOiA1cHg7XG59XG5cbi5jcmVhdGUtcG9zdC1tYWluIHtcbiAgbWF4LXdpZHRoOiA5ODBweDtcbiAgbWFyZ2luOiAwIGF1dG87XG59XG5cbi5jcmVhdGUtcG9zdC1jb250YWluZXIge1xuICBtYXJnaW4tdG9wOiAxMHB4O1xuICAtLXBvc3QtbGluZS1jb2xvcjogI2NjYztcbiAgYm9yZGVyOiAxcHggc29saWQgI2NjYztcbiAgbWFyZ2luLWJvdHRvbTogMTBweDtcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgYmFja2dyb3VuZC1jb2xvcjogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjgpO1xuICBjb2xvcjogIzg3OEE4QztcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xuICBib3JkZXItcmFkaXVzOiA0cHg7XG4gIHBhZGRpbmc6IDVweDtcbn1cblxuLmJ0bkRpc2NhcmQge1xuICAgIGZpbGw6ICMwMDc5RDM7XG4gICAgYm9yZGVyOiAxcHggc29saWQ7XG4gICAgYm9yZGVyLXJhZGl1czogNHB4O1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgICBsZXR0ZXItc3BhY2luZzogMXB4O1xuICAgIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcbiAgICBmb250LXNpemU6IDEycHg7XG4gICAgZm9udC13ZWlnaHQ6IDcwMDtcbiAgICBsZXR0ZXItc3BhY2luZzogLjVweDtcbiAgICBsaW5lLWhlaWdodDogMjRweDtcbiAgICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlO1xuICAgIHBhZGRpbmc6IDNweCAxNnB4O1xuICAgIG9wYWNpdHk6IDE7XG4gICAgd2lkdGg6IDI4OHB4O1xuICAgIGhlaWdodDogMzRweDtcbiAgICBtYXJnaW4tdG9wOiA1cHg7XG4gICAgY29sb3I6ICMwMDc5RDM7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogdHJhbnNwYXJlbnQ7XG4gIH1cblxuLmNyZWF0ZS1wb3N0LWhlYWRpbmcge1xuICBmb250LXNpemU6IDE4cHg7XG4gIGZvbnQtd2VpZ2h0OiA1MDA7XG4gIGxpbmUtaGVpZ2h0OiAyMnB4O1xuICBjb2xvcjogIzFjMWMxYztcbiAgLW1zLWZsZXg6IDE7XG4gIGZsZXg6IDE7XG59XG5cbi5idG5DcmVhdGVQb3N0IHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjMDA3OUQzO1xuICAgIGJvcmRlci1jb2xvcjogIzAwNzlEMztcbiAgICBjb2xvcjogYWxpY2VibHVlO1xuICAgIGZpbGw6ICMwMDc5RDM7XG4gICAgYm9yZGVyOiAxcHggc29saWQ7XG4gICAgYm9yZGVyLXJhZGl1czogNHB4O1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgICBsZXR0ZXItc3BhY2luZzogMXB4O1xuICAgIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcbiAgICBmb250LXNpemU6IDEycHg7XG4gICAgZm9udC13ZWlnaHQ6IDcwMDtcbiAgICBsZXR0ZXItc3BhY2luZzogLjVweDtcbiAgICBsaW5lLWhlaWdodDogMjRweDtcbiAgICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlO1xuICAgIHBhZGRpbmc6IDNweCAxNnB4O1xuICAgIG9wYWNpdHk6IDE7XG4gICAgd2lkdGg6IDI4OHB4O1xuICAgIGhlaWdodDogMzRweDtcbiAgfVxuIl19 */";
     /***/
   },
 
@@ -2915,7 +2867,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = ".post-title {\n  font-size: 28px;\n  font-weight: bold;\n  opacity: 1;\n}\n\n.post-title:hover {\n  opacity: 0.6;\n}\n\n.subreddit-text {\n  font-weight: bold;\n}\n\n.post-url {\n  color: black;\n}\n\n.username{\n    color: gray;\n}\n\n.post-text{\n    margin-top: 10px;\n}\n\n.post-video {\n  width: 100%;\n  max-height: 460px;\n  margin-top: 10px;\n  border-radius: 6px;\n  background: #000;\n}\n\n.post-actions {\n  display: flex;\n  justify-content: flex-end;\n  margin-top: 10px;\n}\n\n.post{\n    --post-line-color: #ccc;    \n    border: 1px solid #ccc;\n    margin-top: 10px;\n    margin-bottom: 10px;\n    overflow: hidden;\n    background-color: rgba(255,255,255,0.8);\n    color: #878A8C;\n    position: relative;\n    border-radius: 4px;\n    padding:5px;\n}\n\n.comment{    \n    --post-line-color: #ccc;    \n    border: 1px solid #ccc;    \n    margin-bottom: 10px;\n    overflow: hidden;\n    background-color: rgba(255,255,255,0.8);\n    color: #878A8C;\n    position: relative;\n    border-radius: 4px;\n    padding:5px;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcG9zdC92aWV3LXBvc3Qvdmlldy1wb3N0LmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxlQUFlO0VBQ2YsaUJBQWlCO0VBQ2pCLFVBQVU7QUFDWjs7QUFFQTtFQUNFLFlBQVk7QUFDZDs7QUFFQTtFQUNFLGlCQUFpQjtBQUNuQjs7QUFFQTtFQUNFLFlBQVk7QUFDZDs7QUFFQTtJQUNJLFdBQVc7QUFDZjs7QUFFQTtJQUNJLGdCQUFnQjtBQUNwQjs7QUFFQTtFQUNFLFdBQVc7RUFDWCxpQkFBaUI7RUFDakIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixnQkFBZ0I7QUFDbEI7O0FBRUE7RUFDRSxhQUFhO0VBQ2IseUJBQXlCO0VBQ3pCLGdCQUFnQjtBQUNsQjs7QUFFQTtJQUNJLHVCQUF1QjtJQUN2QixzQkFBc0I7SUFDdEIsZ0JBQWdCO0lBQ2hCLG1CQUFtQjtJQUNuQixnQkFBZ0I7SUFDaEIsdUNBQXVDO0lBQ3ZDLGNBQWM7SUFDZCxrQkFBa0I7SUFDbEIsa0JBQWtCO0lBQ2xCLFdBQVc7QUFDZjs7QUFFQTtJQUNJLHVCQUF1QjtJQUN2QixzQkFBc0I7SUFDdEIsbUJBQW1CO0lBQ25CLGdCQUFnQjtJQUNoQix1Q0FBdUM7SUFDdkMsY0FBYztJQUNkLGtCQUFrQjtJQUNsQixrQkFBa0I7SUFDbEIsV0FBVztBQUNmIiwiZmlsZSI6InNyYy9hcHAvcG9zdC92aWV3LXBvc3Qvdmlldy1wb3N0LmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIucG9zdC10aXRsZSB7XG4gIGZvbnQtc2l6ZTogMjhweDtcbiAgZm9udC13ZWlnaHQ6IGJvbGQ7XG4gIG9wYWNpdHk6IDE7XG59XG5cbi5wb3N0LXRpdGxlOmhvdmVyIHtcbiAgb3BhY2l0eTogMC42O1xufVxuXG4uc3VicmVkZGl0LXRleHQge1xuICBmb250LXdlaWdodDogYm9sZDtcbn1cblxuLnBvc3QtdXJsIHtcbiAgY29sb3I6IGJsYWNrO1xufVxuXG4udXNlcm5hbWV7XG4gICAgY29sb3I6IGdyYXk7XG59XG5cbi5wb3N0LXRleHR7XG4gICAgbWFyZ2luLXRvcDogMTBweDtcbn1cblxuLnBvc3QtdmlkZW8ge1xuICB3aWR0aDogMTAwJTtcbiAgbWF4LWhlaWdodDogNDYwcHg7XG4gIG1hcmdpbi10b3A6IDEwcHg7XG4gIGJvcmRlci1yYWRpdXM6IDZweDtcbiAgYmFja2dyb3VuZDogIzAwMDtcbn1cblxuLnBvc3QtYWN0aW9ucyB7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGp1c3RpZnktY29udGVudDogZmxleC1lbmQ7XG4gIG1hcmdpbi10b3A6IDEwcHg7XG59XG5cbi5wb3N0e1xuICAgIC0tcG9zdC1saW5lLWNvbG9yOiAjY2NjOyAgICBcbiAgICBib3JkZXI6IDFweCBzb2xpZCAjY2NjO1xuICAgIG1hcmdpbi10b3A6IDEwcHg7XG4gICAgbWFyZ2luLWJvdHRvbTogMTBweDtcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuICAgIGJhY2tncm91bmQtY29sb3I6IHJnYmEoMjU1LDI1NSwyNTUsMC44KTtcbiAgICBjb2xvcjogIzg3OEE4QztcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgYm9yZGVyLXJhZGl1czogNHB4O1xuICAgIHBhZGRpbmc6NXB4O1xufVxuXG4uY29tbWVudHsgICAgXG4gICAgLS1wb3N0LWxpbmUtY29sb3I6ICNjY2M7ICAgIFxuICAgIGJvcmRlcjogMXB4IHNvbGlkICNjY2M7ICAgIFxuICAgIG1hcmdpbi1ib3R0b206IDEwcHg7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDI1NSwyNTUsMjU1LDAuOCk7XG4gICAgY29sb3I6ICM4NzhBOEM7XG4gICAgcG9zaXRpb246IHJlbGF0aXZlO1xuICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICBwYWRkaW5nOjVweDtcbn1cbiJdfQ== */";
+    __webpack_exports__["default"] = ".view-post-main {\n  max-width: 980px;\n  margin: 0 auto;\n}\n\n.post-title {\n  font-size: 28px;\n  font-weight: bold;\n  opacity: 1;\n}\n\n.post-title:hover {\n  opacity: 0.6;\n}\n\n.subreddit-text {\n  font-weight: bold;\n}\n\n.post-url {\n  color: black;\n}\n\n.username {\n  color: gray;\n}\n\n.post-text {\n  margin-top: 10px;\n}\n\n.post-video {\n  width: 100%;\n  max-height: 460px;\n  margin-top: 10px;\n  border-radius: 6px;\n  background: #000;\n}\n\n.post-actions {\n  display: flex;\n  justify-content: flex-end;\n  margin-top: 10px;\n}\n\n.post {\n  --post-line-color: #ccc;\n  border: 1px solid #ccc;\n  margin-top: 10px;\n  margin-bottom: 10px;\n  overflow: hidden;\n  background-color: rgba(255,255,255,0.8);\n  color: #878A8C;\n  position: relative;\n  border-radius: 4px;\n  padding: 5px;\n}\n\n.comment {\n  --post-line-color: #ccc;\n  border: 1px solid #ccc;\n  margin-bottom: 10px;\n  overflow: hidden;\n  background-color: rgba(255,255,255,0.8);\n  color: #878A8C;\n  position: relative;\n  border-radius: 4px;\n  padding: 5px;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcG9zdC92aWV3LXBvc3Qvdmlldy1wb3N0LmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxnQkFBZ0I7RUFDaEIsY0FBYztBQUNoQjs7QUFFQTtFQUNFLGVBQWU7RUFDZixpQkFBaUI7RUFDakIsVUFBVTtBQUNaOztBQUVBO0VBQ0UsWUFBWTtBQUNkOztBQUVBO0VBQ0UsaUJBQWlCO0FBQ25COztBQUVBO0VBQ0UsWUFBWTtBQUNkOztBQUVBO0VBQ0UsV0FBVztBQUNiOztBQUVBO0VBQ0UsZ0JBQWdCO0FBQ2xCOztBQUVBO0VBQ0UsV0FBVztFQUNYLGlCQUFpQjtFQUNqQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtBQUNsQjs7QUFFQTtFQUNFLGFBQWE7RUFDYix5QkFBeUI7RUFDekIsZ0JBQWdCO0FBQ2xCOztBQUVBO0VBQ0UsdUJBQXVCO0VBQ3ZCLHNCQUFzQjtFQUN0QixnQkFBZ0I7RUFDaEIsbUJBQW1CO0VBQ25CLGdCQUFnQjtFQUNoQix1Q0FBdUM7RUFDdkMsY0FBYztFQUNkLGtCQUFrQjtFQUNsQixrQkFBa0I7RUFDbEIsWUFBWTtBQUNkOztBQUVBO0VBQ0UsdUJBQXVCO0VBQ3ZCLHNCQUFzQjtFQUN0QixtQkFBbUI7RUFDbkIsZ0JBQWdCO0VBQ2hCLHVDQUF1QztFQUN2QyxjQUFjO0VBQ2Qsa0JBQWtCO0VBQ2xCLGtCQUFrQjtFQUNsQixZQUFZO0FBQ2QiLCJmaWxlIjoic3JjL2FwcC9wb3N0L3ZpZXctcG9zdC92aWV3LXBvc3QuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi52aWV3LXBvc3QtbWFpbiB7XG4gIG1heC13aWR0aDogOTgwcHg7XG4gIG1hcmdpbjogMCBhdXRvO1xufVxuXG4ucG9zdC10aXRsZSB7XG4gIGZvbnQtc2l6ZTogMjhweDtcbiAgZm9udC13ZWlnaHQ6IGJvbGQ7XG4gIG9wYWNpdHk6IDE7XG59XG5cbi5wb3N0LXRpdGxlOmhvdmVyIHtcbiAgb3BhY2l0eTogMC42O1xufVxuXG4uc3VicmVkZGl0LXRleHQge1xuICBmb250LXdlaWdodDogYm9sZDtcbn1cblxuLnBvc3QtdXJsIHtcbiAgY29sb3I6IGJsYWNrO1xufVxuXG4udXNlcm5hbWUge1xuICBjb2xvcjogZ3JheTtcbn1cblxuLnBvc3QtdGV4dCB7XG4gIG1hcmdpbi10b3A6IDEwcHg7XG59XG5cbi5wb3N0LXZpZGVvIHtcbiAgd2lkdGg6IDEwMCU7XG4gIG1heC1oZWlnaHQ6IDQ2MHB4O1xuICBtYXJnaW4tdG9wOiAxMHB4O1xuICBib3JkZXItcmFkaXVzOiA2cHg7XG4gIGJhY2tncm91bmQ6ICMwMDA7XG59XG5cbi5wb3N0LWFjdGlvbnMge1xuICBkaXNwbGF5OiBmbGV4O1xuICBqdXN0aWZ5LWNvbnRlbnQ6IGZsZXgtZW5kO1xuICBtYXJnaW4tdG9wOiAxMHB4O1xufVxuXG4ucG9zdCB7XG4gIC0tcG9zdC1saW5lLWNvbG9yOiAjY2NjO1xuICBib3JkZXI6IDFweCBzb2xpZCAjY2NjO1xuICBtYXJnaW4tdG9wOiAxMHB4O1xuICBtYXJnaW4tYm90dG9tOiAxMHB4O1xuICBvdmVyZmxvdzogaGlkZGVuO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDI1NSwyNTUsMjU1LDAuOCk7XG4gIGNvbG9yOiAjODc4QThDO1xuICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgcGFkZGluZzogNXB4O1xufVxuXG4uY29tbWVudCB7XG4gIC0tcG9zdC1saW5lLWNvbG9yOiAjY2NjO1xuICBib3JkZXI6IDFweCBzb2xpZCAjY2NjO1xuICBtYXJnaW4tYm90dG9tOiAxMHB4O1xuICBvdmVyZmxvdzogaGlkZGVuO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDI1NSwyNTUsMjU1LDAuOCk7XG4gIGNvbG9yOiAjODc4QThDO1xuICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgcGFkZGluZzogNXB4O1xufVxuIl19 */";
     /***/
   },
 
@@ -3324,209 +3276,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
   },
 
   /***/
-  "./src/app/shared/side-bar/side-bar.component.css":
-  /*!********************************************************!*\
-    !*** ./src/app/shared/side-bar/side-bar.component.css ***!
-    \********************************************************/
-
-  /*! exports provided: default */
-
-  /***/
-  function srcAppSharedSideBarSideBarComponentCss(module, __webpack_exports__, __webpack_require__) {
-    "use strict";
-
-    __webpack_require__.r(__webpack_exports__);
-    /* harmony default export */
-
-
-    __webpack_exports__["default"] = ".sidebar{\n    width: 312px;\n    height: 242px;\n    --post-line-color: #ccc;    \n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n    overflow: hidden;\n    background-color: rgba(255,255,255,0.8);\n    color: #878A8C;\n    position: relative;\n    border-radius: 4px;\n    padding:5px;\n    margin-top: 10px;\n    margin-bottom: 10px;\n}\n\n.sidebar-banner{\n    width: 100%;\n    border-radius: 4px;\n    margin-bottom: 8px;\n    padding: 8px 10px;\n    background: linear-gradient(90deg, #eef5ff 0%, #f7faff 100%);\n    color: #1c1c1c;\n    font-size: 16px;\n    font-weight: 700;\n    text-align: left;\n}\n\n.btnCreatePost, .btnCreateSubreddit{\n    background-color: #0079D3;\n    border-color: #0079D3;\n    color: aliceblue;\n    fill: #0079D3;\n    border: 1px solid;\n    border-radius: 4px;\n    text-align: center;\n    letter-spacing: 1px;\n    text-decoration: none;\n    font-size: 12px;\n    font-weight: 700;\n    letter-spacing: .5px;\n    line-height: 24px;\n    text-transform: uppercase;\n    padding: 3px 16px;    \n    opacity: 1;\n    width: 288px;\n    height: 34px;\n}\n\n.btnCreateSubreddit{\n    margin-top: 5px;\n    color: #0079D3;\n    background-color: transparent;\n}\n\n.sidebar>ul>li{\n    font-size: 16px;\n    font-weight: 500;\n    line-height: 20px;\n    color: #1c1c1c;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc2hhcmVkL3NpZGUtYmFyL3NpZGUtYmFyLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7SUFDSSxZQUFZO0lBQ1osYUFBYTtJQUNiLHVCQUF1QjtJQUN2QixzQkFBc0I7SUFDdEIsbUJBQW1CO0lBQ25CLGdCQUFnQjtJQUNoQix1Q0FBdUM7SUFDdkMsY0FBYztJQUNkLGtCQUFrQjtJQUNsQixrQkFBa0I7SUFDbEIsV0FBVztJQUNYLGdCQUFnQjtJQUNoQixtQkFBbUI7QUFDdkI7O0FBRUE7SUFDSSxXQUFXO0lBQ1gsa0JBQWtCO0lBQ2xCLGtCQUFrQjtJQUNsQixpQkFBaUI7SUFDakIsNERBQTREO0lBQzVELGNBQWM7SUFDZCxlQUFlO0lBQ2YsZ0JBQWdCO0lBQ2hCLGdCQUFnQjtBQUNwQjs7QUFFQTtJQUNJLHlCQUF5QjtJQUN6QixxQkFBcUI7SUFDckIsZ0JBQWdCO0lBQ2hCLGFBQWE7SUFDYixpQkFBaUI7SUFDakIsa0JBQWtCO0lBQ2xCLGtCQUFrQjtJQUNsQixtQkFBbUI7SUFDbkIscUJBQXFCO0lBQ3JCLGVBQWU7SUFDZixnQkFBZ0I7SUFDaEIsb0JBQW9CO0lBQ3BCLGlCQUFpQjtJQUNqQix5QkFBeUI7SUFDekIsaUJBQWlCO0lBQ2pCLFVBQVU7SUFDVixZQUFZO0lBQ1osWUFBWTtBQUNoQjs7QUFFQTtJQUNJLGVBQWU7SUFDZixjQUFjO0lBQ2QsNkJBQTZCO0FBQ2pDOztBQUVBO0lBQ0ksZUFBZTtJQUNmLGdCQUFnQjtJQUNoQixpQkFBaUI7SUFDakIsY0FBYztBQUNsQiIsImZpbGUiOiJzcmMvYXBwL3NoYXJlZC9zaWRlLWJhci9zaWRlLWJhci5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLnNpZGViYXJ7XG4gICAgd2lkdGg6IDMxMnB4O1xuICAgIGhlaWdodDogMjQycHg7XG4gICAgLS1wb3N0LWxpbmUtY29sb3I6ICNjY2M7ICAgIFxuICAgIGJvcmRlcjogMXB4IHNvbGlkICNjY2M7XG4gICAgbWFyZ2luLWJvdHRvbTogMTBweDtcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuICAgIGJhY2tncm91bmQtY29sb3I6IHJnYmEoMjU1LDI1NSwyNTUsMC44KTtcbiAgICBjb2xvcjogIzg3OEE4QztcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgYm9yZGVyLXJhZGl1czogNHB4O1xuICAgIHBhZGRpbmc6NXB4O1xuICAgIG1hcmdpbi10b3A6IDEwcHg7XG4gICAgbWFyZ2luLWJvdHRvbTogMTBweDtcbn1cblxuLnNpZGViYXItYmFubmVye1xuICAgIHdpZHRoOiAxMDAlO1xuICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICBtYXJnaW4tYm90dG9tOiA4cHg7XG4gICAgcGFkZGluZzogOHB4IDEwcHg7XG4gICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDkwZGVnLCAjZWVmNWZmIDAlLCAjZjdmYWZmIDEwMCUpO1xuICAgIGNvbG9yOiAjMWMxYzFjO1xuICAgIGZvbnQtc2l6ZTogMTZweDtcbiAgICBmb250LXdlaWdodDogNzAwO1xuICAgIHRleHQtYWxpZ246IGxlZnQ7XG59XG5cbi5idG5DcmVhdGVQb3N0LCAuYnRuQ3JlYXRlU3VicmVkZGl0e1xuICAgIGJhY2tncm91bmQtY29sb3I6ICMwMDc5RDM7XG4gICAgYm9yZGVyLWNvbG9yOiAjMDA3OUQzO1xuICAgIGNvbG9yOiBhbGljZWJsdWU7XG4gICAgZmlsbDogIzAwNzlEMztcbiAgICBib3JkZXI6IDFweCBzb2xpZDtcbiAgICBib3JkZXItcmFkaXVzOiA0cHg7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIGxldHRlci1zcGFjaW5nOiAxcHg7XG4gICAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICAgIGZvbnQtc2l6ZTogMTJweDtcbiAgICBmb250LXdlaWdodDogNzAwO1xuICAgIGxldHRlci1zcGFjaW5nOiAuNXB4O1xuICAgIGxpbmUtaGVpZ2h0OiAyNHB4O1xuICAgIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XG4gICAgcGFkZGluZzogM3B4IDE2cHg7ICAgIFxuICAgIG9wYWNpdHk6IDE7XG4gICAgd2lkdGg6IDI4OHB4O1xuICAgIGhlaWdodDogMzRweDtcbn1cblxuLmJ0bkNyZWF0ZVN1YnJlZGRpdHtcbiAgICBtYXJnaW4tdG9wOiA1cHg7XG4gICAgY29sb3I6ICMwMDc5RDM7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogdHJhbnNwYXJlbnQ7XG59XG5cbi5zaWRlYmFyPnVsPmxpe1xuICAgIGZvbnQtc2l6ZTogMTZweDtcbiAgICBmb250LXdlaWdodDogNTAwO1xuICAgIGxpbmUtaGVpZ2h0OiAyMHB4O1xuICAgIGNvbG9yOiAjMWMxYzFjO1xufVxuIl19 */";
-    /***/
-  },
-
-  /***/
-  "./src/app/shared/side-bar/side-bar.component.ts":
-  /*!*******************************************************!*\
-    !*** ./src/app/shared/side-bar/side-bar.component.ts ***!
-    \*******************************************************/
-
-  /*! exports provided: SideBarComponent */
-
-  /***/
-  function srcAppSharedSideBarSideBarComponentTs(module, __webpack_exports__, __webpack_require__) {
-    "use strict";
-
-    __webpack_require__.r(__webpack_exports__);
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "SideBarComponent", function () {
-      return SideBarComponent;
-    });
-    /* harmony import */
-
-
-    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-    /*! tslib */
-    "./node_modules/tslib/tslib.es6.js");
-    /* harmony import */
-
-
-    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-    /*! @angular/core */
-    "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
-    /* harmony import */
-
-
-    var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-    /*! @angular/router */
-    "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
-
-    var SideBarComponent = /*#__PURE__*/function () {
-      function SideBarComponent(router) {
-        _classCallCheck(this, SideBarComponent);
-
-        this.router = router;
-      }
-
-      _createClass(SideBarComponent, [{
-        key: "ngOnInit",
-        value: function ngOnInit() {}
-      }, {
-        key: "goToCreatePost",
-        value: function goToCreatePost() {
-          this.router.navigateByUrl('/create-post');
-        }
-      }, {
-        key: "goToCreateSubreddit",
-        value: function goToCreateSubreddit() {
-          this.router.navigateByUrl('/create-subreddit');
-        }
-      }]);
-
-      return SideBarComponent;
-    }();
-
-    SideBarComponent.ctorParameters = function () {
-      return [{
-        type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]
-      }];
-    };
-
-    SideBarComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-      selector: 'app-side-bar',
-      template: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(
-      /*! raw-loader!./side-bar.component.html */
-      "./node_modules/raw-loader/dist/cjs.js!./src/app/shared/side-bar/side-bar.component.html"))["default"],
-      styles: [Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(
-      /*! ./side-bar.component.css */
-      "./src/app/shared/side-bar/side-bar.component.css"))["default"]]
-    })], SideBarComponent);
-    /***/
-  },
-
-  /***/
-  "./src/app/shared/subreddit-side-bar/subreddit-side-bar.component.css":
-  /*!****************************************************************************!*\
-    !*** ./src/app/shared/subreddit-side-bar/subreddit-side-bar.component.css ***!
-    \****************************************************************************/
-
-  /*! exports provided: default */
-
-  /***/
-  function srcAppSharedSubredditSideBarSubredditSideBarComponentCss(module, __webpack_exports__, __webpack_require__) {
-    "use strict";
-
-    __webpack_require__.r(__webpack_exports__);
-    /* harmony default export */
-
-
-    __webpack_exports__["default"] = ".sidebar-view-subreddit {\n    width: 312px;\n    height: 242px;\n    --post-line-color: #ccc;\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n    overflow: hidden;\n    background-color: rgba(255, 255, 255, 0.8);\n    color: #878A8C;\n    position: relative;\n    border-radius: 4px;\n    padding: 5px;\n    margin-top: 10px;\n    margin-bottom: 10px;\n  }\n  \n  .sidebar-view-subreddit {\n    height: 280px;\n  }\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc2hhcmVkL3N1YnJlZGRpdC1zaWRlLWJhci9zdWJyZWRkaXQtc2lkZS1iYXIuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtJQUNJLFlBQVk7SUFDWixhQUFhO0lBQ2IsdUJBQXVCO0lBQ3ZCLHNCQUFzQjtJQUN0QixtQkFBbUI7SUFDbkIsZ0JBQWdCO0lBQ2hCLDBDQUEwQztJQUMxQyxjQUFjO0lBQ2Qsa0JBQWtCO0lBQ2xCLGtCQUFrQjtJQUNsQixZQUFZO0lBQ1osZ0JBQWdCO0lBQ2hCLG1CQUFtQjtFQUNyQjs7RUFFQTtJQUNFLGFBQWE7RUFDZiIsImZpbGUiOiJzcmMvYXBwL3NoYXJlZC9zdWJyZWRkaXQtc2lkZS1iYXIvc3VicmVkZGl0LXNpZGUtYmFyLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuc2lkZWJhci12aWV3LXN1YnJlZGRpdCB7XG4gICAgd2lkdGg6IDMxMnB4O1xuICAgIGhlaWdodDogMjQycHg7XG4gICAgLS1wb3N0LWxpbmUtY29sb3I6ICNjY2M7XG4gICAgYm9yZGVyOiAxcHggc29saWQgI2NjYztcbiAgICBtYXJnaW4tYm90dG9tOiAxMHB4O1xuICAgIG92ZXJmbG93OiBoaWRkZW47XG4gICAgYmFja2dyb3VuZC1jb2xvcjogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjgpO1xuICAgIGNvbG9yOiAjODc4QThDO1xuICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICBib3JkZXItcmFkaXVzOiA0cHg7XG4gICAgcGFkZGluZzogNXB4O1xuICAgIG1hcmdpbi10b3A6IDEwcHg7XG4gICAgbWFyZ2luLWJvdHRvbTogMTBweDtcbiAgfVxuICBcbiAgLnNpZGViYXItdmlldy1zdWJyZWRkaXQge1xuICAgIGhlaWdodDogMjgwcHg7XG4gIH0iXX0= */";
-    /***/
-  },
-
-  /***/
-  "./src/app/shared/subreddit-side-bar/subreddit-side-bar.component.ts":
-  /*!***************************************************************************!*\
-    !*** ./src/app/shared/subreddit-side-bar/subreddit-side-bar.component.ts ***!
-    \***************************************************************************/
-
-  /*! exports provided: SubredditSideBarComponent */
-
-  /***/
-  function srcAppSharedSubredditSideBarSubredditSideBarComponentTs(module, __webpack_exports__, __webpack_require__) {
-    "use strict";
-
-    __webpack_require__.r(__webpack_exports__);
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "SubredditSideBarComponent", function () {
-      return SubredditSideBarComponent;
-    });
-    /* harmony import */
-
-
-    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-    /*! tslib */
-    "./node_modules/tslib/tslib.es6.js");
-    /* harmony import */
-
-
-    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-    /*! @angular/core */
-    "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
-    /* harmony import */
-
-
-    var src_app_subreddit_subreddit_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-    /*! src/app/subreddit/subreddit.service */
-    "./src/app/subreddit/subreddit.service.ts");
-
-    var SubredditSideBarComponent = /*#__PURE__*/function () {
-      function SubredditSideBarComponent(subredditService) {
-        var _this16 = this;
-
-        _classCallCheck(this, SubredditSideBarComponent);
-
-        this.subredditService = subredditService;
-        this.subreddits = [];
-        this.subredditService.getAllSubreddits().subscribe(function (data) {
-          if (data.length > 3) {
-            _this16.subreddits = data.splice(0, 3);
-            _this16.displayViewAll = true;
-          } else {
-            _this16.subreddits = data;
-          }
-        });
-      }
-
-      _createClass(SubredditSideBarComponent, [{
-        key: "ngOnInit",
-        value: function ngOnInit() {}
-      }]);
-
-      return SubredditSideBarComponent;
-    }();
-
-    SubredditSideBarComponent.ctorParameters = function () {
-      return [{
-        type: src_app_subreddit_subreddit_service__WEBPACK_IMPORTED_MODULE_2__["SubredditService"]
-      }];
-    };
-
-    SubredditSideBarComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-      selector: 'app-subreddit-side-bar',
-      template: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(
-      /*! raw-loader!./subreddit-side-bar.component.html */
-      "./node_modules/raw-loader/dist/cjs.js!./src/app/shared/subreddit-side-bar/subreddit-side-bar.component.html"))["default"],
-      styles: [Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(
-      /*! ./subreddit-side-bar.component.css */
-      "./src/app/shared/subreddit-side-bar/subreddit-side-bar.component.css"))["default"]]
-    })], SubredditSideBarComponent);
-    /***/
-  },
-
-  /***/
   "./src/app/shared/video-upload.service.ts":
   /*!************************************************!*\
     !*** ./src/app/shared/video-upload.service.ts ***!
@@ -3711,7 +3460,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     var VoteButtonComponent = /*#__PURE__*/function () {
       function VoteButtonComponent(voteService, authService, postService, toastr) {
-        var _this17 = this;
+        var _this16 = this;
 
         _classCallCheck(this, VoteButtonComponent);
 
@@ -3726,7 +3475,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           postId: undefined
         };
         this.authService.loggedIn.subscribe(function (data) {
-          return _this17.isLoggedIn = data;
+          return _this16.isLoggedIn = data;
         });
       }
 
@@ -3750,13 +3499,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "vote",
         value: function vote() {
-          var _this18 = this;
+          var _this17 = this;
 
           this.votePayload.postId = this.post.id;
           this.voteService.vote(this.votePayload).subscribe(function () {
-            _this18.updateVoteDetails();
+            _this17.updateVoteDetails();
           }, function (error) {
-            _this18.toastr.error(error.error.message);
+            _this17.toastr.error(error.error.message);
 
             Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["throwError"])(error);
           });
@@ -3764,10 +3513,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "updateVoteDetails",
         value: function updateVoteDetails() {
-          var _this19 = this;
+          var _this18 = this;
 
           this.postService.getPost(this.post.id).subscribe(function (post) {
-            _this19.post = post;
+            _this18.post = post;
           });
         }
       }]);
@@ -3926,7 +3675,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = ".create-subreddit-container {\n    margin-top: 10px;\n    --post-line-color: #ccc;\n    border: 1px solid #ccc;\n    margin-top: 10px;\n    margin-bottom: 10px;\n    overflow: hidden;\n    background-color: rgba(255, 255, 255, 0.8);\n    color: #878A8C;\n    position: relative;\n    border-radius: 4px;\n    padding: 5px;\n  }\n  \n  .create-subreddit-heading {\n    font-size: 18px;\n    font-weight: 500;\n    line-height: 22px;\n    color: #1c1c1c;\n    flex: 1;\n  }\n  \n  .btnCreateSubreddit {\n    background-color: #0079D3;\n    border-color: #0079D3;\n    color: aliceblue;\n    fill: #0079D3;\n    border: 1px solid;\n    border-radius: 4px;\n    text-align: center;\n    letter-spacing: 1px;\n    text-decoration: none;\n    font-size: 12px;\n    font-weight: 700;\n    letter-spacing: .5px;\n    line-height: 24px;\n    text-transform: uppercase;\n    padding: 3px 16px;\n    opacity: 1;\n    width: 288px;\n    height: 34px;\n  }\n  \n  .btnDiscard {\n    fill: #0079D3;\n    border: 1px solid;\n    border-radius: 4px;\n    text-align: center;\n    letter-spacing: 1px;\n    text-decoration: none;\n    font-size: 12px;\n    font-weight: 700;\n    letter-spacing: .5px;\n    line-height: 24px;\n    text-transform: uppercase;\n    padding: 3px 16px;\n    opacity: 1;\n    width: 288px;\n    height: 34px;\n    margin-top: 5px;\n    color: #0079D3;\n    background-color: transparent;\n  }\n  \n  .guidelines {\n    text-align: center;\n    font-size: 16px;\n    font-weight: 500;\n    line-height: 20px;\n    color: #1c1c1c;\n  }\n  \n  .sidebar {\n    width: 312px;\n    height: 242px;\n    --post-line-color: #ccc;\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n    overflow: hidden;\n    background-color: rgba(255, 255, 255, 0.8);\n    color: #878A8C;\n    position: relative;\n    border-radius: 4px;\n    padding: 5px;\n    margin-top: 10px;\n    margin-bottom: 10px;\n  }\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc3VicmVkZGl0L2NyZWF0ZS1zdWJyZWRkaXQvY3JlYXRlLXN1YnJlZGRpdC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0lBQ0ksZ0JBQWdCO0lBQ2hCLHVCQUF1QjtJQUN2QixzQkFBc0I7SUFDdEIsZ0JBQWdCO0lBQ2hCLG1CQUFtQjtJQUNuQixnQkFBZ0I7SUFDaEIsMENBQTBDO0lBQzFDLGNBQWM7SUFDZCxrQkFBa0I7SUFDbEIsa0JBQWtCO0lBQ2xCLFlBQVk7RUFDZDs7RUFFQTtJQUNFLGVBQWU7SUFDZixnQkFBZ0I7SUFDaEIsaUJBQWlCO0lBQ2pCLGNBQWM7SUFFZCxPQUFPO0VBQ1Q7O0VBRUE7SUFDRSx5QkFBeUI7SUFDekIscUJBQXFCO0lBQ3JCLGdCQUFnQjtJQUNoQixhQUFhO0lBQ2IsaUJBQWlCO0lBQ2pCLGtCQUFrQjtJQUNsQixrQkFBa0I7SUFDbEIsbUJBQW1CO0lBQ25CLHFCQUFxQjtJQUNyQixlQUFlO0lBQ2YsZ0JBQWdCO0lBQ2hCLG9CQUFvQjtJQUNwQixpQkFBaUI7SUFDakIseUJBQXlCO0lBQ3pCLGlCQUFpQjtJQUNqQixVQUFVO0lBQ1YsWUFBWTtJQUNaLFlBQVk7RUFDZDs7RUFFQTtJQUNFLGFBQWE7SUFDYixpQkFBaUI7SUFDakIsa0JBQWtCO0lBQ2xCLGtCQUFrQjtJQUNsQixtQkFBbUI7SUFDbkIscUJBQXFCO0lBQ3JCLGVBQWU7SUFDZixnQkFBZ0I7SUFDaEIsb0JBQW9CO0lBQ3BCLGlCQUFpQjtJQUNqQix5QkFBeUI7SUFDekIsaUJBQWlCO0lBQ2pCLFVBQVU7SUFDVixZQUFZO0lBQ1osWUFBWTtJQUNaLGVBQWU7SUFDZixjQUFjO0lBQ2QsNkJBQTZCO0VBQy9COztFQUVBO0lBQ0Usa0JBQWtCO0lBQ2xCLGVBQWU7SUFDZixnQkFBZ0I7SUFDaEIsaUJBQWlCO0lBQ2pCLGNBQWM7RUFDaEI7O0VBRUE7SUFDRSxZQUFZO0lBQ1osYUFBYTtJQUNiLHVCQUF1QjtJQUN2QixzQkFBc0I7SUFDdEIsbUJBQW1CO0lBQ25CLGdCQUFnQjtJQUNoQiwwQ0FBMEM7SUFDMUMsY0FBYztJQUNkLGtCQUFrQjtJQUNsQixrQkFBa0I7SUFDbEIsWUFBWTtJQUNaLGdCQUFnQjtJQUNoQixtQkFBbUI7RUFDckIiLCJmaWxlIjoic3JjL2FwcC9zdWJyZWRkaXQvY3JlYXRlLXN1YnJlZGRpdC9jcmVhdGUtc3VicmVkZGl0LmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuY3JlYXRlLXN1YnJlZGRpdC1jb250YWluZXIge1xuICAgIG1hcmdpbi10b3A6IDEwcHg7XG4gICAgLS1wb3N0LWxpbmUtY29sb3I6ICNjY2M7XG4gICAgYm9yZGVyOiAxcHggc29saWQgI2NjYztcbiAgICBtYXJnaW4tdG9wOiAxMHB4O1xuICAgIG1hcmdpbi1ib3R0b206IDEwcHg7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuOCk7XG4gICAgY29sb3I6ICM4NzhBOEM7XG4gICAgcG9zaXRpb246IHJlbGF0aXZlO1xuICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICBwYWRkaW5nOiA1cHg7XG4gIH1cbiAgXG4gIC5jcmVhdGUtc3VicmVkZGl0LWhlYWRpbmcge1xuICAgIGZvbnQtc2l6ZTogMThweDtcbiAgICBmb250LXdlaWdodDogNTAwO1xuICAgIGxpbmUtaGVpZ2h0OiAyMnB4O1xuICAgIGNvbG9yOiAjMWMxYzFjO1xuICAgIC1tcy1mbGV4OiAxO1xuICAgIGZsZXg6IDE7XG4gIH1cbiAgXG4gIC5idG5DcmVhdGVTdWJyZWRkaXQge1xuICAgIGJhY2tncm91bmQtY29sb3I6ICMwMDc5RDM7XG4gICAgYm9yZGVyLWNvbG9yOiAjMDA3OUQzO1xuICAgIGNvbG9yOiBhbGljZWJsdWU7XG4gICAgZmlsbDogIzAwNzlEMztcbiAgICBib3JkZXI6IDFweCBzb2xpZDtcbiAgICBib3JkZXItcmFkaXVzOiA0cHg7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIGxldHRlci1zcGFjaW5nOiAxcHg7XG4gICAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICAgIGZvbnQtc2l6ZTogMTJweDtcbiAgICBmb250LXdlaWdodDogNzAwO1xuICAgIGxldHRlci1zcGFjaW5nOiAuNXB4O1xuICAgIGxpbmUtaGVpZ2h0OiAyNHB4O1xuICAgIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XG4gICAgcGFkZGluZzogM3B4IDE2cHg7XG4gICAgb3BhY2l0eTogMTtcbiAgICB3aWR0aDogMjg4cHg7XG4gICAgaGVpZ2h0OiAzNHB4O1xuICB9XG4gIFxuICAuYnRuRGlzY2FyZCB7XG4gICAgZmlsbDogIzAwNzlEMztcbiAgICBib3JkZXI6IDFweCBzb2xpZDtcbiAgICBib3JkZXItcmFkaXVzOiA0cHg7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIGxldHRlci1zcGFjaW5nOiAxcHg7XG4gICAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICAgIGZvbnQtc2l6ZTogMTJweDtcbiAgICBmb250LXdlaWdodDogNzAwO1xuICAgIGxldHRlci1zcGFjaW5nOiAuNXB4O1xuICAgIGxpbmUtaGVpZ2h0OiAyNHB4O1xuICAgIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XG4gICAgcGFkZGluZzogM3B4IDE2cHg7XG4gICAgb3BhY2l0eTogMTtcbiAgICB3aWR0aDogMjg4cHg7XG4gICAgaGVpZ2h0OiAzNHB4O1xuICAgIG1hcmdpbi10b3A6IDVweDtcbiAgICBjb2xvcjogIzAwNzlEMztcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiB0cmFuc3BhcmVudDtcbiAgfVxuICBcbiAgLmd1aWRlbGluZXMge1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgICBmb250LXNpemU6IDE2cHg7XG4gICAgZm9udC13ZWlnaHQ6IDUwMDtcbiAgICBsaW5lLWhlaWdodDogMjBweDtcbiAgICBjb2xvcjogIzFjMWMxYztcbiAgfVxuICBcbiAgLnNpZGViYXIge1xuICAgIHdpZHRoOiAzMTJweDtcbiAgICBoZWlnaHQ6IDI0MnB4O1xuICAgIC0tcG9zdC1saW5lLWNvbG9yOiAjY2NjO1xuICAgIGJvcmRlcjogMXB4IHNvbGlkICNjY2M7XG4gICAgbWFyZ2luLWJvdHRvbTogMTBweDtcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuICAgIGJhY2tncm91bmQtY29sb3I6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC44KTtcbiAgICBjb2xvcjogIzg3OEE4QztcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgYm9yZGVyLXJhZGl1czogNHB4O1xuICAgIHBhZGRpbmc6IDVweDtcbiAgICBtYXJnaW4tdG9wOiAxMHB4O1xuICAgIG1hcmdpbi1ib3R0b206IDEwcHg7XG4gIH0iXX0= */";
+    __webpack_exports__["default"] = ".create-subreddit-main {\n  max-width: 980px;\n  margin: 0 auto;\n}\n\n.create-subreddit-container {\n  margin-top: 10px;\n  --post-line-color: #ccc;\n  border: 1px solid #ccc;\n  margin-bottom: 10px;\n  overflow: hidden;\n  background-color: rgba(255, 255, 255, 0.8);\n  color: #878A8C;\n  position: relative;\n  border-radius: 4px;\n  padding: 5px;\n}\n\n.create-subreddit-heading {\n  font-size: 18px;\n  font-weight: 500;\n  line-height: 22px;\n  color: #1c1c1c;\n  flex: 1;\n}\n\n.btnCreateSubreddit {\n  background-color: #0079D3;\n  border-color: #0079D3;\n  color: aliceblue;\n  fill: #0079D3;\n  border: 1px solid;\n  border-radius: 4px;\n  text-align: center;\n  letter-spacing: 1px;\n  text-decoration: none;\n  font-size: 12px;\n  font-weight: 700;\n  letter-spacing: .5px;\n  line-height: 24px;\n  text-transform: uppercase;\n  padding: 3px 16px;\n  opacity: 1;\n  width: 288px;\n  height: 34px;\n}\n\n.btnDiscard {\n  fill: #0079D3;\n  border: 1px solid;\n  border-radius: 4px;\n  text-align: center;\n  letter-spacing: 1px;\n  text-decoration: none;\n  font-size: 12px;\n  font-weight: 700;\n  letter-spacing: .5px;\n  line-height: 24px;\n  text-transform: uppercase;\n  padding: 3px 16px;\n  opacity: 1;\n  width: 288px;\n  height: 34px;\n  margin-top: 5px;\n  color: #0079D3;\n  background-color: transparent;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc3VicmVkZGl0L2NyZWF0ZS1zdWJyZWRkaXQvY3JlYXRlLXN1YnJlZGRpdC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsZ0JBQWdCO0VBQ2hCLGNBQWM7QUFDaEI7O0FBRUE7RUFDRSxnQkFBZ0I7RUFDaEIsdUJBQXVCO0VBQ3ZCLHNCQUFzQjtFQUN0QixtQkFBbUI7RUFDbkIsZ0JBQWdCO0VBQ2hCLDBDQUEwQztFQUMxQyxjQUFjO0VBQ2Qsa0JBQWtCO0VBQ2xCLGtCQUFrQjtFQUNsQixZQUFZO0FBQ2Q7O0FBRUE7RUFDRSxlQUFlO0VBQ2YsZ0JBQWdCO0VBQ2hCLGlCQUFpQjtFQUNqQixjQUFjO0VBRWQsT0FBTztBQUNUOztBQUVBO0VBQ0UseUJBQXlCO0VBQ3pCLHFCQUFxQjtFQUNyQixnQkFBZ0I7RUFDaEIsYUFBYTtFQUNiLGlCQUFpQjtFQUNqQixrQkFBa0I7RUFDbEIsa0JBQWtCO0VBQ2xCLG1CQUFtQjtFQUNuQixxQkFBcUI7RUFDckIsZUFBZTtFQUNmLGdCQUFnQjtFQUNoQixvQkFBb0I7RUFDcEIsaUJBQWlCO0VBQ2pCLHlCQUF5QjtFQUN6QixpQkFBaUI7RUFDakIsVUFBVTtFQUNWLFlBQVk7RUFDWixZQUFZO0FBQ2Q7O0FBRUE7RUFDRSxhQUFhO0VBQ2IsaUJBQWlCO0VBQ2pCLGtCQUFrQjtFQUNsQixrQkFBa0I7RUFDbEIsbUJBQW1CO0VBQ25CLHFCQUFxQjtFQUNyQixlQUFlO0VBQ2YsZ0JBQWdCO0VBQ2hCLG9CQUFvQjtFQUNwQixpQkFBaUI7RUFDakIseUJBQXlCO0VBQ3pCLGlCQUFpQjtFQUNqQixVQUFVO0VBQ1YsWUFBWTtFQUNaLFlBQVk7RUFDWixlQUFlO0VBQ2YsY0FBYztFQUNkLDZCQUE2QjtBQUMvQiIsImZpbGUiOiJzcmMvYXBwL3N1YnJlZGRpdC9jcmVhdGUtc3VicmVkZGl0L2NyZWF0ZS1zdWJyZWRkaXQuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5jcmVhdGUtc3VicmVkZGl0LW1haW4ge1xuICBtYXgtd2lkdGg6IDk4MHB4O1xuICBtYXJnaW46IDAgYXV0bztcbn1cblxuLmNyZWF0ZS1zdWJyZWRkaXQtY29udGFpbmVyIHtcbiAgbWFyZ2luLXRvcDogMTBweDtcbiAgLS1wb3N0LWxpbmUtY29sb3I6ICNjY2M7XG4gIGJvcmRlcjogMXB4IHNvbGlkICNjY2M7XG4gIG1hcmdpbi1ib3R0b206IDEwcHg7XG4gIG92ZXJmbG93OiBoaWRkZW47XG4gIGJhY2tncm91bmQtY29sb3I6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC44KTtcbiAgY29sb3I6ICM4NzhBOEM7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgYm9yZGVyLXJhZGl1czogNHB4O1xuICBwYWRkaW5nOiA1cHg7XG59XG5cbi5jcmVhdGUtc3VicmVkZGl0LWhlYWRpbmcge1xuICBmb250LXNpemU6IDE4cHg7XG4gIGZvbnQtd2VpZ2h0OiA1MDA7XG4gIGxpbmUtaGVpZ2h0OiAyMnB4O1xuICBjb2xvcjogIzFjMWMxYztcbiAgLW1zLWZsZXg6IDE7XG4gIGZsZXg6IDE7XG59XG5cbi5idG5DcmVhdGVTdWJyZWRkaXQge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjMDA3OUQzO1xuICBib3JkZXItY29sb3I6ICMwMDc5RDM7XG4gIGNvbG9yOiBhbGljZWJsdWU7XG4gIGZpbGw6ICMwMDc5RDM7XG4gIGJvcmRlcjogMXB4IHNvbGlkO1xuICBib3JkZXItcmFkaXVzOiA0cHg7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgbGV0dGVyLXNwYWNpbmc6IDFweDtcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICBmb250LXNpemU6IDEycHg7XG4gIGZvbnQtd2VpZ2h0OiA3MDA7XG4gIGxldHRlci1zcGFjaW5nOiAuNXB4O1xuICBsaW5lLWhlaWdodDogMjRweDtcbiAgdGV4dC10cmFuc2Zvcm06IHVwcGVyY2FzZTtcbiAgcGFkZGluZzogM3B4IDE2cHg7XG4gIG9wYWNpdHk6IDE7XG4gIHdpZHRoOiAyODhweDtcbiAgaGVpZ2h0OiAzNHB4O1xufVxuXG4uYnRuRGlzY2FyZCB7XG4gIGZpbGw6ICMwMDc5RDM7XG4gIGJvcmRlcjogMXB4IHNvbGlkO1xuICBib3JkZXItcmFkaXVzOiA0cHg7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgbGV0dGVyLXNwYWNpbmc6IDFweDtcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICBmb250LXNpemU6IDEycHg7XG4gIGZvbnQtd2VpZ2h0OiA3MDA7XG4gIGxldHRlci1zcGFjaW5nOiAuNXB4O1xuICBsaW5lLWhlaWdodDogMjRweDtcbiAgdGV4dC10cmFuc2Zvcm06IHVwcGVyY2FzZTtcbiAgcGFkZGluZzogM3B4IDE2cHg7XG4gIG9wYWNpdHk6IDE7XG4gIHdpZHRoOiAyODhweDtcbiAgaGVpZ2h0OiAzNHB4O1xuICBtYXJnaW4tdG9wOiA1cHg7XG4gIGNvbG9yOiAjMDA3OUQzO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB0cmFuc3BhcmVudDtcbn1cbiJdfQ== */";
     /***/
   },
 
@@ -4015,12 +3764,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "createSubreddit",
         value: function createSubreddit() {
-          var _this20 = this;
+          var _this19 = this;
 
           this.subredditModel.name = this.createSubredditForm.get('title').value;
           this.subredditModel.description = this.createSubredditForm.get('description').value;
           this.subredditService.createSubreddit(this.subredditModel).subscribe(function (data) {
-            _this20.router.navigateByUrl('/list-subreddits');
+            _this19.router.navigateByUrl('/list-subreddits');
           }, function (error) {
             Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["throwError"])(error);
           });
@@ -4066,7 +3815,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3N1YnJlZGRpdC9saXN0LXN1YnJlZGRpdHMvbGlzdC1zdWJyZWRkaXRzLmNvbXBvbmVudC5jc3MifQ== */";
+    __webpack_exports__["default"] = ".list-subreddits-main {\n  max-width: 980px;\n  margin: 0 auto;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc3VicmVkZGl0L2xpc3Qtc3VicmVkZGl0cy9saXN0LXN1YnJlZGRpdHMuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGdCQUFnQjtFQUNoQixjQUFjO0FBQ2hCIiwiZmlsZSI6InNyYy9hcHAvc3VicmVkZGl0L2xpc3Qtc3VicmVkZGl0cy9saXN0LXN1YnJlZGRpdHMuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5saXN0LXN1YnJlZGRpdHMtbWFpbiB7XG4gIG1heC13aWR0aDogOTgwcHg7XG4gIG1hcmdpbjogMCBhdXRvO1xufVxuIl19 */";
     /***/
   },
 
@@ -4124,10 +3873,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(ListSubredditsComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this21 = this;
+          var _this20 = this;
 
           this.subredditService.getAllSubreddits().subscribe(function (data) {
-            _this21.subreddits = data;
+            _this20.subreddits = data;
           }, function (error) {
             Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(error);
           });
@@ -4302,7 +4051,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(TokenInterceptor, [{
         key: "intercept",
         value: function intercept(req, next) {
-          var _this22 = this;
+          var _this21 = this;
 
           if (req.url.indexOf('refresh') !== -1 || req.url.indexOf('login') !== -1) {
             return next.handle(req);
@@ -4313,7 +4062,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           if (jwtToken) {
             return next.handle(this.addToken(req, jwtToken)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["catchError"])(function (error) {
               if (error instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpErrorResponse"] && error.status === 403) {
-                return _this22.handleAuthErrors(req, next);
+                return _this21.handleAuthErrors(req, next);
               } else {
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(error);
               }
@@ -4325,23 +4074,23 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "handleAuthErrors",
         value: function handleAuthErrors(req, next) {
-          var _this23 = this;
+          var _this22 = this;
 
           if (!this.isTokenRefreshing) {
             this.isTokenRefreshing = true;
             this.refreshTokenSubject.next(null);
             return this.authService.refreshToken().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["switchMap"])(function (refreshTokenResponse) {
-              _this23.isTokenRefreshing = false;
+              _this22.isTokenRefreshing = false;
 
-              _this23.refreshTokenSubject.next(refreshTokenResponse.authenticationToken);
+              _this22.refreshTokenSubject.next(refreshTokenResponse.authenticationToken);
 
-              return next.handle(_this23.addToken(req, refreshTokenResponse.authenticationToken));
+              return next.handle(_this22.addToken(req, refreshTokenResponse.authenticationToken));
             }));
           } else {
             return this.refreshTokenSubject.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["filter"])(function (result) {
               return result !== null;
             }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["take"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["switchMap"])(function (res) {
-              return next.handle(_this23.addToken(req, _this23.authService.getJwtToken()));
+              return next.handle(_this22.addToken(req, _this22.authService.getJwtToken()));
             }));
           }
         }
