@@ -76,8 +76,8 @@
 }
 
 .hf-media-wrap {
-    width: min(100%, 620px);
-    margin: 0 auto 10px;
+    width: 100%;
+    margin: 0 0 10px;
     position: relative;
     border-radius: 10px;
     overflow: hidden;

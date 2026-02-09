@@ -1,63 +1,61 @@
 <div class="humanfirst-body">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-lg-3 col-xl-2">
-        <aside class="hf-sidebar">
-          <nav class="hf-nav">
-            <button
-              *ngFor="let item of primaryNavItems"
-              type="button"
-              class="hf-row"
-              [class.active]="isItemActive(item)"
-              (click)="handlePrimaryNavClick(item)">
-              <fa-icon class="hf-icon" [icon]="item.icon"></fa-icon>
-              <span>{{item.label}}</span>
-            </button>
-          </nav>
+  <div class="hf-layout">
+    <aside class="hf-sidebar">
+      <nav class="hf-nav">
+        <button
+          *ngFor="let item of primaryNavItems"
+          type="button"
+          class="hf-row"
+          [class.active]="isItemActive(item)"
+          (click)="handlePrimaryNavClick(item)">
+          <fa-icon class="hf-icon" [icon]="item.icon"></fa-icon>
+          <span>{{item.label}}</span>
+        </button>
+      </nav>
 
-          <hr class="hf-divider" />
+      <hr class="hf-divider" />
 
-          <button type="button" class="hf-row hf-action-row" (click)="goToCreateSubreddit()">
-            <fa-icon class="hf-icon" [icon]="faPlus"></fa-icon>
-            <span>Start a community</span>
-          </button>
+      <button type="button" class="hf-row hf-action-row" (click)="goToCreateSubreddit()">
+        <fa-icon class="hf-icon" [icon]="faPlus"></fa-icon>
+        <span>Start a community</span>
+      </button>
 
-          <hr class="hf-divider" />
+      <hr class="hf-divider" />
 
-          <section class="hf-section">
-            <div class="hf-section-header">
-              <span>COMMUNITIES</span>
-              <fa-icon [icon]="faChevronDown"></fa-icon>
-            </div>
-            <button
-              *ngFor="let item of communityItems"
-              type="button"
-              class="hf-row"
-              [class.active]="isItemActive(item)"
-              (click)="handleCommunityClick(item)">
-              <fa-icon class="hf-icon" [icon]="item.icon"></fa-icon>
-              <span>{{item.label}}</span>
-            </button>
-          </section>
-
-          <section class="hf-section">
-            <div class="hf-section-header">
-              <span>CUSTOM FEEDS</span>
-              <fa-icon [icon]="faChevronDown"></fa-icon>
-            </div>
-            <button type="button" class="hf-row">
-              <fa-icon class="hf-icon" [icon]="faPlus"></fa-icon>
-              <span>Create Custom Feed</span>
-            </button>
-          </section>
-        </aside>
-      </div>
-
-      <div class="col-lg-9 col-xl-10 hf-main-col">
-        <div class="hf-main-feed">
-          <app-post-tile [posts]="posts"></app-post-tile>
+      <section class="hf-section">
+        <div class="hf-section-header">
+          <span>COMMUNITIES</span>
+          <fa-icon [icon]="faChevronDown"></fa-icon>
         </div>
+        <button
+          *ngFor="let item of communityItems"
+          type="button"
+          class="hf-row"
+          [class.active]="isItemActive(item)"
+          (click)="handleCommunityClick(item)">
+          <fa-icon class="hf-icon" [icon]="item.icon"></fa-icon>
+          <span>{{item.label}}</span>
+        </button>
+      </section>
+
+      <section class="hf-section">
+        <div class="hf-section-header">
+          <span>CUSTOM FEEDS</span>
+          <fa-icon [icon]="faChevronDown"></fa-icon>
+        </div>
+        <button type="button" class="hf-row">
+          <fa-icon class="hf-icon" [icon]="faPlus"></fa-icon>
+          <span>Create Custom Feed</span>
+        </button>
+      </section>
+    </aside>
+
+    <main class="hf-main-col">
+      <div class="hf-main-feed">
+        <app-post-tile [posts]="posts"></app-post-tile>
       </div>
-    </div>
+    </main>
+
+    <div class="hf-right-gutter" aria-hidden="true"></div>
   </div>
 </div>
