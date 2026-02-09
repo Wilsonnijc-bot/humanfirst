@@ -13,6 +13,8 @@ import { AccountVerificationComponent } from './auth/account-verification/accoun
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'r/:subreddit/comments/:id/:slug', component: ViewPostComponent },
+  { path: 'r/:subreddit/comments/:id', component: ViewPostComponent },
   { path: 'view-post/:id', component: ViewPostComponent },
   { path: 'user-profile/:name', component: UserProfileComponent, canActivate: [AuthGuard] },
   { path: 'list-subreddits', component: ListSubredditsComponent },

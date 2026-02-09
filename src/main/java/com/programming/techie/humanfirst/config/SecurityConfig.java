@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/index.html", "/favicon.ico").permitAll()
                         .requestMatchers("/login", "/sign-up", "/list-subreddits",
-                                "/create-post", "/create-subreddit", "/view-post/**",
+                                "/create", "/create-post", "/create-subreddit", "/view-post/**", "/r/**",
                                 "/user-profile/**", "/account-verification/**", "/signup").permitAll()
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/*.js", "/*.css", "/*.map").permitAll()

@@ -12,9 +12,12 @@ public class SpaForwardController {
             "/sign-up",
             "/signup",
             "/list-subreddits",
+            "/create",
             "/create-post",
             "/create-subreddit",
             "/view-post/{id}",
+            "/r/{subreddit}/comments/{id}",
+            "/r/{subreddit}/comments/{id}/{slug}",
             "/user-profile/{name}",
             "/account-verification/{token}"
     })

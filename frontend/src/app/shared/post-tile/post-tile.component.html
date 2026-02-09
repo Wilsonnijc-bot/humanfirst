@@ -3,6 +3,8 @@
     <div class="hf-post-meta">
       <span class="hf-community">h/{{post.subredditName}}</span>
       <span class="hf-dot">•</span>
+      <span class="hf-author">u/{{post.userName}}</span>
+      <span class="hf-dot">•</span>
       <span>{{post.duration}}</span>
     </div>
     <button type="button" class="hf-overflow-btn" aria-label="Post actions">
@@ -11,35 +13,38 @@
   </div>
 
   <div class="hf-post-title">
-    <a *ngIf="isExternalLinkPost(post); else noExternalPostLink" class="hf-post-title-link" [href]="post.url" target="_blank" rel="noopener noreferrer">{{post.postName}}</a>
-    <ng-template #noExternalPostLink>
-      <span>{{post.postName}}</span>
-    </ng-template>
+    <a class="hf-post-title-link" [routerLink]="getPostPath(post)">{{post.postName}}</a>
   </div>
 
+  <a class="hf-post-link-preview" *ngIf="isExternalLinkPost(post)" [href]="post.url" target="_blank" rel="noopener noreferrer">
+    {{post.url}}
+  </a>
+
   <ng-container *ngIf="isMediaPost(post); else textPostBlock">
-    <div *ngIf="isVideoPost(post); else imagePostBlock" class="hf-media-wrap">
-      <video class="hf-media-content" controls preload="metadata" [src]="post.videoUrl"></video>
-      <div class="hf-media-badge">
-        <fa-icon [icon]="faPlay"></fa-icon>
-        <fa-icon [icon]="faVolumeMute"></fa-icon>
-      </div>
-    </div>
-    <ng-template #imagePostBlock>
-      <div class="hf-media-wrap" *ngIf="getImageUrl(post) as imageUrl">
-        <img class="hf-media-content" [src]="imageUrl" [alt]="post.postName">
-      </div>
-    </ng-template>
+    <button type="button" class="hf-media-wrap" (click)="goToPost(post)" aria-label="Open post details">
+      <ng-container *ngIf="isVideoPost(post); else imagePostBlock">
+        <video class="hf-media-content" controls preload="metadata" [src]="post.videoUrl"></video>
+        <div class="hf-media-badge">
+          <fa-icon [icon]="faPlay"></fa-icon>
+          <fa-icon [icon]="faVolumeMute"></fa-icon>
+        </div>
+      </ng-container>
+      <ng-template #imagePostBlock>
+        <img class="hf-media-content" *ngIf="getImageUrl(post) as imageUrl" [src]="imageUrl" [alt]="post.postName">
+      </ng-template>
+    </button>
   </ng-container>
 
   <ng-template #textPostBlock>
-    <p *ngIf="post.description" class="hf-text-preview" [innerHtml]="post.description"></p>
+    <button type="button" class="hf-text-preview-btn" (click)="goToPost(post)">
+      <p *ngIf="post.description" class="hf-text-preview" [innerHtml]="post.description"></p>
+    </button>
   </ng-template>
 
   <div class="hf-post-footer">
     <app-vote-button [post]="post"></app-vote-button>
 
-    <button type="button" class="hf-action-btn" (click)="goToPost(post.id)">
+    <button type="button" class="hf-action-btn" (click)="goToPost(post)">
       <fa-icon [icon]="faComments"></fa-icon>
       <span>{{post.commentCount}}</span>
     </button>

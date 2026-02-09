@@ -24,8 +24,14 @@ export class PostTileComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  goToPost(id: number): void {
-    this.router.navigateByUrl('/view-post/' + id);
+  goToPost(post: PostModel): void {
+    this.router.navigateByUrl(this.getPostPath(post));
+  }
+
+  getPostPath(post: PostModel): string {
+    const safeSubreddit = this.slugify(post?.subredditName || 'community');
+    const safeTitle = this.slugify(post?.postName || 'post');
+    return `/r/${safeSubreddit}/comments/${post.id}/${safeTitle}`;
   }
 
   isVideoPost(post: PostModel): boolean {
@@ -53,7 +59,7 @@ export class PostTileComponent implements OnInit {
   }
 
   sharePost(post: PostModel): void {
-    const shareUrl = `${window.location.origin}/view-post/${post.id}`;
+    const shareUrl = `${window.location.origin}${this.getPostPath(post)}`;
     const webNavigator = navigator as any;
     if (webNavigator.share) {
       webNavigator.share({ title: post.postName, url: shareUrl }).catch(() => {
@@ -64,6 +70,17 @@ export class PostTileComponent implements OnInit {
       webNavigator.clipboard.writeText(shareUrl).catch(() => {
       });
     }
+  }
+
+  private slugify(value: string): string {
+    return (value || '')
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .trim()
+      .replace(/\s+/g, '_')
+      .replace(/_+/g, '_')
+      .replace(/^-+|-+$/g, '')
+      || 'post';
   }
 
   private isLikelyImageUrl(url: string): boolean {

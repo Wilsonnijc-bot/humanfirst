@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PostService } from 'src/app/shared/post.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PostModel } from 'src/app/shared/post-model';
-import { throwError } from 'rxjs';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { throwError, Subscription } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CommentPayload } from 'src/app/comment/comment.payload';
 import { CommentService } from 'src/app/comment/comment.service';
 
@@ -12,35 +12,51 @@ import { CommentService } from 'src/app/comment/comment.service';
   templateUrl: './view-post.component.html',
   styleUrls: ['./view-post.component.css']
 })
-export class ViewPostComponent implements OnInit {
+export class ViewPostComponent implements OnInit, OnDestroy {
 
   postId: number;
   post: PostModel;
   commentForm: FormGroup;
   commentPayload: CommentPayload;
   comments: CommentPayload[];
+  private routeSubscription?: Subscription;
 
   constructor(private postService: PostService, private activateRoute: ActivatedRoute,
     private commentService: CommentService, private router: Router) {
-    this.postId = this.activateRoute.snapshot.params.id;
 
     this.commentForm = new FormGroup({
       text: new FormControl('', Validators.required)
     });
     this.commentPayload = {
       text: '',
-      postId: this.postId
+      postId: 0
     };
   }
 
   ngOnInit(): void {
-    this.getPostById();
-    this.getCommentsForPost();
+    this.routeSubscription = this.activateRoute.paramMap.subscribe((params) => {
+      const idParam = params.get('id');
+      const parsedId = idParam ? Number(idParam) : NaN;
+
+      if (Number.isNaN(parsedId) || parsedId <= 0) {
+        this.router.navigateByUrl('/');
+        return;
+      }
+
+      this.postId = parsedId;
+      this.commentPayload.postId = this.postId;
+      this.getPostById();
+      this.getCommentsForPost();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.routeSubscription?.unsubscribe();
   }
 
   postComment() {
     this.commentPayload.text = this.commentForm.get('text').value;
-    this.commentService.postComment(this.commentPayload).subscribe(data => {
+    this.commentService.postComment(this.commentPayload).subscribe(() => {
       this.commentForm.get('text').setValue('');
       this.getCommentsForPost();
     }, error => {

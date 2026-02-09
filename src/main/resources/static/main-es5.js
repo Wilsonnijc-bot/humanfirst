@@ -243,7 +243,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div class=\"hf-post-card\" *ngFor=\"let post of posts\">\n  <div class=\"hf-post-header\">\n    <div class=\"hf-post-meta\">\n      <span class=\"hf-community\">h/{{post.subredditName}}</span>\n      <span class=\"hf-dot\">•</span>\n      <span>{{post.duration}}</span>\n    </div>\n    <button type=\"button\" class=\"hf-overflow-btn\" aria-label=\"Post actions\">\n      <fa-icon [icon]=\"faEllipsisH\"></fa-icon>\n    </button>\n  </div>\n\n  <div class=\"hf-post-title\">\n    <a *ngIf=\"isExternalLinkPost(post); else noExternalPostLink\" class=\"hf-post-title-link\" [href]=\"post.url\" target=\"_blank\" rel=\"noopener noreferrer\">{{post.postName}}</a>\n    <ng-template #noExternalPostLink>\n      <span>{{post.postName}}</span>\n    </ng-template>\n  </div>\n\n  <ng-container *ngIf=\"isMediaPost(post); else textPostBlock\">\n    <div *ngIf=\"isVideoPost(post); else imagePostBlock\" class=\"hf-media-wrap\">\n      <video class=\"hf-media-content\" controls preload=\"metadata\" [src]=\"post.videoUrl\"></video>\n      <div class=\"hf-media-badge\">\n        <fa-icon [icon]=\"faPlay\"></fa-icon>\n        <fa-icon [icon]=\"faVolumeMute\"></fa-icon>\n      </div>\n    </div>\n    <ng-template #imagePostBlock>\n      <div class=\"hf-media-wrap\" *ngIf=\"getImageUrl(post) as imageUrl\">\n        <img class=\"hf-media-content\" [src]=\"imageUrl\" [alt]=\"post.postName\">\n      </div>\n    </ng-template>\n  </ng-container>\n\n  <ng-template #textPostBlock>\n    <p *ngIf=\"post.description\" class=\"hf-text-preview\" [innerHtml]=\"post.description\"></p>\n  </ng-template>\n\n  <div class=\"hf-post-footer\">\n    <app-vote-button [post]=\"post\"></app-vote-button>\n\n    <button type=\"button\" class=\"hf-action-btn\" (click)=\"goToPost(post.id)\">\n      <fa-icon [icon]=\"faComments\"></fa-icon>\n      <span>{{post.commentCount}}</span>\n    </button>\n\n    <button type=\"button\" class=\"hf-action-btn\">\n      <fa-icon [icon]=\"faHeart\"></fa-icon>\n      <span>{{post.voteCount}}</span>\n    </button>\n\n    <button type=\"button\" class=\"hf-action-btn\" (click)=\"sharePost(post)\">\n      <fa-icon [icon]=\"faShare\"></fa-icon>\n      <span>Share</span>\n    </button>\n  </div>\n</div>\n";
+    __webpack_exports__["default"] = "<div class=\"hf-post-card\" *ngFor=\"let post of posts\">\n  <div class=\"hf-post-header\">\n    <div class=\"hf-post-meta\">\n      <span class=\"hf-community\">h/{{post.subredditName}}</span>\n      <span class=\"hf-dot\">•</span>\n      <span class=\"hf-author\">u/{{post.userName}}</span>\n      <span class=\"hf-dot\">•</span>\n      <span>{{post.duration}}</span>\n    </div>\n    <button type=\"button\" class=\"hf-overflow-btn\" aria-label=\"Post actions\">\n      <fa-icon [icon]=\"faEllipsisH\"></fa-icon>\n    </button>\n  </div>\n\n  <div class=\"hf-post-title\">\n    <a class=\"hf-post-title-link\" [routerLink]=\"getPostPath(post)\">{{post.postName}}</a>\n  </div>\n\n  <a class=\"hf-post-link-preview\" *ngIf=\"isExternalLinkPost(post)\" [href]=\"post.url\" target=\"_blank\" rel=\"noopener noreferrer\">\n    {{post.url}}\n  </a>\n\n  <ng-container *ngIf=\"isMediaPost(post); else textPostBlock\">\n    <button type=\"button\" class=\"hf-media-wrap\" (click)=\"goToPost(post)\" aria-label=\"Open post details\">\n      <ng-container *ngIf=\"isVideoPost(post); else imagePostBlock\">\n        <video class=\"hf-media-content\" controls preload=\"metadata\" [src]=\"post.videoUrl\"></video>\n        <div class=\"hf-media-badge\">\n          <fa-icon [icon]=\"faPlay\"></fa-icon>\n          <fa-icon [icon]=\"faVolumeMute\"></fa-icon>\n        </div>\n      </ng-container>\n      <ng-template #imagePostBlock>\n        <img class=\"hf-media-content\" *ngIf=\"getImageUrl(post) as imageUrl\" [src]=\"imageUrl\" [alt]=\"post.postName\">\n      </ng-template>\n    </button>\n  </ng-container>\n\n  <ng-template #textPostBlock>\n    <button type=\"button\" class=\"hf-text-preview-btn\" (click)=\"goToPost(post)\">\n      <p *ngIf=\"post.description\" class=\"hf-text-preview\" [innerHtml]=\"post.description\"></p>\n    </button>\n  </ng-template>\n\n  <div class=\"hf-post-footer\">\n    <app-vote-button [post]=\"post\"></app-vote-button>\n\n    <button type=\"button\" class=\"hf-action-btn\" (click)=\"goToPost(post)\">\n      <fa-icon [icon]=\"faComments\"></fa-icon>\n      <span>{{post.commentCount}}</span>\n    </button>\n\n    <button type=\"button\" class=\"hf-action-btn\">\n      <fa-icon [icon]=\"faHeart\"></fa-icon>\n      <span>{{post.voteCount}}</span>\n    </button>\n\n    <button type=\"button\" class=\"hf-action-btn\" (click)=\"sharePost(post)\">\n      <fa-icon [icon]=\"faShare\"></fa-icon>\n      <span>Share</span>\n    </button>\n  </div>\n</div>\n";
     /***/
   },
 
@@ -1001,6 +1001,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var routes = [{
       path: '',
       component: _home_home_component__WEBPACK_IMPORTED_MODULE_5__["HomeComponent"]
+    }, {
+      path: 'r/:subreddit/comments/:id/:slug',
+      component: _post_view_post_view_post_component__WEBPACK_IMPORTED_MODULE_9__["ViewPostComponent"]
+    }, {
+      path: 'r/:subreddit/comments/:id',
+      component: _post_view_post_view_post_component__WEBPACK_IMPORTED_MODULE_9__["ViewPostComponent"]
     }, {
       path: 'view-post/:id',
       component: _post_view_post_view_post_component__WEBPACK_IMPORTED_MODULE_9__["ViewPostComponent"]
@@ -3108,32 +3114,55 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         this.activateRoute = activateRoute;
         this.commentService = commentService;
         this.router = router;
-        this.postId = this.activateRoute.snapshot.params.id;
         this.commentForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormGroup"]({
           text: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required)
         });
         this.commentPayload = {
           text: '',
-          postId: this.postId
+          postId: 0
         };
       }
 
       _createClass(ViewPostComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          this.getPostById();
-          this.getCommentsForPost();
+          var _this14 = this;
+
+          this.routeSubscription = this.activateRoute.paramMap.subscribe(function (params) {
+            var idParam = params.get('id');
+            var parsedId = idParam ? Number(idParam) : NaN;
+
+            if (Number.isNaN(parsedId) || parsedId <= 0) {
+              _this14.router.navigateByUrl('/');
+
+              return;
+            }
+
+            _this14.postId = parsedId;
+            _this14.commentPayload.postId = _this14.postId;
+
+            _this14.getPostById();
+
+            _this14.getCommentsForPost();
+          });
+        }
+      }, {
+        key: "ngOnDestroy",
+        value: function ngOnDestroy() {
+          var _a;
+
+          (_a = this.routeSubscription) === null || _a === void 0 ? void 0 : _a.unsubscribe();
         }
       }, {
         key: "postComment",
         value: function postComment() {
-          var _this14 = this;
+          var _this15 = this;
 
           this.commentPayload.text = this.commentForm.get('text').value;
-          this.commentService.postComment(this.commentPayload).subscribe(function (data) {
-            _this14.commentForm.get('text').setValue('');
+          this.commentService.postComment(this.commentPayload).subscribe(function () {
+            _this15.commentForm.get('text').setValue('');
 
-            _this14.getCommentsForPost();
+            _this15.getCommentsForPost();
           }, function (error) {
             Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(error);
           });
@@ -3176,10 +3205,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "getPostById",
         value: function getPostById() {
-          var _this15 = this;
+          var _this16 = this;
 
           this.postService.getPost(this.postId).subscribe(function (data) {
-            _this15.post = data;
+            _this16.post = data;
           }, function (error) {
             Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(error);
           });
@@ -3187,10 +3216,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "getCommentsForPost",
         value: function getCommentsForPost() {
-          var _this16 = this;
+          var _this17 = this;
 
           this.commentService.getAllCommentsForPost(this.postId).subscribe(function (data) {
-            _this16.comments = data;
+            _this17.comments = data;
           }, function (error) {
             Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(error);
           });
@@ -3245,7 +3274,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = ".hf-post-card {\n    border: 1px solid var(--hf-border);\n    border-radius: 12px;\n    background: var(--hf-surface);\n    color: var(--hf-text-secondary);\n    margin-bottom: 12px;\n    padding: 12px 14px;\n    box-shadow: var(--hf-shadow);\n}\n\n.hf-post-header {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    margin-bottom: 8px;\n}\n\n.hf-post-meta {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n    font-size: 12px;\n    color: var(--hf-text-muted);\n}\n\n.hf-community {\n    font-weight: 600;\n    color: var(--hf-text-secondary);\n}\n\n.hf-dot {\n    color: var(--hf-text-muted);\n}\n\n.hf-overflow-btn {\n    border: 1px solid transparent;\n    background: transparent;\n    color: var(--hf-text-muted);\n    cursor: pointer;\n    padding: 4px 6px;\n    border-radius: 14px;\n}\n\n.hf-overflow-btn:hover {\n    background: #1a1a24;\n    color: var(--hf-text);\n}\n\n.hf-post-title {\n    font-size: 20px;\n    line-height: 1.3;\n    font-weight: 700;\n    margin-bottom: 8px;\n    color: var(--hf-text);\n}\n\n.hf-post-title-link {\n    color: inherit;\n    text-decoration: none;\n}\n\n.hf-post-title-link:hover {\n    text-decoration: underline;\n}\n\n.hf-text-preview {\n    margin: 0 0 10px;\n    color: var(--hf-text-secondary);\n    font-size: 14px;\n    line-height: 1.45;\n    display: -webkit-box;\n    -webkit-line-clamp: 3;\n    -webkit-box-orient: vertical;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n\n.hf-media-wrap {\n    width: 100%;\n    margin: 0 0 10px;\n    position: relative;\n    border-radius: 10px;\n    overflow: hidden;\n    background: #0f1114;\n    aspect-ratio: 1 / 1;\n}\n\n.hf-media-content {\n    width: 100%;\n    height: 100%;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n\n.hf-media-badge {\n    position: absolute;\n    right: 10px;\n    bottom: 10px;\n    display: inline-flex;\n    align-items: center;\n    gap: 8px;\n    padding: 6px 9px;\n    border-radius: 14px;\n    background: rgba(0, 0, 0, 0.6);\n    color: var(--hf-text);\n    font-size: 12px;\n}\n\n.hf-post-footer {\n    display: flex;\n    align-items: center;\n    flex-wrap: wrap;\n    gap: 8px;\n    border-top: 1px solid var(--hf-border);\n    padding-top: 10px;\n}\n\n.hf-action-btn {\n    border: 1px solid var(--hf-border-strong);\n    background: var(--hf-surface-soft);\n    color: var(--hf-text-secondary);\n    border-radius: 18px;\n    padding: 5px 10px;\n    cursor: pointer;\n    font-size: 12px;\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n}\n\n.hf-action-btn:hover {\n    background: #1b1b28;\n    color: var(--hf-text);\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc2hhcmVkL3Bvc3QtdGlsZS9wb3N0LXRpbGUuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtJQUNJLGtDQUFrQztJQUNsQyxtQkFBbUI7SUFDbkIsNkJBQTZCO0lBQzdCLCtCQUErQjtJQUMvQixtQkFBbUI7SUFDbkIsa0JBQWtCO0lBQ2xCLDRCQUE0QjtBQUNoQzs7QUFFQTtJQUNJLGFBQWE7SUFDYiw4QkFBOEI7SUFDOUIsbUJBQW1CO0lBQ25CLGtCQUFrQjtBQUN0Qjs7QUFFQTtJQUNJLG9CQUFvQjtJQUNwQixtQkFBbUI7SUFDbkIsUUFBUTtJQUNSLGVBQWU7SUFDZiwyQkFBMkI7QUFDL0I7O0FBRUE7SUFDSSxnQkFBZ0I7SUFDaEIsK0JBQStCO0FBQ25DOztBQUVBO0lBQ0ksMkJBQTJCO0FBQy9COztBQUVBO0lBQ0ksNkJBQTZCO0lBQzdCLHVCQUF1QjtJQUN2QiwyQkFBMkI7SUFDM0IsZUFBZTtJQUNmLGdCQUFnQjtJQUNoQixtQkFBbUI7QUFDdkI7O0FBRUE7SUFDSSxtQkFBbUI7SUFDbkIscUJBQXFCO0FBQ3pCOztBQUVBO0lBQ0ksZUFBZTtJQUNmLGdCQUFnQjtJQUNoQixnQkFBZ0I7SUFDaEIsa0JBQWtCO0lBQ2xCLHFCQUFxQjtBQUN6Qjs7QUFFQTtJQUNJLGNBQWM7SUFDZCxxQkFBcUI7QUFDekI7O0FBRUE7SUFDSSwwQkFBMEI7QUFDOUI7O0FBRUE7SUFDSSxnQkFBZ0I7SUFDaEIsK0JBQStCO0lBQy9CLGVBQWU7SUFDZixpQkFBaUI7SUFDakIsb0JBQW9CO0lBQ3BCLHFCQUFxQjtJQUNyQiw0QkFBNEI7SUFDNUIsZ0JBQWdCO0lBQ2hCLHVCQUF1QjtBQUMzQjs7QUFFQTtJQUNJLFdBQVc7SUFDWCxnQkFBZ0I7SUFDaEIsa0JBQWtCO0lBQ2xCLG1CQUFtQjtJQUNuQixnQkFBZ0I7SUFDaEIsbUJBQW1CO0lBQ25CLG1CQUFtQjtBQUN2Qjs7QUFFQTtJQUNJLFdBQVc7SUFDWCxZQUFZO0lBQ1osb0JBQWlCO09BQWpCLGlCQUFpQjtBQUNyQjs7QUFFQTtJQUNJLGtCQUFrQjtJQUNsQixXQUFXO0lBQ1gsWUFBWTtJQUNaLG9CQUFvQjtJQUNwQixtQkFBbUI7SUFDbkIsUUFBUTtJQUNSLGdCQUFnQjtJQUNoQixtQkFBbUI7SUFDbkIsOEJBQThCO0lBQzlCLHFCQUFxQjtJQUNyQixlQUFlO0FBQ25COztBQUVBO0lBQ0ksYUFBYTtJQUNiLG1CQUFtQjtJQUNuQixlQUFlO0lBQ2YsUUFBUTtJQUNSLHNDQUFzQztJQUN0QyxpQkFBaUI7QUFDckI7O0FBRUE7SUFDSSx5Q0FBeUM7SUFDekMsa0NBQWtDO0lBQ2xDLCtCQUErQjtJQUMvQixtQkFBbUI7SUFDbkIsaUJBQWlCO0lBQ2pCLGVBQWU7SUFDZixlQUFlO0lBQ2Ysb0JBQW9CO0lBQ3BCLG1CQUFtQjtJQUNuQixRQUFRO0FBQ1o7O0FBRUE7SUFDSSxtQkFBbUI7SUFDbkIscUJBQXFCO0FBQ3pCIiwiZmlsZSI6InNyYy9hcHAvc2hhcmVkL3Bvc3QtdGlsZS9wb3N0LXRpbGUuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5oZi1wb3N0LWNhcmQge1xuICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWhmLWJvcmRlcik7XG4gICAgYm9yZGVyLXJhZGl1czogMTJweDtcbiAgICBiYWNrZ3JvdW5kOiB2YXIoLS1oZi1zdXJmYWNlKTtcbiAgICBjb2xvcjogdmFyKC0taGYtdGV4dC1zZWNvbmRhcnkpO1xuICAgIG1hcmdpbi1ib3R0b206IDEycHg7XG4gICAgcGFkZGluZzogMTJweCAxNHB4O1xuICAgIGJveC1zaGFkb3c6IHZhcigtLWhmLXNoYWRvdyk7XG59XG5cbi5oZi1wb3N0LWhlYWRlciB7XG4gICAgZGlzcGxheTogZmxleDtcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgICBtYXJnaW4tYm90dG9tOiA4cHg7XG59XG5cbi5oZi1wb3N0LW1ldGEge1xuICAgIGRpc3BsYXk6IGlubGluZS1mbGV4O1xuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gICAgZ2FwOiA2cHg7XG4gICAgZm9udC1zaXplOiAxMnB4O1xuICAgIGNvbG9yOiB2YXIoLS1oZi10ZXh0LW11dGVkKTtcbn1cblxuLmhmLWNvbW11bml0eSB7XG4gICAgZm9udC13ZWlnaHQ6IDYwMDtcbiAgICBjb2xvcjogdmFyKC0taGYtdGV4dC1zZWNvbmRhcnkpO1xufVxuXG4uaGYtZG90IHtcbiAgICBjb2xvcjogdmFyKC0taGYtdGV4dC1tdXRlZCk7XG59XG5cbi5oZi1vdmVyZmxvdy1idG4ge1xuICAgIGJvcmRlcjogMXB4IHNvbGlkIHRyYW5zcGFyZW50O1xuICAgIGJhY2tncm91bmQ6IHRyYW5zcGFyZW50O1xuICAgIGNvbG9yOiB2YXIoLS1oZi10ZXh0LW11dGVkKTtcbiAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgcGFkZGluZzogNHB4IDZweDtcbiAgICBib3JkZXItcmFkaXVzOiAxNHB4O1xufVxuXG4uaGYtb3ZlcmZsb3ctYnRuOmhvdmVyIHtcbiAgICBiYWNrZ3JvdW5kOiAjMWExYTI0O1xuICAgIGNvbG9yOiB2YXIoLS1oZi10ZXh0KTtcbn1cblxuLmhmLXBvc3QtdGl0bGUge1xuICAgIGZvbnQtc2l6ZTogMjBweDtcbiAgICBsaW5lLWhlaWdodDogMS4zO1xuICAgIGZvbnQtd2VpZ2h0OiA3MDA7XG4gICAgbWFyZ2luLWJvdHRvbTogOHB4O1xuICAgIGNvbG9yOiB2YXIoLS1oZi10ZXh0KTtcbn1cblxuLmhmLXBvc3QtdGl0bGUtbGluayB7XG4gICAgY29sb3I6IGluaGVyaXQ7XG4gICAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xufVxuXG4uaGYtcG9zdC10aXRsZS1saW5rOmhvdmVyIHtcbiAgICB0ZXh0LWRlY29yYXRpb246IHVuZGVybGluZTtcbn1cblxuLmhmLXRleHQtcHJldmlldyB7XG4gICAgbWFyZ2luOiAwIDAgMTBweDtcbiAgICBjb2xvcjogdmFyKC0taGYtdGV4dC1zZWNvbmRhcnkpO1xuICAgIGZvbnQtc2l6ZTogMTRweDtcbiAgICBsaW5lLWhlaWdodDogMS40NTtcbiAgICBkaXNwbGF5OiAtd2Via2l0LWJveDtcbiAgICAtd2Via2l0LWxpbmUtY2xhbXA6IDM7XG4gICAgLXdlYmtpdC1ib3gtb3JpZW50OiB2ZXJ0aWNhbDtcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuICAgIHRleHQtb3ZlcmZsb3c6IGVsbGlwc2lzO1xufVxuXG4uaGYtbWVkaWEtd3JhcCB7XG4gICAgd2lkdGg6IDEwMCU7XG4gICAgbWFyZ2luOiAwIDAgMTBweDtcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgYm9yZGVyLXJhZGl1czogMTBweDtcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuICAgIGJhY2tncm91bmQ6ICMwZjExMTQ7XG4gICAgYXNwZWN0LXJhdGlvOiAxIC8gMTtcbn1cblxuLmhmLW1lZGlhLWNvbnRlbnQge1xuICAgIHdpZHRoOiAxMDAlO1xuICAgIGhlaWdodDogMTAwJTtcbiAgICBvYmplY3QtZml0OiBjb3Zlcjtcbn1cblxuLmhmLW1lZGlhLWJhZGdlIHtcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgcmlnaHQ6IDEwcHg7XG4gICAgYm90dG9tOiAxMHB4O1xuICAgIGRpc3BsYXk6IGlubGluZS1mbGV4O1xuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gICAgZ2FwOiA4cHg7XG4gICAgcGFkZGluZzogNnB4IDlweDtcbiAgICBib3JkZXItcmFkaXVzOiAxNHB4O1xuICAgIGJhY2tncm91bmQ6IHJnYmEoMCwgMCwgMCwgMC42KTtcbiAgICBjb2xvcjogdmFyKC0taGYtdGV4dCk7XG4gICAgZm9udC1zaXplOiAxMnB4O1xufVxuXG4uaGYtcG9zdC1mb290ZXIge1xuICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgICBmbGV4LXdyYXA6IHdyYXA7XG4gICAgZ2FwOiA4cHg7XG4gICAgYm9yZGVyLXRvcDogMXB4IHNvbGlkIHZhcigtLWhmLWJvcmRlcik7XG4gICAgcGFkZGluZy10b3A6IDEwcHg7XG59XG5cbi5oZi1hY3Rpb24tYnRuIHtcbiAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1oZi1ib3JkZXItc3Ryb25nKTtcbiAgICBiYWNrZ3JvdW5kOiB2YXIoLS1oZi1zdXJmYWNlLXNvZnQpO1xuICAgIGNvbG9yOiB2YXIoLS1oZi10ZXh0LXNlY29uZGFyeSk7XG4gICAgYm9yZGVyLXJhZGl1czogMThweDtcbiAgICBwYWRkaW5nOiA1cHggMTBweDtcbiAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgZm9udC1zaXplOiAxMnB4O1xuICAgIGRpc3BsYXk6IGlubGluZS1mbGV4O1xuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gICAgZ2FwOiA2cHg7XG59XG5cbi5oZi1hY3Rpb24tYnRuOmhvdmVyIHtcbiAgICBiYWNrZ3JvdW5kOiAjMWIxYjI4O1xuICAgIGNvbG9yOiB2YXIoLS1oZi10ZXh0KTtcbn1cbiJdfQ== */";
+    __webpack_exports__["default"] = ".hf-post-card {\n    border: 1px solid var(--hf-border);\n    border-radius: 12px;\n    background: var(--hf-surface);\n    color: var(--hf-text-secondary);\n    margin-bottom: 12px;\n    padding: 12px 14px;\n    box-shadow: var(--hf-shadow);\n}\n\n.hf-post-header {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    margin-bottom: 8px;\n}\n\n.hf-post-meta {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n    font-size: 12px;\n    color: var(--hf-text-muted);\n}\n\n.hf-community,\n.hf-author {\n    font-weight: 600;\n    color: var(--hf-text-secondary);\n}\n\n.hf-dot {\n    color: var(--hf-text-muted);\n}\n\n.hf-overflow-btn {\n    border: 1px solid transparent;\n    background: transparent;\n    color: var(--hf-text-muted);\n    cursor: pointer;\n    padding: 4px 6px;\n    border-radius: 14px;\n}\n\n.hf-overflow-btn:hover {\n    background: #1a1a24;\n    color: var(--hf-text);\n}\n\n.hf-post-title {\n    font-size: 20px;\n    line-height: 1.3;\n    font-weight: 700;\n    margin-bottom: 8px;\n    color: var(--hf-text);\n}\n\n.hf-post-title-link {\n    color: inherit;\n    text-decoration: none;\n}\n\n.hf-post-title-link:hover {\n    text-decoration: underline;\n}\n\n.hf-post-link-preview {\n    display: block;\n    margin: 0 0 10px;\n    color: var(--hf-text-muted);\n    font-size: 12px;\n    text-decoration: none;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n\n.hf-post-link-preview:hover {\n    color: var(--hf-text-secondary);\n    text-decoration: underline;\n}\n\n.hf-text-preview-btn {\n    width: 100%;\n    border: 0;\n    background: transparent;\n    text-align: left;\n    padding: 0;\n    cursor: pointer;\n}\n\n.hf-text-preview {\n    margin: 0 0 10px;\n    color: var(--hf-text-secondary);\n    font-size: 14px;\n    line-height: 1.45;\n    display: -webkit-box;\n    -webkit-line-clamp: 3;\n    -webkit-box-orient: vertical;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n\n.hf-media-wrap {\n    width: 100%;\n    margin: 0 0 10px;\n    position: relative;\n    border-radius: 10px;\n    overflow: hidden;\n    background: #0f1114;\n    aspect-ratio: 1 / 1;\n    border: 0;\n    padding: 0;\n    cursor: pointer;\n}\n\n.hf-media-content {\n    width: 100%;\n    height: 100%;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n\n.hf-media-badge {\n    position: absolute;\n    right: 10px;\n    bottom: 10px;\n    display: inline-flex;\n    align-items: center;\n    gap: 8px;\n    padding: 6px 9px;\n    border-radius: 14px;\n    background: rgba(0, 0, 0, 0.6);\n    color: var(--hf-text);\n    font-size: 12px;\n}\n\n.hf-post-footer {\n    display: flex;\n    align-items: center;\n    flex-wrap: wrap;\n    gap: 8px;\n    border-top: 1px solid var(--hf-border);\n    padding-top: 10px;\n}\n\n.hf-action-btn {\n    border: 1px solid var(--hf-border-strong);\n    background: var(--hf-surface-soft);\n    color: var(--hf-text-secondary);\n    border-radius: 18px;\n    padding: 5px 10px;\n    cursor: pointer;\n    font-size: 12px;\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n}\n\n.hf-action-btn:hover {\n    background: #1b1b28;\n    color: var(--hf-text);\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc2hhcmVkL3Bvc3QtdGlsZS9wb3N0LXRpbGUuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtJQUNJLGtDQUFrQztJQUNsQyxtQkFBbUI7SUFDbkIsNkJBQTZCO0lBQzdCLCtCQUErQjtJQUMvQixtQkFBbUI7SUFDbkIsa0JBQWtCO0lBQ2xCLDRCQUE0QjtBQUNoQzs7QUFFQTtJQUNJLGFBQWE7SUFDYiw4QkFBOEI7SUFDOUIsbUJBQW1CO0lBQ25CLGtCQUFrQjtBQUN0Qjs7QUFFQTtJQUNJLG9CQUFvQjtJQUNwQixtQkFBbUI7SUFDbkIsUUFBUTtJQUNSLGVBQWU7SUFDZiwyQkFBMkI7QUFDL0I7O0FBRUE7O0lBRUksZ0JBQWdCO0lBQ2hCLCtCQUErQjtBQUNuQzs7QUFFQTtJQUNJLDJCQUEyQjtBQUMvQjs7QUFFQTtJQUNJLDZCQUE2QjtJQUM3Qix1QkFBdUI7SUFDdkIsMkJBQTJCO0lBQzNCLGVBQWU7SUFDZixnQkFBZ0I7SUFDaEIsbUJBQW1CO0FBQ3ZCOztBQUVBO0lBQ0ksbUJBQW1CO0lBQ25CLHFCQUFxQjtBQUN6Qjs7QUFFQTtJQUNJLGVBQWU7SUFDZixnQkFBZ0I7SUFDaEIsZ0JBQWdCO0lBQ2hCLGtCQUFrQjtJQUNsQixxQkFBcUI7QUFDekI7O0FBRUE7SUFDSSxjQUFjO0lBQ2QscUJBQXFCO0FBQ3pCOztBQUVBO0lBQ0ksMEJBQTBCO0FBQzlCOztBQUVBO0lBQ0ksY0FBYztJQUNkLGdCQUFnQjtJQUNoQiwyQkFBMkI7SUFDM0IsZUFBZTtJQUNmLHFCQUFxQjtJQUNyQixtQkFBbUI7SUFDbkIsZ0JBQWdCO0lBQ2hCLHVCQUF1QjtBQUMzQjs7QUFFQTtJQUNJLCtCQUErQjtJQUMvQiwwQkFBMEI7QUFDOUI7O0FBRUE7SUFDSSxXQUFXO0lBQ1gsU0FBUztJQUNULHVCQUF1QjtJQUN2QixnQkFBZ0I7SUFDaEIsVUFBVTtJQUNWLGVBQWU7QUFDbkI7O0FBRUE7SUFDSSxnQkFBZ0I7SUFDaEIsK0JBQStCO0lBQy9CLGVBQWU7SUFDZixpQkFBaUI7SUFDakIsb0JBQW9CO0lBQ3BCLHFCQUFxQjtJQUNyQiw0QkFBNEI7SUFDNUIsZ0JBQWdCO0lBQ2hCLHVCQUF1QjtBQUMzQjs7QUFFQTtJQUNJLFdBQVc7SUFDWCxnQkFBZ0I7SUFDaEIsa0JBQWtCO0lBQ2xCLG1CQUFtQjtJQUNuQixnQkFBZ0I7SUFDaEIsbUJBQW1CO0lBQ25CLG1CQUFtQjtJQUNuQixTQUFTO0lBQ1QsVUFBVTtJQUNWLGVBQWU7QUFDbkI7O0FBRUE7SUFDSSxXQUFXO0lBQ1gsWUFBWTtJQUNaLG9CQUFpQjtPQUFqQixpQkFBaUI7QUFDckI7O0FBRUE7SUFDSSxrQkFBa0I7SUFDbEIsV0FBVztJQUNYLFlBQVk7SUFDWixvQkFBb0I7SUFDcEIsbUJBQW1CO0lBQ25CLFFBQVE7SUFDUixnQkFBZ0I7SUFDaEIsbUJBQW1CO0lBQ25CLDhCQUE4QjtJQUM5QixxQkFBcUI7SUFDckIsZUFBZTtBQUNuQjs7QUFFQTtJQUNJLGFBQWE7SUFDYixtQkFBbUI7SUFDbkIsZUFBZTtJQUNmLFFBQVE7SUFDUixzQ0FBc0M7SUFDdEMsaUJBQWlCO0FBQ3JCOztBQUVBO0lBQ0kseUNBQXlDO0lBQ3pDLGtDQUFrQztJQUNsQywrQkFBK0I7SUFDL0IsbUJBQW1CO0lBQ25CLGlCQUFpQjtJQUNqQixlQUFlO0lBQ2YsZUFBZTtJQUNmLG9CQUFvQjtJQUNwQixtQkFBbUI7SUFDbkIsUUFBUTtBQUNaOztBQUVBO0lBQ0ksbUJBQW1CO0lBQ25CLHFCQUFxQjtBQUN6QiIsImZpbGUiOiJzcmMvYXBwL3NoYXJlZC9wb3N0LXRpbGUvcG9zdC10aWxlLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuaGYtcG9zdC1jYXJkIHtcbiAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1oZi1ib3JkZXIpO1xuICAgIGJvcmRlci1yYWRpdXM6IDEycHg7XG4gICAgYmFja2dyb3VuZDogdmFyKC0taGYtc3VyZmFjZSk7XG4gICAgY29sb3I6IHZhcigtLWhmLXRleHQtc2Vjb25kYXJ5KTtcbiAgICBtYXJnaW4tYm90dG9tOiAxMnB4O1xuICAgIHBhZGRpbmc6IDEycHggMTRweDtcbiAgICBib3gtc2hhZG93OiB2YXIoLS1oZi1zaGFkb3cpO1xufVxuXG4uaGYtcG9zdC1oZWFkZXIge1xuICAgIGRpc3BsYXk6IGZsZXg7XG4gICAganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gICAgbWFyZ2luLWJvdHRvbTogOHB4O1xufVxuXG4uaGYtcG9zdC1tZXRhIHtcbiAgICBkaXNwbGF5OiBpbmxpbmUtZmxleDtcbiAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgIGdhcDogNnB4O1xuICAgIGZvbnQtc2l6ZTogMTJweDtcbiAgICBjb2xvcjogdmFyKC0taGYtdGV4dC1tdXRlZCk7XG59XG5cbi5oZi1jb21tdW5pdHksXG4uaGYtYXV0aG9yIHtcbiAgICBmb250LXdlaWdodDogNjAwO1xuICAgIGNvbG9yOiB2YXIoLS1oZi10ZXh0LXNlY29uZGFyeSk7XG59XG5cbi5oZi1kb3Qge1xuICAgIGNvbG9yOiB2YXIoLS1oZi10ZXh0LW11dGVkKTtcbn1cblxuLmhmLW92ZXJmbG93LWJ0biB7XG4gICAgYm9yZGVyOiAxcHggc29saWQgdHJhbnNwYXJlbnQ7XG4gICAgYmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XG4gICAgY29sb3I6IHZhcigtLWhmLXRleHQtbXV0ZWQpO1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICBwYWRkaW5nOiA0cHggNnB4O1xuICAgIGJvcmRlci1yYWRpdXM6IDE0cHg7XG59XG5cbi5oZi1vdmVyZmxvdy1idG46aG92ZXIge1xuICAgIGJhY2tncm91bmQ6ICMxYTFhMjQ7XG4gICAgY29sb3I6IHZhcigtLWhmLXRleHQpO1xufVxuXG4uaGYtcG9zdC10aXRsZSB7XG4gICAgZm9udC1zaXplOiAyMHB4O1xuICAgIGxpbmUtaGVpZ2h0OiAxLjM7XG4gICAgZm9udC13ZWlnaHQ6IDcwMDtcbiAgICBtYXJnaW4tYm90dG9tOiA4cHg7XG4gICAgY29sb3I6IHZhcigtLWhmLXRleHQpO1xufVxuXG4uaGYtcG9zdC10aXRsZS1saW5rIHtcbiAgICBjb2xvcjogaW5oZXJpdDtcbiAgICB0ZXh0LWRlY29yYXRpb246IG5vbmU7XG59XG5cbi5oZi1wb3N0LXRpdGxlLWxpbms6aG92ZXIge1xuICAgIHRleHQtZGVjb3JhdGlvbjogdW5kZXJsaW5lO1xufVxuXG4uaGYtcG9zdC1saW5rLXByZXZpZXcge1xuICAgIGRpc3BsYXk6IGJsb2NrO1xuICAgIG1hcmdpbjogMCAwIDEwcHg7XG4gICAgY29sb3I6IHZhcigtLWhmLXRleHQtbXV0ZWQpO1xuICAgIGZvbnQtc2l6ZTogMTJweDtcbiAgICB0ZXh0LWRlY29yYXRpb246IG5vbmU7XG4gICAgd2hpdGUtc3BhY2U6IG5vd3JhcDtcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuICAgIHRleHQtb3ZlcmZsb3c6IGVsbGlwc2lzO1xufVxuXG4uaGYtcG9zdC1saW5rLXByZXZpZXc6aG92ZXIge1xuICAgIGNvbG9yOiB2YXIoLS1oZi10ZXh0LXNlY29uZGFyeSk7XG4gICAgdGV4dC1kZWNvcmF0aW9uOiB1bmRlcmxpbmU7XG59XG5cbi5oZi10ZXh0LXByZXZpZXctYnRuIHtcbiAgICB3aWR0aDogMTAwJTtcbiAgICBib3JkZXI6IDA7XG4gICAgYmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XG4gICAgdGV4dC1hbGlnbjogbGVmdDtcbiAgICBwYWRkaW5nOiAwO1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbn1cblxuLmhmLXRleHQtcHJldmlldyB7XG4gICAgbWFyZ2luOiAwIDAgMTBweDtcbiAgICBjb2xvcjogdmFyKC0taGYtdGV4dC1zZWNvbmRhcnkpO1xuICAgIGZvbnQtc2l6ZTogMTRweDtcbiAgICBsaW5lLWhlaWdodDogMS40NTtcbiAgICBkaXNwbGF5OiAtd2Via2l0LWJveDtcbiAgICAtd2Via2l0LWxpbmUtY2xhbXA6IDM7XG4gICAgLXdlYmtpdC1ib3gtb3JpZW50OiB2ZXJ0aWNhbDtcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuICAgIHRleHQtb3ZlcmZsb3c6IGVsbGlwc2lzO1xufVxuXG4uaGYtbWVkaWEtd3JhcCB7XG4gICAgd2lkdGg6IDEwMCU7XG4gICAgbWFyZ2luOiAwIDAgMTBweDtcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgYm9yZGVyLXJhZGl1czogMTBweDtcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuICAgIGJhY2tncm91bmQ6ICMwZjExMTQ7XG4gICAgYXNwZWN0LXJhdGlvOiAxIC8gMTtcbiAgICBib3JkZXI6IDA7XG4gICAgcGFkZGluZzogMDtcbiAgICBjdXJzb3I6IHBvaW50ZXI7XG59XG5cbi5oZi1tZWRpYS1jb250ZW50IHtcbiAgICB3aWR0aDogMTAwJTtcbiAgICBoZWlnaHQ6IDEwMCU7XG4gICAgb2JqZWN0LWZpdDogY292ZXI7XG59XG5cbi5oZi1tZWRpYS1iYWRnZSB7XG4gICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgIHJpZ2h0OiAxMHB4O1xuICAgIGJvdHRvbTogMTBweDtcbiAgICBkaXNwbGF5OiBpbmxpbmUtZmxleDtcbiAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgIGdhcDogOHB4O1xuICAgIHBhZGRpbmc6IDZweCA5cHg7XG4gICAgYm9yZGVyLXJhZGl1czogMTRweDtcbiAgICBiYWNrZ3JvdW5kOiByZ2JhKDAsIDAsIDAsIDAuNik7XG4gICAgY29sb3I6IHZhcigtLWhmLXRleHQpO1xuICAgIGZvbnQtc2l6ZTogMTJweDtcbn1cblxuLmhmLXBvc3QtZm9vdGVyIHtcbiAgICBkaXNwbGF5OiBmbGV4O1xuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gICAgZmxleC13cmFwOiB3cmFwO1xuICAgIGdhcDogOHB4O1xuICAgIGJvcmRlci10b3A6IDFweCBzb2xpZCB2YXIoLS1oZi1ib3JkZXIpO1xuICAgIHBhZGRpbmctdG9wOiAxMHB4O1xufVxuXG4uaGYtYWN0aW9uLWJ0biB7XG4gICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0taGYtYm9yZGVyLXN0cm9uZyk7XG4gICAgYmFja2dyb3VuZDogdmFyKC0taGYtc3VyZmFjZS1zb2Z0KTtcbiAgICBjb2xvcjogdmFyKC0taGYtdGV4dC1zZWNvbmRhcnkpO1xuICAgIGJvcmRlci1yYWRpdXM6IDE4cHg7XG4gICAgcGFkZGluZzogNXB4IDEwcHg7XG4gICAgY3Vyc29yOiBwb2ludGVyO1xuICAgIGZvbnQtc2l6ZTogMTJweDtcbiAgICBkaXNwbGF5OiBpbmxpbmUtZmxleDtcbiAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgIGdhcDogNnB4O1xufVxuXG4uaGYtYWN0aW9uLWJ0bjpob3ZlciB7XG4gICAgYmFja2dyb3VuZDogIzFiMWIyODtcbiAgICBjb2xvcjogdmFyKC0taGYtdGV4dCk7XG59XG4iXX0= */";
     /***/
   },
 
@@ -3311,8 +3340,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         value: function ngOnInit() {}
       }, {
         key: "goToPost",
-        value: function goToPost(id) {
-          this.router.navigateByUrl('/view-post/' + id);
+        value: function goToPost(post) {
+          this.router.navigateByUrl(this.getPostPath(post));
+        }
+      }, {
+        key: "getPostPath",
+        value: function getPostPath(post) {
+          var safeSubreddit = this.slugify((post === null || post === void 0 ? void 0 : post.subredditName) || 'community');
+          var safeTitle = this.slugify((post === null || post === void 0 ? void 0 : post.postName) || 'post');
+          return "/r/".concat(safeSubreddit, "/comments/").concat(post.id, "/").concat(safeTitle);
         }
       }, {
         key: "isVideoPost",
@@ -3347,7 +3383,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         value: function sharePost(post) {
           var _a;
 
-          var shareUrl = "".concat(window.location.origin, "/view-post/").concat(post.id);
+          var shareUrl = "".concat(window.location.origin).concat(this.getPostPath(post));
           var webNavigator = navigator;
 
           if (webNavigator.share) {
@@ -3361,6 +3397,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           if ((_a = webNavigator.clipboard) === null || _a === void 0 ? void 0 : _a.writeText) {
             webNavigator.clipboard.writeText(shareUrl)["catch"](function () {});
           }
+        }
+      }, {
+        key: "slugify",
+        value: function slugify(value) {
+          return (value || '').toLowerCase().replace(/[^a-z0-9\s-]/g, '').trim().replace(/\s+/g, '_').replace(/_+/g, '_').replace(/^-+|-+$/g, '') || 'post';
         }
       }, {
         key: "isLikelyImageUrl",
@@ -3693,7 +3734,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     var VoteButtonComponent = /*#__PURE__*/function () {
       function VoteButtonComponent(voteService, authService, postService, toastr) {
-        var _this17 = this;
+        var _this18 = this;
 
         _classCallCheck(this, VoteButtonComponent);
 
@@ -3708,7 +3749,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           postId: undefined
         };
         this.authService.loggedIn.subscribe(function (data) {
-          return _this17.isLoggedIn = data;
+          return _this18.isLoggedIn = data;
         });
       }
 
@@ -3732,13 +3773,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "vote",
         value: function vote() {
-          var _this18 = this;
+          var _this19 = this;
 
           this.votePayload.postId = this.post.id;
           this.voteService.vote(this.votePayload).subscribe(function () {
-            _this18.updateVoteDetails();
+            _this19.updateVoteDetails();
           }, function (error) {
-            _this18.toastr.error(error.error.message);
+            _this19.toastr.error(error.error.message);
 
             Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["throwError"])(error);
           });
@@ -3746,10 +3787,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "updateVoteDetails",
         value: function updateVoteDetails() {
-          var _this19 = this;
+          var _this20 = this;
 
           this.postService.getPost(this.post.id).subscribe(function (post) {
-            _this19.post = post;
+            _this20.post = post;
           });
         }
       }]);
@@ -3997,12 +4038,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "createSubreddit",
         value: function createSubreddit() {
-          var _this20 = this;
+          var _this21 = this;
 
           this.subredditModel.name = this.createSubredditForm.get('title').value;
           this.subredditModel.description = this.createSubredditForm.get('description').value;
           this.subredditService.createSubreddit(this.subredditModel).subscribe(function (data) {
-            _this20.router.navigateByUrl('/list-subreddits');
+            _this21.router.navigateByUrl('/list-subreddits');
           }, function (error) {
             Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["throwError"])(error);
           });
@@ -4106,10 +4147,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(ListSubredditsComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this21 = this;
+          var _this22 = this;
 
           this.subredditService.getAllSubreddits().subscribe(function (data) {
-            _this21.subreddits = data;
+            _this22.subreddits = data;
           }, function (error) {
             Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(error);
           });
@@ -4290,7 +4331,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(TokenInterceptor, [{
         key: "intercept",
         value: function intercept(req, next) {
-          var _this22 = this;
+          var _this23 = this;
 
           // Presigned S3 uploads must not include app JWT headers.
           if (!this.isApiRequest(req.url)) {
@@ -4306,7 +4347,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           if (jwtToken) {
             return next.handle(this.addToken(req, jwtToken)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["catchError"])(function (error) {
               if (error instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpErrorResponse"] && error.status === 403) {
-                return _this22.handleAuthErrors(req, next);
+                return _this23.handleAuthErrors(req, next);
               }
 
               return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(error);
@@ -4335,24 +4376,24 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "handleAuthErrors",
         value: function handleAuthErrors(req, next) {
-          var _this23 = this;
+          var _this24 = this;
 
           if (!this.isTokenRefreshing) {
             this.isTokenRefreshing = true;
             this.refreshTokenSubject.next(null);
             return this.authService.refreshToken().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["switchMap"])(function (refreshTokenResponse) {
-              _this23.isTokenRefreshing = false;
+              _this24.isTokenRefreshing = false;
 
-              _this23.refreshTokenSubject.next(refreshTokenResponse.authenticationToken);
+              _this24.refreshTokenSubject.next(refreshTokenResponse.authenticationToken);
 
-              return next.handle(_this23.addToken(req, refreshTokenResponse.authenticationToken));
+              return next.handle(_this24.addToken(req, refreshTokenResponse.authenticationToken));
             }));
           }
 
           return this.refreshTokenSubject.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["filter"])(function (result) {
             return result !== null;
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["take"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["switchMap"])(function () {
-            return next.handle(_this23.addToken(req, _this23.authService.getJwtToken()));
+            return next.handle(_this24.addToken(req, _this24.authService.getJwtToken()));
           }));
         }
       }, {
