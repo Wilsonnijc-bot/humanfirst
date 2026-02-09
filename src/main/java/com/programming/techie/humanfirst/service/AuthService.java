@@ -39,7 +39,7 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
     private final RefreshTokenService refreshTokenService;
-    @Value("${app.url:https://redditmvp-19af7fe1e209.herokuapp.com}")
+    @Value("${app.url:https://humanfirst-0dc0273c37c7.herokuapp.com}")
     private String appUrl;
 
 
@@ -135,7 +135,7 @@ public class AuthService {
 
     private String normalizeBaseUrl(String rawBaseUrl) {
         if (rawBaseUrl == null || rawBaseUrl.isBlank()) {
-            return "https://redditmvp-19af7fe1e209.herokuapp.com";
+            return "https://humanfirst-0dc0273c37c7.herokuapp.com";
         }
         return rawBaseUrl.endsWith("/") ? rawBaseUrl.substring(0, rawBaseUrl.length() - 1) : rawBaseUrl;
     }
