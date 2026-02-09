@@ -6,19 +6,15 @@ import { SubredditModel } from '../subreddit/subreddit-response';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import {
-  faBullhorn,
   faChevronDown,
   faComments,
   faCompass,
-  faFire,
-  faGlobe,
   faHome,
   faLayerGroup,
-  faPaintBrush,
   faPlus,
-  faUsers,
-  faCogs
+  faUsers
 } from '@fortawesome/free-solid-svg-icons';
+import { TopicDiscussionService } from '../topics/topic-discussion.service';
 
 @Component({
   selector: 'app-home',
@@ -30,34 +26,45 @@ export class HomeComponent implements OnInit {
   posts: Array<PostModel> = [];
   selectedDomain = 'all';
   readonly primaryNavItems = [
-    { key: 'home', label: 'Home', icon: faHome },
-    { key: 'popular', label: 'Popular', icon: faFire },
-    { key: 'explore', label: 'Explore', icon: faCompass },
-    { key: 'all', label: 'All', icon: faGlobe, domain: 'all' }
+    { key: 'home', label: 'Home', icon: faHome, domain: 'all' }
+  ];
+  readonly homeSubItems = [
+    { key: 'discussions', label: 'discussions', icon: faComments, domain: 'discussions' },
+    { key: 'ai-prospects', label: 'AI prospects', icon: faLayerGroup, domain: 'ai-prospects' }
   ];
   readonly communityItems = [
-    { key: 'discussions', label: 'discussions', icon: faComments, domain: 'discussions' },
-    { key: 'ai-prospects', label: 'AI prospects', icon: faLayerGroup, domain: 'ai-prospects' },
-    { key: 'humanfirst-lounge', label: 'Humanfirst Lounge', icon: faUsers },
-    { key: 'design', label: 'Design', icon: faPaintBrush },
-    { key: 'engineering', label: 'Engineering', icon: faCogs },
-    { key: 'announcements', label: 'Announcements', icon: faBullhorn },
-    { key: 'discover', label: 'Discover More Communities', icon: faCompass }
+    { key: 'ai-agent-community', label: 'AI agent community', icon: faUsers, domain: 'ai-agent-community' },
+    { key: 'medical-science-community', label: 'Medical Science community', icon: faLayerGroup, domain: 'medical-science-community' }
   ];
+
+  monthlyTopicLabel = 'Topic of the month - (manually change each month)';
+  weeklyTopicLabel = 'Topic of the week - (manually change each week)';
+
+  readonly faCompass = faCompass;
   readonly faPlus = faPlus;
   readonly faChevronDown = faChevronDown;
+
+  private currentTopicSlug: string | null = null;
   private subredditIdByDomain = new Map<string, number>();
+  private readonly domainAliases: Record<string, string[]> = {
+    discussions: ['discussions'],
+    'ai-prospects': ['ai prospects', 'ai-prospects'],
+    'ai-agent-community': ['ai agent community', 'ai-agent-community'],
+    'medical-science-community': ['medical science community', 'medical-science-community']
+  };
 
   constructor(
     private postService: PostService,
     private subredditService: SubredditService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private topicDiscussionService: TopicDiscussionService
   ) {
   }
 
   ngOnInit(): void {
     this.loadDomainMapping();
+    this.loadTopicLabels();
   }
 
   selectDomain(domainKey: string) {
@@ -69,6 +76,12 @@ export class HomeComponent implements OnInit {
   }
 
   handlePrimaryNavClick(item: { domain?: string }) {
+    if (item.domain) {
+      this.selectDomain(item.domain);
+    }
+  }
+
+  handleHomeSubItemClick(item: { domain?: string }) {
     if (item.domain) {
       this.selectDomain(item.domain);
     }
@@ -88,18 +101,53 @@ export class HomeComponent implements OnInit {
     this.router.navigateByUrl('/create-subreddit');
   }
 
+  goToCurrentTopic() {
+    if (this.currentTopicSlug) {
+      this.router.navigate(['/topics', this.currentTopicSlug]);
+      return;
+    }
+    this.router.navigateByUrl('/topics');
+  }
+
+  goToTopicArchive() {
+    this.router.navigateByUrl('/topics/archive');
+  }
+
+  private loadTopicLabels() {
+    this.topicDiscussionService.getCurrentTopic().subscribe((topic) => {
+      this.monthlyTopicLabel = `Topic of the month - ${topic.monthTitle}`;
+      this.weeklyTopicLabel = `Topic of the week - ${topic.weekTitle}`;
+      this.currentTopicSlug = topic.slug || null;
+    }, () => {
+      this.currentTopicSlug = null;
+    });
+  }
+
   private loadDomainMapping() {
     this.subredditService.getAllSubreddits().subscribe((subreddits: SubredditModel[]) => {
       this.subredditIdByDomain.clear();
-      const discussions = subreddits.find((item) => item.name.toLowerCase() === 'discussions');
-      const aiProspects = subreddits.find((item) => item.name.toLowerCase() === 'ai prospects');
 
-      if (discussions?.id) {
-        this.subredditIdByDomain.set('discussions', discussions.id);
+      const subredditIdByName = new Map<string, number>();
+      subreddits.forEach((item) => {
+        if (item.id) {
+          subredditIdByName.set(this.normalizeName(item.name), item.id);
+        }
+      });
+
+      Object.entries(this.domainAliases).forEach(([domainKey, aliases]) => {
+        const mappedId = aliases
+          .map((alias) => subredditIdByName.get(this.normalizeName(alias)))
+          .find((value) => !!value);
+
+        if (mappedId) {
+          this.subredditIdByDomain.set(domainKey, mappedId);
+        }
+      });
+
+      if (this.selectedDomain !== 'all' && !this.subredditIdByDomain.has(this.selectedDomain)) {
+        this.selectedDomain = 'all';
       }
-      if (aiProspects?.id) {
-        this.subredditIdByDomain.set('ai-prospects', aiProspects.id);
-      }
+
       this.loadPosts();
     }, () => {
       this.toastr.error('Failed to load domain list');
@@ -152,5 +200,13 @@ export class HomeComponent implements OnInit {
     }
     const parsed = new Date(value).getTime();
     return Number.isNaN(parsed) ? 0 : parsed;
+  }
+
+  private normalizeName(value: string): string {
+    return (value || '')
+      .toLowerCase()
+      .replace(/[_-]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
   }
 }

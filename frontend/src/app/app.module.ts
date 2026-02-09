@@ -24,6 +24,9 @@ import { ViewPostComponent } from './post/view-post/view-post.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserProfileComponent } from './auth/user-profile/user-profile.component';
 import { AccountVerificationComponent } from './auth/account-verification/account-verification.component';
+import { TopicDiscussionComponent } from './topics/topic-discussion.component';
+import { TopicsArchiveComponent } from './topics/topics-archive/topics-archive.component';
+import { TopicCommentThreadComponent } from './topics/topic-comment-thread/topic-comment-thread.component';
 
 
 @NgModule({
@@ -40,7 +43,10 @@ import { AccountVerificationComponent } from './auth/account-verification/accoun
     ListSubredditsComponent,
     ViewPostComponent,
     UserProfileComponent,
-    AccountVerificationComponent
+    AccountVerificationComponent,
+    TopicDiscussionComponent,
+    TopicsArchiveComponent,
+    TopicCommentThreadComponent
   ],
   imports: [
     BrowserModule,

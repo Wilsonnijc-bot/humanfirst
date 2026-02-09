@@ -33,10 +33,15 @@
 }
 
 .hf-nav,
+.hf-home-subitems,
 .hf-section {
   display: flex;
   flex-direction: column;
   gap: 2px;
+}
+
+.hf-home-subitems {
+  margin-top: 2px;
 }
 
 .hf-divider {
@@ -77,6 +82,12 @@
   cursor: pointer;
 }
 
+.hf-sub-row {
+  margin-left: 24px;
+  width: calc(100% - 24px);
+  font-size: 13px;
+}
+
 .hf-row:hover {
   background: #181824;
   color: var(--hf-text);
@@ -101,6 +112,17 @@
 
 .hf-action-row {
   margin: 2px 0;
+}
+
+.hf-static-row {
+  cursor: default;
+  background: transparent;
+  color: var(--hf-text-secondary);
+}
+
+.hf-static-row:hover {
+  background: transparent;
+  color: var(--hf-text-secondary);
 }
 
 @media (min-width: 1024px) {

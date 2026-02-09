@@ -1,0 +1,15 @@
+<div class="topics-archive">
+  <h1>Discover previous</h1>
+  <p class="archive-subtitle">Browse earlier weekly topics and open any full discussion page.</p>
+
+  <div class="archive-state" *ngIf="loading">Loading previous topics...</div>
+  <div class="archive-state" *ngIf="!loading && (!topics || topics.length === 0)">No previous topics yet.</div>
+
+  <div class="archive-list" *ngIf="!loading && topics && topics.length > 0">
+    <article class="archive-card" *ngFor="let topic of topics; trackBy: trackByTopic">
+      <h2>{{topic.weekTitle}}</h2>
+      <p>Topic of the month - {{topic.monthTitle}}</p>
+      <a [routerLink]="['/topics', topic.slug]">Open discussion</a>
+    </article>
+  </div>
+</div>

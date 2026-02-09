@@ -32,7 +32,7 @@ public class SecurityConfig {
                         .requestMatchers("/", "/index.html", "/favicon.ico").permitAll()
                         .requestMatchers("/login", "/sign-up", "/list-subreddits",
                                 "/create", "/create-post", "/create-subreddit", "/view-post/**", "/r/**",
-                                "/user-profile/**", "/account-verification/**", "/signup").permitAll()
+                                "/user-profile/**", "/account-verification/**", "/signup", "/topics", "/topics/**").permitAll()
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/*.js", "/*.css", "/*.map").permitAll()
                         .requestMatchers("/tinymce/**").permitAll()
@@ -40,6 +40,7 @@ public class SecurityConfig {
                         .requestMatchers("/error").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/subreddit", "/api/subreddit/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/posts", "/api/posts/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/topics", "/api/topics/**").permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated()
                 )

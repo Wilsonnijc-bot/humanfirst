@@ -1,0 +1,54 @@
+.topics-archive {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.topics-archive h1 {
+  margin: 0;
+  font-size: 32px;
+  color: var(--hf-text);
+}
+
+.archive-subtitle {
+  margin: 8px 0 16px;
+  color: var(--hf-text-muted);
+}
+
+.archive-state {
+  border: 1px solid var(--hf-border);
+  border-radius: 12px;
+  background: var(--hf-surface);
+  padding: 14px;
+  color: var(--hf-text-secondary);
+}
+
+.archive-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.archive-card {
+  border: 1px solid var(--hf-border);
+  border-radius: 12px;
+  background: var(--hf-surface);
+  box-shadow: var(--hf-shadow);
+  padding: 14px;
+}
+
+.archive-card h2 {
+  margin: 0 0 6px;
+  font-size: 20px;
+  color: var(--hf-text);
+}
+
+.archive-card p {
+  margin: 0 0 10px;
+  color: var(--hf-text-secondary);
+}
+
+.archive-card a {
+  color: var(--hf-link);
+  font-weight: 600;
+}

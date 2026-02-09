@@ -1,0 +1,99 @@
+<div class="topic-page" *ngIf="!loading && topic; else topicStateTpl">
+  <section class="topic-hero">
+    <p class="topic-kicker">Topic of the week</p>
+    <h1 class="topic-title">{{topic.weekTitle}}</h1>
+    <p class="topic-month">Topic of the month - {{topic.monthTitle}}</p>
+  </section>
+
+  <section class="topic-subdivisions" *ngIf="topic.subdivisions?.length">
+    <h2>Monthly subdivisions</h2>
+    <ol>
+      <li *ngFor="let subdivision of topic.subdivisions; trackBy: trackBySubdivision">
+        {{subdivision.title}}
+      </li>
+    </ol>
+  </section>
+
+  <section class="topic-voting">
+    <div class="vote-header">
+      <h2>Pros vs Cons</h2>
+      <span>{{topic.voteSummary.totalVotes}} total votes</span>
+    </div>
+
+    <div class="vote-bar" aria-label="Pros and cons vote percentages">
+      <div class="pro-fill" [style.width.%]="getProBarPercent()"></div>
+      <div class="con-fill" [style.width.%]="getConBarPercent()"></div>
+    </div>
+
+    <div class="vote-stats">
+      <span>Pro: {{topic.voteSummary.proPercent}}% ({{topic.voteSummary.proVotes}})</span>
+      <span>Con: {{topic.voteSummary.conPercent}}% ({{topic.voteSummary.conVotes}})</span>
+    </div>
+
+    <div class="vote-actions">
+      <button
+        type="button"
+        class="topic-btn pro-btn"
+        [class.active]="topic.voteSummary.userStance === 'PRO'"
+        (click)="vote('PRO')">
+        Take Pro Side
+      </button>
+      <button
+        type="button"
+        class="topic-btn con-btn"
+        [class.active]="topic.voteSummary.userStance === 'CON'"
+        (click)="vote('CON')">
+        Take Con Side
+      </button>
+    </div>
+  </section>
+
+  <section class="topic-comments-grid">
+    <article class="topic-column pro-column">
+      <h3>Pro comments</h3>
+      <p class="topic-column-meta">Highest upvoted comments are displayed first.</p>
+
+      <div class="topic-comment-editor">
+        <textarea
+          [value]="proCommentText"
+          (input)="proCommentText = $any($event.target).value"
+          placeholder="Share your pro argument"></textarea>
+        <button type="button" class="topic-btn" (click)="submitTopLevelComment('PRO')">Post Pro Comment</button>
+      </div>
+
+      <app-topic-comment-thread
+        [topicId]="topic.id"
+        [comments]="topic.proComments"
+        [stance]="'PRO'"
+        [isLoggedIn]="isLoggedIn"
+        (threadUpdated)="onThreadUpdated()">
+      </app-topic-comment-thread>
+    </article>
+
+    <article class="topic-column con-column">
+      <h3>Con comments</h3>
+      <p class="topic-column-meta">Highest upvoted comments are displayed first.</p>
+
+      <div class="topic-comment-editor">
+        <textarea
+          [value]="conCommentText"
+          (input)="conCommentText = $any($event.target).value"
+          placeholder="Share your con argument"></textarea>
+        <button type="button" class="topic-btn" (click)="submitTopLevelComment('CON')">Post Con Comment</button>
+      </div>
+
+      <app-topic-comment-thread
+        [topicId]="topic.id"
+        [comments]="topic.conComments"
+        [stance]="'CON'"
+        [isLoggedIn]="isLoggedIn"
+        (threadUpdated)="onThreadUpdated()">
+      </app-topic-comment-thread>
+    </article>
+  </section>
+</div>
+
+<ng-template #topicStateTpl>
+  <div class="topic-state" *ngIf="loading">Loading topic discussion...</div>
+  <div class="topic-state topic-state-error" *ngIf="!loading && errorMessage">{{errorMessage}}</div>
+</ng-template>

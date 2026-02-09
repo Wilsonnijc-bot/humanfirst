@@ -3,7 +3,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SubredditModel } from '../subreddit-response';
 import { Router } from '@angular/router';
 import { SubredditService } from '../subreddit.service';
-import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-create-subreddit',
@@ -24,10 +23,10 @@ export class CreateSubredditComponent implements OnInit {
     this.subredditModel = {
       name: '',
       description: ''
-    }
+    };
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
   discard() {
@@ -35,14 +34,18 @@ export class CreateSubredditComponent implements OnInit {
   }
 
   createSubreddit() {
-    this.subredditModel.name = this.createSubredditForm.get('title')
-    .value;
-    this.subredditModel.description = this.createSubredditForm.get('description')
-    .value;
-    this.subredditService.createSubreddit(this.subredditModel).subscribe(data => {
-      this.router.navigateByUrl('/list-subreddits');
-    }, error => {
-      throwError(error);
-    })
+    if (this.createSubredditForm.invalid) {
+      this.createSubredditForm.markAllAsTouched();
+      return;
+    }
+
+    this.subredditModel.name = (this.createSubredditForm.get('title')?.value || '').trim();
+    this.subredditModel.description = (this.createSubredditForm.get('description')?.value || '').trim();
+
+    this.subredditService.createSubreddit(this.subredditModel).subscribe({
+      next: () => {
+        this.router.navigateByUrl('/list-subreddits');
+      }
+    });
   }
 }

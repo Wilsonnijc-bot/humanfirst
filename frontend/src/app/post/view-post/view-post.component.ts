@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PostService } from 'src/app/shared/post.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PostModel } from 'src/app/shared/post-model';
-import { throwError, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CommentPayload } from 'src/app/comment/comment.payload';
 import { CommentService } from 'src/app/comment/comment.service';
@@ -55,12 +55,12 @@ export class ViewPostComponent implements OnInit, OnDestroy {
   }
 
   postComment() {
-    this.commentPayload.text = this.commentForm.get('text').value;
-    this.commentService.postComment(this.commentPayload).subscribe(() => {
-      this.commentForm.get('text').setValue('');
-      this.getCommentsForPost();
-    }, error => {
-      throwError(error);
+    this.commentPayload.text = this.commentForm.get('text')?.value;
+    this.commentService.postComment(this.commentPayload).subscribe({
+      next: () => {
+        this.commentForm.get('text')?.setValue('');
+        this.getCommentsForPost();
+      }
     });
   }
 
@@ -93,18 +93,24 @@ export class ViewPostComponent implements OnInit, OnDestroy {
   }
 
   private getPostById() {
-    this.postService.getPost(this.postId).subscribe(data => {
-      this.post = data;
-    }, error => {
-      throwError(error);
+    this.postService.getPost(this.postId).subscribe({
+      next: (data) => {
+        this.post = data;
+      },
+      error: () => {
+        this.router.navigateByUrl('/');
+      }
     });
   }
 
   private getCommentsForPost() {
-    this.commentService.getAllCommentsForPost(this.postId).subscribe(data => {
-      this.comments = data;
-    }, error => {
-      throwError(error);
+    this.commentService.getAllCommentsForPost(this.postId).subscribe({
+      next: (data) => {
+        this.comments = data;
+      },
+      error: () => {
+        this.comments = [];
+      }
     });
   }
 

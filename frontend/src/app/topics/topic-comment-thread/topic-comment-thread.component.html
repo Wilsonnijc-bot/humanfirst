@@ -1,0 +1,47 @@
+<div class="thread-empty" *ngIf="!comments || comments.length === 0">No comments yet.</div>
+
+<ul class="thread-list" *ngIf="comments && comments.length > 0">
+  <li class="thread-item" *ngFor="let comment of comments; trackBy: trackByComment">
+    <article class="comment-card">
+      <header>
+        <span class="comment-user">{{comment.userName}}</span>
+        <span class="comment-time">{{comment.duration}}</span>
+      </header>
+
+      <p class="comment-text">{{comment.text}}</p>
+
+      <div class="comment-actions">
+        <button
+          type="button"
+          class="comment-btn"
+          [class.active]="comment.upVotedByCurrentUser"
+          (click)="toggleCommentUpvote(comment)">
+          Upvote ({{comment.upvoteCount}})
+        </button>
+        <button type="button" class="comment-btn" (click)="toggleReply(comment.id)">
+          Reply
+        </button>
+      </div>
+
+      <div class="reply-editor" *ngIf="replyOpenMap[comment.id]">
+        <textarea
+          [value]="replyTextMap[comment.id] || ''"
+          (input)="replyTextMap[comment.id] = $any($event.target).value"
+          placeholder="Write a reply"></textarea>
+        <button type="button" class="comment-btn primary" (click)="submitReply(comment)">
+          Post Reply
+        </button>
+      </div>
+    </article>
+
+    <app-topic-comment-thread
+      class="reply-thread"
+      *ngIf="comment.replies && comment.replies.length > 0"
+      [topicId]="topicId"
+      [comments]="comment.replies"
+      [stance]="stance"
+      [isLoggedIn]="isLoggedIn"
+      (threadUpdated)="onNestedThreadUpdated()">
+    </app-topic-comment-thread>
+  </li>
+</ul>

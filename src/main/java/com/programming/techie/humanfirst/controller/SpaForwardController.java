@@ -19,7 +19,10 @@ public class SpaForwardController {
             "/r/{subreddit}/comments/{id}",
             "/r/{subreddit}/comments/{id}/{slug}",
             "/user-profile/{name}",
-            "/account-verification/{token}"
+            "/account-verification/{token}",
+            "/topics",
+            "/topics/archive",
+            "/topics/{slug}"
     })
     public String forwardToIndex() {
         return "forward:/index.html";

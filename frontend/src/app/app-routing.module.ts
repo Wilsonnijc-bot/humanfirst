@@ -10,6 +10,8 @@ import { ViewPostComponent } from './post/view-post/view-post.component';
 import { UserProfileComponent } from './auth/user-profile/user-profile.component';
 import { AuthGuard } from './auth/auth.guard';
 import { AccountVerificationComponent } from './auth/account-verification/account-verification.component';
+import { TopicDiscussionComponent } from './topics/topic-discussion.component';
+import { TopicsArchiveComponent } from './topics/topics-archive/topics-archive.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,6 +19,9 @@ const routes: Routes = [
   { path: 'r/:subreddit/comments/:id', component: ViewPostComponent },
   { path: 'view-post/:id', component: ViewPostComponent },
   { path: 'user-profile/:name', component: UserProfileComponent, canActivate: [AuthGuard] },
+  { path: 'topics/archive', component: TopicsArchiveComponent },
+  { path: 'topics/:slug', component: TopicDiscussionComponent },
+  { path: 'topics', component: TopicDiscussionComponent },
   { path: 'list-subreddits', component: ListSubredditsComponent },
   { path: 'create', component: CreatePostComponent, canActivate: [AuthGuard] },
   { path: 'create-post', redirectTo: '/create', pathMatch: 'full' },

@@ -24,9 +24,7 @@ public class SubredditBootstrapConfig {
     }
 
     private void ensureSubredditExists(String name, String description) {
-        boolean alreadyExists = subredditRepository.findAll().stream()
-                .anyMatch(item -> item.getName() != null && item.getName().equalsIgnoreCase(name));
-        if (alreadyExists) {
+        if (subredditRepository.existsByNameIgnoreCase(name)) {
             return;
         }
 
