@@ -45,7 +45,35 @@ export class ViewPostComponent implements OnInit {
       this.getCommentsForPost();
     }, error => {
       throwError(error);
-    })
+    });
+  }
+
+  hasVideo(): boolean {
+    return !!this.post?.videoUrl;
+  }
+
+  getImageUrl(): string | null {
+    if (!this.post) {
+      return null;
+    }
+
+    if (this.post.imageUrl) {
+      return this.post.imageUrl;
+    }
+
+    if (this.post.url && this.isLikelyImageUrl(this.post.url)) {
+      return this.post.url;
+    }
+
+    return null;
+  }
+
+  isExternalLinkPost(): boolean {
+    if (!this.post?.url) {
+      return false;
+    }
+
+    return !this.isLikelyImageUrl(this.post.url) && !this.post.imageUrl;
   }
 
   private getPostById() {
@@ -64,4 +92,7 @@ export class ViewPostComponent implements OnInit {
     });
   }
 
+  private isLikelyImageUrl(url: string): boolean {
+    return /\.(png|jpe?g|gif|webp|bmp|svg|avif)(\?.*)?$/i.test(url);
+  }
 }

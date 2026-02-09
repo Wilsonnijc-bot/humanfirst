@@ -29,6 +29,8 @@ public class Post {
     @Nullable
     private String videoKey;
     @Nullable
+    private String imageKey;
+    @Nullable
     @Lob
     private String description;
     @Builder.Default

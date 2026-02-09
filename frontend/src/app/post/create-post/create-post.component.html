@@ -1,55 +1,94 @@
 <div class="container">
-    <div class="row">
-      <hr />
-      <div class="col-12 create-post-main">
-        <div class="create-post-container">
-          <form class="post-form" [formGroup]="createPostForm" (ngSubmit)="createPost()">
-            <div class="form-group">
-              <div class="create-post-heading">Create Post</div>
-              <hr />
-              <input type="text" [formControlName]="'postName'" class="form-control" style="margin-top: 5px"
-                placeholder="Title">
+  <div class="row">
+    <hr />
+    <div class="col-12 create-post-main">
+      <div class="create-post-container">
+        <form class="post-form" [formGroup]="createPostForm" (ngSubmit)="createPost()">
+          <div class="form-group">
+            <div class="create-post-heading">Create Post</div>
+            <hr />
 
-              <input type="text" class="form-control" [formControlName]="'url'" style="margin-top: 5px" placeholder="URL (optional)">
+            <input
+              type="text"
+              [formControlName]="'postName'"
+              class="form-control"
+              style="margin-top: 5px"
+              placeholder="Title"
+            >
 
-              <div style="margin-top: 10px;">
-                <input
-                  type="file"
-                  class="form-control"
-                  accept="video/*"
-                  (change)="onVideoSelected($event)">
-                <small *ngIf="isUploadingVideo">Uploading video...</small>
-                <small *ngIf="!isUploadingVideo && uploadedVideoFileName">Uploaded: {{uploadedVideoFileName}}</small>
+            <input
+              type="text"
+              class="form-control"
+              [formControlName]="'url'"
+              style="margin-top: 5px"
+              placeholder="URL (optional)"
+            >
+
+            <div class="media-upload-block" style="margin-top: 10px;">
+              <input
+                #filePicker
+                type="file"
+                class="media-input"
+                [accept]="acceptedFileTypes"
+                (change)="onMediaSelected($event)"
+              >
+
+              <div
+                class="media-dropzone"
+                [class.drag-active]="isDragActive"
+                [class.uploading]="isUploadingAttachment"
+                role="button"
+                tabindex="0"
+                aria-label="Attach image or video"
+                (click)="onDropZoneClick(filePicker)"
+                (keydown.enter)="onDropZoneClick(filePicker)"
+                (keydown.space)="$event.preventDefault(); onDropZoneClick(filePicker)"
+                (dragover)="onDragOver($event)"
+                (dragleave)="onDragLeave($event)"
+                (drop)="onDrop($event)">
+                <strong>Drag and drop an image/video here</strong>
+                <span>or click to browse</span>
+                <small>Accepted: jpg, jpeg, png, gif, webp, heic, mp4, mov, webm, mkv</small>
               </div>
 
-              <select class="form-control" style="margin-top: 10px" [formControlName]="'subredditName'">
-                <option *ngFor="let domain of domainOptions" [value]="domain.value">{{domain.label}}</option>
-              </select>
+              <small *ngIf="isUploadingAttachment">Uploading attachment...</small>
 
-              <editor [formControlName]="'description'" [init]="{
-                          height: 500,
-                          menubar: false,
-                          skin: 'oxide-dark',
-                          content_css: 'dark',
-                          plugins: [
-                            'advlist autolink lists link image charmap print preview anchor',
-                            'searchreplace visualblocks code fullscreen',
-                            'insertdatetime media table paste code help wordcount'
-                          ],
-                          toolbar:
-                            'undo redo | formatselect | bold italic backcolor | \
-                            alignleft aligncenter alignright alignjustify | \
-                            bullist numlist outdent indent | removeformat | help'
-                        }"></editor>
-              <span>
-                <div style="margin-top: 5px" class="float-right">
-                  <button type="button" (click)="discardPost()" class="btnDiscard">Discard</button>
-                  <button type="submit" class="btnCreatePost" [disabled]="isUploadingVideo">Post</button>
-                </div>
-              </span>
+              <div class="attachment-row" *ngIf="!isUploadingAttachment && uploadedAttachmentFileName">
+                <span>
+                  Attached {{uploadedAttachmentType}}: <strong>{{uploadedAttachmentFileName}}</strong>
+                </span>
+                <button type="button" class="clear-attachment" (click)="clearAttachment()">Remove</button>
+              </div>
             </div>
-          </form>
-        </div>
+
+            <select class="form-control" style="margin-top: 10px" [formControlName]="'subredditName'">
+              <option *ngFor="let domain of domainOptions" [value]="domain.value">{{domain.label}}</option>
+            </select>
+
+            <editor [formControlName]="'description'" [init]="{
+                        height: 500,
+                        menubar: false,
+                        skin: 'oxide-dark',
+                        content_css: 'dark',
+                        plugins: [
+                          'advlist autolink lists link image charmap print preview anchor',
+                          'searchreplace visualblocks code fullscreen',
+                          'insertdatetime media table paste code help wordcount'
+                        ],
+                        toolbar:
+                          'undo redo | formatselect | bold italic backcolor | \
+                          alignleft aligncenter alignright alignjustify | \
+                          bullist numlist outdent indent | removeformat | help'
+                      }"></editor>
+            <span>
+              <div style="margin-top: 5px" class="float-right">
+                <button type="button" (click)="discardPost()" class="btnDiscard">Discard</button>
+                <button type="submit" class="btnCreatePost" [disabled]="isUploadingAttachment">Post</button>
+              </div>
+            </span>
+          </div>
+        </form>
       </div>
     </div>
   </div>
+</div>

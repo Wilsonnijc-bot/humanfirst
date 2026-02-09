@@ -13,5 +13,6 @@ public class PostRequest {
     private String postName;
     private String url;
     private String videoKey;
+    private String imageKey;
     private String description;
 }

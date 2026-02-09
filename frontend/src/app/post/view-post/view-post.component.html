@@ -13,12 +13,15 @@
             </span>
           </span>
           <hr />
-          <a *ngIf="post.url; else postTitleNoUrl" class="post-title post-url" [href]="post.url" target="_blank" rel="noopener noreferrer">{{post.postName}}</a>
+          <a *ngIf="isExternalLinkPost(); else postTitleNoUrl" class="post-title post-url" [href]="post.url" target="_blank" rel="noopener noreferrer">{{post.postName}}</a>
           <ng-template #postTitleNoUrl>
             <span class="post-title">{{post.postName}}</span>
           </ng-template>
-          <div *ngIf="post.videoUrl">
+          <div *ngIf="hasVideo()">
             <video class="post-video" controls preload="metadata" [src]="post.videoUrl"></video>
+          </div>
+          <div *ngIf="getImageUrl() as imageUrl">
+            <img class="post-image" [src]="imageUrl" [alt]="post.postName">
           </div>
           <div>
             <p class="post-text" [innerHtml]="post.description"></p>

@@ -33,9 +33,14 @@ export class PostTileComponent implements OnInit {
   }
 
   getImageUrl(post: PostModel): string | null {
+    if (post?.imageUrl) {
+      return post.imageUrl;
+    }
+
     if (!post?.url) {
       return null;
     }
+
     return this.isLikelyImageUrl(post.url) ? post.url : null;
   }
 
@@ -44,7 +49,7 @@ export class PostTileComponent implements OnInit {
   }
 
   isExternalLinkPost(post: PostModel): boolean {
-    return !!post?.url && !this.isLikelyImageUrl(post.url);
+    return !!post?.url && !this.isLikelyImageUrl(post.url) && !post?.imageUrl;
   }
 
   sharePost(post: PostModel): void {

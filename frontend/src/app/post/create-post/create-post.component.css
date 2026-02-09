@@ -29,6 +29,72 @@
   padding: 10px;
 }
 
+.media-upload-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.media-input {
+  display: none;
+}
+
+.media-dropzone {
+  border: 1px dashed var(--hf-border-strong);
+  border-radius: 10px;
+  background: #141420;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  color: var(--hf-text-secondary);
+}
+
+.media-dropzone strong {
+  color: var(--hf-text);
+}
+
+.media-dropzone.drag-active {
+  border-color: #93cefb;
+  background: #17172a;
+}
+
+.media-dropzone.uploading {
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.media-dropzone:focus {
+  outline: none;
+  box-shadow: var(--hf-focus-ring);
+}
+
+.attachment-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.clear-attachment {
+  border: 1px solid var(--hf-border-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--hf-text-secondary);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+}
+
+.clear-attachment:hover {
+  color: var(--hf-text);
+  background: #1a1a24;
+}
+
 .btnDiscard {
   border: 1px solid var(--hf-border-strong);
   border-radius: 999px;

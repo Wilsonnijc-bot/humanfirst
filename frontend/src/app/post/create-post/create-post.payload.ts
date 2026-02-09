@@ -3,5 +3,6 @@ export class CreatePostPayload {
     subredditName?: string;
     url?: string;
     videoKey?: string;
+    imageKey?: string;
     description: string;
 }

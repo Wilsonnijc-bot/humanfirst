@@ -1,3 +1,15 @@
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -191,7 +203,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div class=\"container\">\n    <div class=\"row\">\n      <hr />\n      <div class=\"col-12 create-post-main\">\n        <div class=\"create-post-container\">\n          <form class=\"post-form\" [formGroup]=\"createPostForm\" (ngSubmit)=\"createPost()\">\n            <div class=\"form-group\">\n              <div class=\"create-post-heading\">Create Post</div>\n              <hr />\n              <input type=\"text\" [formControlName]=\"'postName'\" class=\"form-control\" style=\"margin-top: 5px\"\n                placeholder=\"Title\">\n\n              <input type=\"text\" class=\"form-control\" [formControlName]=\"'url'\" style=\"margin-top: 5px\" placeholder=\"URL (optional)\">\n\n              <div style=\"margin-top: 10px;\">\n                <input\n                  type=\"file\"\n                  class=\"form-control\"\n                  accept=\"video/*\"\n                  (change)=\"onVideoSelected($event)\">\n                <small *ngIf=\"isUploadingVideo\">Uploading video...</small>\n                <small *ngIf=\"!isUploadingVideo && uploadedVideoFileName\">Uploaded: {{uploadedVideoFileName}}</small>\n              </div>\n\n              <select class=\"form-control\" style=\"margin-top: 10px\" [formControlName]=\"'subredditName'\">\n                <option *ngFor=\"let domain of domainOptions\" [value]=\"domain.value\">{{domain.label}}</option>\n              </select>\n\n              <editor [formControlName]=\"'description'\" [init]=\"{\n                          height: 500,\n                          menubar: false,\n                          skin: 'oxide-dark',\n                          content_css: 'dark',\n                          plugins: [\n                            'advlist autolink lists link image charmap print preview anchor',\n                            'searchreplace visualblocks code fullscreen',\n                            'insertdatetime media table paste code help wordcount'\n                          ],\n                          toolbar:\n                            'undo redo | formatselect | bold italic backcolor | \\\n                            alignleft aligncenter alignright alignjustify | \\\n                            bullist numlist outdent indent | removeformat | help'\n                        }\"></editor>\n              <span>\n                <div style=\"margin-top: 5px\" class=\"float-right\">\n                  <button type=\"button\" (click)=\"discardPost()\" class=\"btnDiscard\">Discard</button>\n                  <button type=\"submit\" class=\"btnCreatePost\" [disabled]=\"isUploadingVideo\">Post</button>\n                </div>\n              </span>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n";
+    __webpack_exports__["default"] = "<div class=\"container\">\n  <div class=\"row\">\n    <hr />\n    <div class=\"col-12 create-post-main\">\n      <div class=\"create-post-container\">\n        <form class=\"post-form\" [formGroup]=\"createPostForm\" (ngSubmit)=\"createPost()\">\n          <div class=\"form-group\">\n            <div class=\"create-post-heading\">Create Post</div>\n            <hr />\n\n            <input\n              type=\"text\"\n              [formControlName]=\"'postName'\"\n              class=\"form-control\"\n              style=\"margin-top: 5px\"\n              placeholder=\"Title\"\n            >\n\n            <input\n              type=\"text\"\n              class=\"form-control\"\n              [formControlName]=\"'url'\"\n              style=\"margin-top: 5px\"\n              placeholder=\"URL (optional)\"\n            >\n\n            <div class=\"media-upload-block\" style=\"margin-top: 10px;\">\n              <input\n                #filePicker\n                type=\"file\"\n                class=\"media-input\"\n                [accept]=\"acceptedFileTypes\"\n                (change)=\"onMediaSelected($event)\"\n              >\n\n              <div\n                class=\"media-dropzone\"\n                [class.drag-active]=\"isDragActive\"\n                [class.uploading]=\"isUploadingAttachment\"\n                role=\"button\"\n                tabindex=\"0\"\n                aria-label=\"Attach image or video\"\n                (click)=\"onDropZoneClick(filePicker)\"\n                (keydown.enter)=\"onDropZoneClick(filePicker)\"\n                (keydown.space)=\"$event.preventDefault(); onDropZoneClick(filePicker)\"\n                (dragover)=\"onDragOver($event)\"\n                (dragleave)=\"onDragLeave($event)\"\n                (drop)=\"onDrop($event)\">\n                <strong>Drag and drop an image/video here</strong>\n                <span>or click to browse</span>\n                <small>Accepted: jpg, jpeg, png, gif, webp, heic, mp4, mov, webm, mkv</small>\n              </div>\n\n              <small *ngIf=\"isUploadingAttachment\">Uploading attachment...</small>\n\n              <div class=\"attachment-row\" *ngIf=\"!isUploadingAttachment && uploadedAttachmentFileName\">\n                <span>\n                  Attached {{uploadedAttachmentType}}: <strong>{{uploadedAttachmentFileName}}</strong>\n                </span>\n                <button type=\"button\" class=\"clear-attachment\" (click)=\"clearAttachment()\">Remove</button>\n              </div>\n            </div>\n\n            <select class=\"form-control\" style=\"margin-top: 10px\" [formControlName]=\"'subredditName'\">\n              <option *ngFor=\"let domain of domainOptions\" [value]=\"domain.value\">{{domain.label}}</option>\n            </select>\n\n            <editor [formControlName]=\"'description'\" [init]=\"{\n                        height: 500,\n                        menubar: false,\n                        skin: 'oxide-dark',\n                        content_css: 'dark',\n                        plugins: [\n                          'advlist autolink lists link image charmap print preview anchor',\n                          'searchreplace visualblocks code fullscreen',\n                          'insertdatetime media table paste code help wordcount'\n                        ],\n                        toolbar:\n                          'undo redo | formatselect | bold italic backcolor | \\\n                          alignleft aligncenter alignright alignjustify | \\\n                          bullist numlist outdent indent | removeformat | help'\n                      }\"></editor>\n            <span>\n              <div style=\"margin-top: 5px\" class=\"float-right\">\n                <button type=\"button\" (click)=\"discardPost()\" class=\"btnDiscard\">Discard</button>\n                <button type=\"submit\" class=\"btnCreatePost\" [disabled]=\"isUploadingAttachment\">Post</button>\n              </div>\n            </span>\n          </div>\n        </form>\n      </div>\n    </div>\n  </div>\n</div>\n";
     /***/
   },
 
@@ -211,7 +223,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div class=\"container\">\n  <div class=\"row\">\n    <hr />\n    <div class=\"col-12 view-post-main\">\n      <div class=\"row post\">\n        <div class=\"col-md-12\">\n          <span>\n            <span class=\"subreddit-text\"><a class=\"post-url\" href=\"\">{{post.subredditName}}</a></span>\n            <span> . Posted\n              <span> {{post.duration}} </span>\n              by\n              <a class=\"username\" href=\"\">{{post.userName}}</a>\n            </span>\n          </span>\n          <hr />\n          <a *ngIf=\"post.url; else postTitleNoUrl\" class=\"post-title post-url\" [href]=\"post.url\" target=\"_blank\" rel=\"noopener noreferrer\">{{post.postName}}</a>\n          <ng-template #postTitleNoUrl>\n            <span class=\"post-title\">{{post.postName}}</span>\n          </ng-template>\n          <div *ngIf=\"post.videoUrl\">\n            <video class=\"post-video\" controls preload=\"metadata\" [src]=\"post.videoUrl\"></video>\n          </div>\n          <div>\n            <p class=\"post-text\" [innerHtml]=\"post.description\"></p>\n          </div>\n          <div class=\"post-actions\">\n            <app-vote-button [post]=\"post\"></app-vote-button>\n          </div>\n          <div class=\"post-comment\">\n            <form [formGroup]=\"commentForm\" (ngSubmit)=\"postComment()\">\n              <div class=\"form-group\">\n                <textarea class=\"form-control\" [formControlName]=\"'text'\" placeholder=\"Your Thoughts?\"></textarea>\n              </div>\n              <button type=\"submit\" class=\"comment-submit float-right\">Comment</button>\n            </form>\n          </div>\n          <div style=\"margin-top: 60px;\" *ngFor=\"let comment of comments\">\n            <div class=\"comment\">\n              <div class=\"username\">\n                <a routerLink=\"/user/comment.username\">{{comment.userName}}</a>\n              </div>\n              <div>\n                <p>{{comment.duration}}</p>\n              </div>\n              <b>{{comment.text}}</b>\n            </div>\n            <hr />\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n";
+    __webpack_exports__["default"] = "<div class=\"container\">\n  <div class=\"row\">\n    <hr />\n    <div class=\"col-12 view-post-main\">\n      <div class=\"row post\">\n        <div class=\"col-md-12\">\n          <span>\n            <span class=\"subreddit-text\"><a class=\"post-url\" href=\"\">{{post.subredditName}}</a></span>\n            <span> . Posted\n              <span> {{post.duration}} </span>\n              by\n              <a class=\"username\" href=\"\">{{post.userName}}</a>\n            </span>\n          </span>\n          <hr />\n          <a *ngIf=\"isExternalLinkPost(); else postTitleNoUrl\" class=\"post-title post-url\" [href]=\"post.url\" target=\"_blank\" rel=\"noopener noreferrer\">{{post.postName}}</a>\n          <ng-template #postTitleNoUrl>\n            <span class=\"post-title\">{{post.postName}}</span>\n          </ng-template>\n          <div *ngIf=\"hasVideo()\">\n            <video class=\"post-video\" controls preload=\"metadata\" [src]=\"post.videoUrl\"></video>\n          </div>\n          <div *ngIf=\"getImageUrl() as imageUrl\">\n            <img class=\"post-image\" [src]=\"imageUrl\" [alt]=\"post.postName\">\n          </div>\n          <div>\n            <p class=\"post-text\" [innerHtml]=\"post.description\"></p>\n          </div>\n          <div class=\"post-actions\">\n            <app-vote-button [post]=\"post\"></app-vote-button>\n          </div>\n          <div class=\"post-comment\">\n            <form [formGroup]=\"commentForm\" (ngSubmit)=\"postComment()\">\n              <div class=\"form-group\">\n                <textarea class=\"form-control\" [formControlName]=\"'text'\" placeholder=\"Your Thoughts?\"></textarea>\n              </div>\n              <button type=\"submit\" class=\"comment-submit float-right\">Comment</button>\n            </form>\n          </div>\n          <div style=\"margin-top: 60px;\" *ngFor=\"let comment of comments\">\n            <div class=\"comment\">\n              <div class=\"username\">\n                <a routerLink=\"/user/comment.username\">{{comment.userName}}</a>\n              </div>\n              <div>\n                <p>{{comment.duration}}</p>\n              </div>\n              <b>{{comment.text}}</b>\n            </div>\n            <hr />\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n";
     /***/
   },
 
@@ -2570,7 +2582,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           if (this.selectedDomain === 'all') {
             this.postService.getAllPosts().subscribe(function (post) {
-              _this10.posts = post;
+              _this10.posts = _this10.sortPostsByNewest(post);
             }, function () {
               _this10.posts = [];
 
@@ -2588,12 +2600,39 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           }
 
           this.postService.getPostsBySubreddit(subredditId).subscribe(function (post) {
-            _this10.posts = post;
+            _this10.posts = _this10.sortPostsByNewest(post);
           }, function () {
             _this10.posts = [];
 
             _this10.toastr.error('Failed to load posts for selected domain');
           });
+        }
+      }, {
+        key: "sortPostsByNewest",
+        value: function sortPostsByNewest(posts) {
+          var _this11 = this;
+
+          return _toConsumableArray(posts || []).sort(function (a, b) {
+            var createdTimeA = _this11.parseTimestamp(a === null || a === void 0 ? void 0 : a.createdAt);
+
+            var createdTimeB = _this11.parseTimestamp(b === null || b === void 0 ? void 0 : b.createdAt);
+
+            if (createdTimeA !== createdTimeB) {
+              return createdTimeB - createdTimeA;
+            }
+
+            return ((b === null || b === void 0 ? void 0 : b.id) || 0) - ((a === null || a === void 0 ? void 0 : a.id) || 0);
+          });
+        }
+      }, {
+        key: "parseTimestamp",
+        value: function parseTimestamp(value) {
+          if (!value) {
+            return 0;
+          }
+
+          var parsed = new Date(value).getTime();
+          return Number.isNaN(parsed) ? 0 : parsed;
         }
       }]);
 
@@ -2640,7 +2679,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = ".btnCreatePost,\n.btnCreateSubreddit {\n  margin-top: 5px;\n}\n\n.post-form {\n  margin: 2px;\n}\n\n.comment-notification {\n  margin-top: 5px;\n}\n\n.create-post-main {\n  max-width: 980px;\n  margin: 0 auto;\n}\n\n.create-post-container {\n  margin-top: 10px;\n  border: 1px solid var(--hf-border);\n  margin-bottom: 10px;\n  overflow: hidden;\n  background-color: var(--hf-surface);\n  color: var(--hf-text-secondary);\n  position: relative;\n  border-radius: 10px;\n  box-shadow: var(--hf-shadow);\n  padding: 10px;\n}\n\n.btnDiscard {\n  border: 1px solid var(--hf-border-strong);\n  border-radius: 999px;\n  text-align: center;\n  text-decoration: none;\n  font-size: 12px;\n  font-weight: 700;\n  letter-spacing: .5px;\n  line-height: 24px;\n  text-transform: uppercase;\n  padding: 3px 18px;\n  min-width: 140px;\n  height: 36px;\n  margin-top: 5px;\n  color: var(--hf-text-secondary);\n  background-color: transparent;\n}\n\n.btnDiscard:hover {\n  background-color: #1a1a24;\n  color: var(--hf-text);\n}\n\n.create-post-heading {\n  font-size: 18px;\n  font-weight: 600;\n  line-height: 22px;\n  color: var(--hf-text);\n}\n\n.btnCreatePost {\n  background-color: var(--hf-surface-soft);\n  border-color: var(--hf-border-strong);\n  color: var(--hf-text);\n  border: 1px solid;\n  border-radius: 999px;\n  text-align: center;\n  text-decoration: none;\n  font-size: 12px;\n  font-weight: 700;\n  letter-spacing: .5px;\n  line-height: 24px;\n  text-transform: uppercase;\n  padding: 3px 18px;\n  min-width: 140px;\n  height: 36px;\n  margin-left: 8px;\n}\n\n.btnCreatePost:hover {\n  background-color: #1b1b28;\n}\n\nsmall {\n  color: var(--hf-text-muted);\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcG9zdC9jcmVhdGUtcG9zdC9jcmVhdGUtcG9zdC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztFQUVFLGVBQWU7QUFDakI7O0FBRUE7RUFDRSxXQUFXO0FBQ2I7O0FBRUE7RUFDRSxlQUFlO0FBQ2pCOztBQUVBO0VBQ0UsZ0JBQWdCO0VBQ2hCLGNBQWM7QUFDaEI7O0FBRUE7RUFDRSxnQkFBZ0I7RUFDaEIsa0NBQWtDO0VBQ2xDLG1CQUFtQjtFQUNuQixnQkFBZ0I7RUFDaEIsbUNBQW1DO0VBQ25DLCtCQUErQjtFQUMvQixrQkFBa0I7RUFDbEIsbUJBQW1CO0VBQ25CLDRCQUE0QjtFQUM1QixhQUFhO0FBQ2Y7O0FBRUE7RUFDRSx5Q0FBeUM7RUFDekMsb0JBQW9CO0VBQ3BCLGtCQUFrQjtFQUNsQixxQkFBcUI7RUFDckIsZUFBZTtFQUNmLGdCQUFnQjtFQUNoQixvQkFBb0I7RUFDcEIsaUJBQWlCO0VBQ2pCLHlCQUF5QjtFQUN6QixpQkFBaUI7RUFDakIsZ0JBQWdCO0VBQ2hCLFlBQVk7RUFDWixlQUFlO0VBQ2YsK0JBQStCO0VBQy9CLDZCQUE2QjtBQUMvQjs7QUFFQTtFQUNFLHlCQUF5QjtFQUN6QixxQkFBcUI7QUFDdkI7O0FBRUE7RUFDRSxlQUFlO0VBQ2YsZ0JBQWdCO0VBQ2hCLGlCQUFpQjtFQUNqQixxQkFBcUI7QUFDdkI7O0FBRUE7RUFDRSx3Q0FBd0M7RUFDeEMscUNBQXFDO0VBQ3JDLHFCQUFxQjtFQUNyQixpQkFBaUI7RUFDakIsb0JBQW9CO0VBQ3BCLGtCQUFrQjtFQUNsQixxQkFBcUI7RUFDckIsZUFBZTtFQUNmLGdCQUFnQjtFQUNoQixvQkFBb0I7RUFDcEIsaUJBQWlCO0VBQ2pCLHlCQUF5QjtFQUN6QixpQkFBaUI7RUFDakIsZ0JBQWdCO0VBQ2hCLFlBQVk7RUFDWixnQkFBZ0I7QUFDbEI7O0FBRUE7RUFDRSx5QkFBeUI7QUFDM0I7O0FBRUE7RUFDRSwyQkFBMkI7QUFDN0IiLCJmaWxlIjoic3JjL2FwcC9wb3N0L2NyZWF0ZS1wb3N0L2NyZWF0ZS1wb3N0LmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuYnRuQ3JlYXRlUG9zdCxcbi5idG5DcmVhdGVTdWJyZWRkaXQge1xuICBtYXJnaW4tdG9wOiA1cHg7XG59XG5cbi5wb3N0LWZvcm0ge1xuICBtYXJnaW46IDJweDtcbn1cblxuLmNvbW1lbnQtbm90aWZpY2F0aW9uIHtcbiAgbWFyZ2luLXRvcDogNXB4O1xufVxuXG4uY3JlYXRlLXBvc3QtbWFpbiB7XG4gIG1heC13aWR0aDogOTgwcHg7XG4gIG1hcmdpbjogMCBhdXRvO1xufVxuXG4uY3JlYXRlLXBvc3QtY29udGFpbmVyIHtcbiAgbWFyZ2luLXRvcDogMTBweDtcbiAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0taGYtYm9yZGVyKTtcbiAgbWFyZ2luLWJvdHRvbTogMTBweDtcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0taGYtc3VyZmFjZSk7XG4gIGNvbG9yOiB2YXIoLS1oZi10ZXh0LXNlY29uZGFyeSk7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgYm9yZGVyLXJhZGl1czogMTBweDtcbiAgYm94LXNoYWRvdzogdmFyKC0taGYtc2hhZG93KTtcbiAgcGFkZGluZzogMTBweDtcbn1cblxuLmJ0bkRpc2NhcmQge1xuICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1oZi1ib3JkZXItc3Ryb25nKTtcbiAgYm9yZGVyLXJhZGl1czogOTk5cHg7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICBmb250LXNpemU6IDEycHg7XG4gIGZvbnQtd2VpZ2h0OiA3MDA7XG4gIGxldHRlci1zcGFjaW5nOiAuNXB4O1xuICBsaW5lLWhlaWdodDogMjRweDtcbiAgdGV4dC10cmFuc2Zvcm06IHVwcGVyY2FzZTtcbiAgcGFkZGluZzogM3B4IDE4cHg7XG4gIG1pbi13aWR0aDogMTQwcHg7XG4gIGhlaWdodDogMzZweDtcbiAgbWFyZ2luLXRvcDogNXB4O1xuICBjb2xvcjogdmFyKC0taGYtdGV4dC1zZWNvbmRhcnkpO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB0cmFuc3BhcmVudDtcbn1cblxuLmJ0bkRpc2NhcmQ6aG92ZXIge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjMWExYTI0O1xuICBjb2xvcjogdmFyKC0taGYtdGV4dCk7XG59XG5cbi5jcmVhdGUtcG9zdC1oZWFkaW5nIHtcbiAgZm9udC1zaXplOiAxOHB4O1xuICBmb250LXdlaWdodDogNjAwO1xuICBsaW5lLWhlaWdodDogMjJweDtcbiAgY29sb3I6IHZhcigtLWhmLXRleHQpO1xufVxuXG4uYnRuQ3JlYXRlUG9zdCB7XG4gIGJhY2tncm91bmQtY29sb3I6IHZhcigtLWhmLXN1cmZhY2Utc29mdCk7XG4gIGJvcmRlci1jb2xvcjogdmFyKC0taGYtYm9yZGVyLXN0cm9uZyk7XG4gIGNvbG9yOiB2YXIoLS1oZi10ZXh0KTtcbiAgYm9yZGVyOiAxcHggc29saWQ7XG4gIGJvcmRlci1yYWRpdXM6IDk5OXB4O1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcbiAgZm9udC1zaXplOiAxMnB4O1xuICBmb250LXdlaWdodDogNzAwO1xuICBsZXR0ZXItc3BhY2luZzogLjVweDtcbiAgbGluZS1oZWlnaHQ6IDI0cHg7XG4gIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XG4gIHBhZGRpbmc6IDNweCAxOHB4O1xuICBtaW4td2lkdGg6IDE0MHB4O1xuICBoZWlnaHQ6IDM2cHg7XG4gIG1hcmdpbi1sZWZ0OiA4cHg7XG59XG5cbi5idG5DcmVhdGVQb3N0OmhvdmVyIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogIzFiMWIyODtcbn1cblxuc21hbGwge1xuICBjb2xvcjogdmFyKC0taGYtdGV4dC1tdXRlZCk7XG59XG4iXX0= */";
+    __webpack_exports__["default"] = ".btnCreatePost,\n.btnCreateSubreddit {\n  margin-top: 5px;\n}\n\n.post-form {\n  margin: 2px;\n}\n\n.comment-notification {\n  margin-top: 5px;\n}\n\n.create-post-main {\n  max-width: 980px;\n  margin: 0 auto;\n}\n\n.create-post-container {\n  margin-top: 10px;\n  border: 1px solid var(--hf-border);\n  margin-bottom: 10px;\n  overflow: hidden;\n  background-color: var(--hf-surface);\n  color: var(--hf-text-secondary);\n  position: relative;\n  border-radius: 10px;\n  box-shadow: var(--hf-shadow);\n  padding: 10px;\n}\n\n.media-upload-block {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n\n.media-input {\n  display: none;\n}\n\n.media-dropzone {\n  border: 1px dashed var(--hf-border-strong);\n  border-radius: 10px;\n  background: #141420;\n  padding: 16px;\n  display: flex;\n  flex-direction: column;\n  gap: 6px;\n  cursor: pointer;\n  color: var(--hf-text-secondary);\n}\n\n.media-dropzone strong {\n  color: var(--hf-text);\n}\n\n.media-dropzone.drag-active {\n  border-color: #93cefb;\n  background: #17172a;\n}\n\n.media-dropzone.uploading {\n  opacity: 0.8;\n  pointer-events: none;\n}\n\n.media-dropzone:focus {\n  outline: none;\n  box-shadow: var(--hf-focus-ring);\n}\n\n.attachment-row {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  gap: 8px;\n  flex-wrap: wrap;\n}\n\n.clear-attachment {\n  border: 1px solid var(--hf-border-strong);\n  border-radius: 999px;\n  background: transparent;\n  color: var(--hf-text-secondary);\n  font-size: 11px;\n  font-weight: 700;\n  letter-spacing: .5px;\n  text-transform: uppercase;\n  padding: 4px 12px;\n}\n\n.clear-attachment:hover {\n  color: var(--hf-text);\n  background: #1a1a24;\n}\n\n.btnDiscard {\n  border: 1px solid var(--hf-border-strong);\n  border-radius: 999px;\n  text-align: center;\n  text-decoration: none;\n  font-size: 12px;\n  font-weight: 700;\n  letter-spacing: .5px;\n  line-height: 24px;\n  text-transform: uppercase;\n  padding: 3px 18px;\n  min-width: 140px;\n  height: 36px;\n  margin-top: 5px;\n  color: var(--hf-text-secondary);\n  background-color: transparent;\n}\n\n.btnDiscard:hover {\n  background-color: #1a1a24;\n  color: var(--hf-text);\n}\n\n.create-post-heading {\n  font-size: 18px;\n  font-weight: 600;\n  line-height: 22px;\n  color: var(--hf-text);\n}\n\n.btnCreatePost {\n  background-color: var(--hf-surface-soft);\n  border-color: var(--hf-border-strong);\n  color: var(--hf-text);\n  border: 1px solid;\n  border-radius: 999px;\n  text-align: center;\n  text-decoration: none;\n  font-size: 12px;\n  font-weight: 700;\n  letter-spacing: .5px;\n  line-height: 24px;\n  text-transform: uppercase;\n  padding: 3px 18px;\n  min-width: 140px;\n  height: 36px;\n  margin-left: 8px;\n}\n\n.btnCreatePost:hover {\n  background-color: #1b1b28;\n}\n\nsmall {\n  color: var(--hf-text-muted);\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcG9zdC9jcmVhdGUtcG9zdC9jcmVhdGUtcG9zdC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztFQUVFLGVBQWU7QUFDakI7O0FBRUE7RUFDRSxXQUFXO0FBQ2I7O0FBRUE7RUFDRSxlQUFlO0FBQ2pCOztBQUVBO0VBQ0UsZ0JBQWdCO0VBQ2hCLGNBQWM7QUFDaEI7O0FBRUE7RUFDRSxnQkFBZ0I7RUFDaEIsa0NBQWtDO0VBQ2xDLG1CQUFtQjtFQUNuQixnQkFBZ0I7RUFDaEIsbUNBQW1DO0VBQ25DLCtCQUErQjtFQUMvQixrQkFBa0I7RUFDbEIsbUJBQW1CO0VBQ25CLDRCQUE0QjtFQUM1QixhQUFhO0FBQ2Y7O0FBRUE7RUFDRSxhQUFhO0VBQ2Isc0JBQXNCO0VBQ3RCLFFBQVE7QUFDVjs7QUFFQTtFQUNFLGFBQWE7QUFDZjs7QUFFQTtFQUNFLDBDQUEwQztFQUMxQyxtQkFBbUI7RUFDbkIsbUJBQW1CO0VBQ25CLGFBQWE7RUFDYixhQUFhO0VBQ2Isc0JBQXNCO0VBQ3RCLFFBQVE7RUFDUixlQUFlO0VBQ2YsK0JBQStCO0FBQ2pDOztBQUVBO0VBQ0UscUJBQXFCO0FBQ3ZCOztBQUVBO0VBQ0UscUJBQXFCO0VBQ3JCLG1CQUFtQjtBQUNyQjs7QUFFQTtFQUNFLFlBQVk7RUFDWixvQkFBb0I7QUFDdEI7O0FBRUE7RUFDRSxhQUFhO0VBQ2IsZ0NBQWdDO0FBQ2xDOztBQUVBO0VBQ0UsYUFBYTtFQUNiLDhCQUE4QjtFQUM5QixtQkFBbUI7RUFDbkIsUUFBUTtFQUNSLGVBQWU7QUFDakI7O0FBRUE7RUFDRSx5Q0FBeUM7RUFDekMsb0JBQW9CO0VBQ3BCLHVCQUF1QjtFQUN2QiwrQkFBK0I7RUFDL0IsZUFBZTtFQUNmLGdCQUFnQjtFQUNoQixvQkFBb0I7RUFDcEIseUJBQXlCO0VBQ3pCLGlCQUFpQjtBQUNuQjs7QUFFQTtFQUNFLHFCQUFxQjtFQUNyQixtQkFBbUI7QUFDckI7O0FBRUE7RUFDRSx5Q0FBeUM7RUFDekMsb0JBQW9CO0VBQ3BCLGtCQUFrQjtFQUNsQixxQkFBcUI7RUFDckIsZUFBZTtFQUNmLGdCQUFnQjtFQUNoQixvQkFBb0I7RUFDcEIsaUJBQWlCO0VBQ2pCLHlCQUF5QjtFQUN6QixpQkFBaUI7RUFDakIsZ0JBQWdCO0VBQ2hCLFlBQVk7RUFDWixlQUFlO0VBQ2YsK0JBQStCO0VBQy9CLDZCQUE2QjtBQUMvQjs7QUFFQTtFQUNFLHlCQUF5QjtFQUN6QixxQkFBcUI7QUFDdkI7O0FBRUE7RUFDRSxlQUFlO0VBQ2YsZ0JBQWdCO0VBQ2hCLGlCQUFpQjtFQUNqQixxQkFBcUI7QUFDdkI7O0FBRUE7RUFDRSx3Q0FBd0M7RUFDeEMscUNBQXFDO0VBQ3JDLHFCQUFxQjtFQUNyQixpQkFBaUI7RUFDakIsb0JBQW9CO0VBQ3BCLGtCQUFrQjtFQUNsQixxQkFBcUI7RUFDckIsZUFBZTtFQUNmLGdCQUFnQjtFQUNoQixvQkFBb0I7RUFDcEIsaUJBQWlCO0VBQ2pCLHlCQUF5QjtFQUN6QixpQkFBaUI7RUFDakIsZ0JBQWdCO0VBQ2hCLFlBQVk7RUFDWixnQkFBZ0I7QUFDbEI7O0FBRUE7RUFDRSx5QkFBeUI7QUFDM0I7O0FBRUE7RUFDRSwyQkFBMkI7QUFDN0IiLCJmaWxlIjoic3JjL2FwcC9wb3N0L2NyZWF0ZS1wb3N0L2NyZWF0ZS1wb3N0LmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuYnRuQ3JlYXRlUG9zdCxcbi5idG5DcmVhdGVTdWJyZWRkaXQge1xuICBtYXJnaW4tdG9wOiA1cHg7XG59XG5cbi5wb3N0LWZvcm0ge1xuICBtYXJnaW46IDJweDtcbn1cblxuLmNvbW1lbnQtbm90aWZpY2F0aW9uIHtcbiAgbWFyZ2luLXRvcDogNXB4O1xufVxuXG4uY3JlYXRlLXBvc3QtbWFpbiB7XG4gIG1heC13aWR0aDogOTgwcHg7XG4gIG1hcmdpbjogMCBhdXRvO1xufVxuXG4uY3JlYXRlLXBvc3QtY29udGFpbmVyIHtcbiAgbWFyZ2luLXRvcDogMTBweDtcbiAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0taGYtYm9yZGVyKTtcbiAgbWFyZ2luLWJvdHRvbTogMTBweDtcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0taGYtc3VyZmFjZSk7XG4gIGNvbG9yOiB2YXIoLS1oZi10ZXh0LXNlY29uZGFyeSk7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgYm9yZGVyLXJhZGl1czogMTBweDtcbiAgYm94LXNoYWRvdzogdmFyKC0taGYtc2hhZG93KTtcbiAgcGFkZGluZzogMTBweDtcbn1cblxuLm1lZGlhLXVwbG9hZC1ibG9jayB7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XG4gIGdhcDogOHB4O1xufVxuXG4ubWVkaWEtaW5wdXQge1xuICBkaXNwbGF5OiBub25lO1xufVxuXG4ubWVkaWEtZHJvcHpvbmUge1xuICBib3JkZXI6IDFweCBkYXNoZWQgdmFyKC0taGYtYm9yZGVyLXN0cm9uZyk7XG4gIGJvcmRlci1yYWRpdXM6IDEwcHg7XG4gIGJhY2tncm91bmQ6ICMxNDE0MjA7XG4gIHBhZGRpbmc6IDE2cHg7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XG4gIGdhcDogNnB4O1xuICBjdXJzb3I6IHBvaW50ZXI7XG4gIGNvbG9yOiB2YXIoLS1oZi10ZXh0LXNlY29uZGFyeSk7XG59XG5cbi5tZWRpYS1kcm9wem9uZSBzdHJvbmcge1xuICBjb2xvcjogdmFyKC0taGYtdGV4dCk7XG59XG5cbi5tZWRpYS1kcm9wem9uZS5kcmFnLWFjdGl2ZSB7XG4gIGJvcmRlci1jb2xvcjogIzkzY2VmYjtcbiAgYmFja2dyb3VuZDogIzE3MTcyYTtcbn1cblxuLm1lZGlhLWRyb3B6b25lLnVwbG9hZGluZyB7XG4gIG9wYWNpdHk6IDAuODtcbiAgcG9pbnRlci1ldmVudHM6IG5vbmU7XG59XG5cbi5tZWRpYS1kcm9wem9uZTpmb2N1cyB7XG4gIG91dGxpbmU6IG5vbmU7XG4gIGJveC1zaGFkb3c6IHZhcigtLWhmLWZvY3VzLXJpbmcpO1xufVxuXG4uYXR0YWNobWVudC1yb3cge1xuICBkaXNwbGF5OiBmbGV4O1xuICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gIGdhcDogOHB4O1xuICBmbGV4LXdyYXA6IHdyYXA7XG59XG5cbi5jbGVhci1hdHRhY2htZW50IHtcbiAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0taGYtYm9yZGVyLXN0cm9uZyk7XG4gIGJvcmRlci1yYWRpdXM6IDk5OXB4O1xuICBiYWNrZ3JvdW5kOiB0cmFuc3BhcmVudDtcbiAgY29sb3I6IHZhcigtLWhmLXRleHQtc2Vjb25kYXJ5KTtcbiAgZm9udC1zaXplOiAxMXB4O1xuICBmb250LXdlaWdodDogNzAwO1xuICBsZXR0ZXItc3BhY2luZzogLjVweDtcbiAgdGV4dC10cmFuc2Zvcm06IHVwcGVyY2FzZTtcbiAgcGFkZGluZzogNHB4IDEycHg7XG59XG5cbi5jbGVhci1hdHRhY2htZW50OmhvdmVyIHtcbiAgY29sb3I6IHZhcigtLWhmLXRleHQpO1xuICBiYWNrZ3JvdW5kOiAjMWExYTI0O1xufVxuXG4uYnRuRGlzY2FyZCB7XG4gIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWhmLWJvcmRlci1zdHJvbmcpO1xuICBib3JkZXItcmFkaXVzOiA5OTlweDtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xuICB0ZXh0LWRlY29yYXRpb246IG5vbmU7XG4gIGZvbnQtc2l6ZTogMTJweDtcbiAgZm9udC13ZWlnaHQ6IDcwMDtcbiAgbGV0dGVyLXNwYWNpbmc6IC41cHg7XG4gIGxpbmUtaGVpZ2h0OiAyNHB4O1xuICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlO1xuICBwYWRkaW5nOiAzcHggMThweDtcbiAgbWluLXdpZHRoOiAxNDBweDtcbiAgaGVpZ2h0OiAzNnB4O1xuICBtYXJnaW4tdG9wOiA1cHg7XG4gIGNvbG9yOiB2YXIoLS1oZi10ZXh0LXNlY29uZGFyeSk7XG4gIGJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50O1xufVxuXG4uYnRuRGlzY2FyZDpob3ZlciB7XG4gIGJhY2tncm91bmQtY29sb3I6ICMxYTFhMjQ7XG4gIGNvbG9yOiB2YXIoLS1oZi10ZXh0KTtcbn1cblxuLmNyZWF0ZS1wb3N0LWhlYWRpbmcge1xuICBmb250LXNpemU6IDE4cHg7XG4gIGZvbnQtd2VpZ2h0OiA2MDA7XG4gIGxpbmUtaGVpZ2h0OiAyMnB4O1xuICBjb2xvcjogdmFyKC0taGYtdGV4dCk7XG59XG5cbi5idG5DcmVhdGVQb3N0IHtcbiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0taGYtc3VyZmFjZS1zb2Z0KTtcbiAgYm9yZGVyLWNvbG9yOiB2YXIoLS1oZi1ib3JkZXItc3Ryb25nKTtcbiAgY29sb3I6IHZhcigtLWhmLXRleHQpO1xuICBib3JkZXI6IDFweCBzb2xpZDtcbiAgYm9yZGVyLXJhZGl1czogOTk5cHg7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICBmb250LXNpemU6IDEycHg7XG4gIGZvbnQtd2VpZ2h0OiA3MDA7XG4gIGxldHRlci1zcGFjaW5nOiAuNXB4O1xuICBsaW5lLWhlaWdodDogMjRweDtcbiAgdGV4dC10cmFuc2Zvcm06IHVwcGVyY2FzZTtcbiAgcGFkZGluZzogM3B4IDE4cHg7XG4gIG1pbi13aWR0aDogMTQwcHg7XG4gIGhlaWdodDogMzZweDtcbiAgbWFyZ2luLWxlZnQ6IDhweDtcbn1cblxuLmJ0bkNyZWF0ZVBvc3Q6aG92ZXIge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjMWIxYjI4O1xufVxuXG5zbWFsbCB7XG4gIGNvbG9yOiB2YXIoLS1oZi10ZXh0LW11dGVkKTtcbn1cbiJdfQ== */";
     /***/
   },
 
@@ -2720,8 +2759,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         this.postService = postService;
         this.toastr = toastr;
         this.videoUploadService = videoUploadService;
-        this.isUploadingVideo = false;
-        this.uploadedVideoFileName = '';
+        this.isUploadingAttachment = false;
+        this.isDragActive = false;
+        this.uploadedAttachmentFileName = '';
+        this.uploadedAttachmentType = '';
+        this.acceptedFileTypes = '.jpg,.jpeg,.png,.gif,.webp,.heic,.heif,.mp4,.mov,.webm,.mkv';
         this.domainOptions = [{
           value: 'all',
           label: 'all'
@@ -2736,6 +2778,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           postName: '',
           url: '',
           videoKey: '',
+          imageKey: '',
           description: '',
           subredditName: ''
         };
@@ -2754,15 +2797,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "createPost",
         value: function createPost() {
-          var _this11 = this;
+          var _this12 = this;
 
           if (this.createPostForm.invalid) {
             this.toastr.error('Please fill in all required fields');
             return;
           }
 
-          if (this.isUploadingVideo) {
-            this.toastr.info('Video is still uploading. Please wait.');
+          if (this.isUploadingAttachment) {
+            this.toastr.info('Media upload is still in progress. Please wait.');
             return;
           }
 
@@ -2777,50 +2820,155 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           this.postPayload.subredditName = subredditName;
           this.postPayload.url = (this.createPostForm.get('url').value || '').trim();
           this.postPayload.description = this.createPostForm.get('description').value;
-          this.postService.createPost(this.postPayload).subscribe(function (data) {
-            _this11.toastr.success('Post created successfully');
+          this.postService.createPost(this.postPayload).subscribe(function () {
+            _this12.toastr.success('Post created successfully');
 
-            _this11.router.navigateByUrl('/');
+            _this12.router.navigateByUrl('/');
           }, function () {
-            _this11.toastr.error('Create post failed. Please login again and try once more.');
+            _this12.toastr.error('Create post failed. Please login again and try once more.');
           });
         }
       }, {
-        key: "onVideoSelected",
-        value: function onVideoSelected(event) {
-          var _this12 = this;
-
+        key: "onMediaSelected",
+        value: function onMediaSelected(event) {
           var input = event.target;
-          var file = input.files && input.files.length > 0 ? input.files[0] : null;
+          this.handleSelectedFiles(input.files);
+          input.value = '';
+        }
+      }, {
+        key: "onDropZoneClick",
+        value: function onDropZoneClick(fileInput) {
+          fileInput.click();
+        }
+      }, {
+        key: "onDragOver",
+        value: function onDragOver(event) {
+          event.preventDefault();
+          event.stopPropagation();
+          this.isDragActive = true;
+        }
+      }, {
+        key: "onDragLeave",
+        value: function onDragLeave(event) {
+          event.preventDefault();
+          event.stopPropagation();
+          this.isDragActive = false;
+        }
+      }, {
+        key: "onDrop",
+        value: function onDrop(event) {
+          var _a;
 
-          if (!file) {
-            return;
-          }
-
-          this.isUploadingVideo = true;
-          this.videoUploadService.createVideoUploadUrl(file.name, file.type).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["switchMap"])(function (uploadData) {
-            return _this12.videoUploadService.uploadVideo(uploadData.uploadUrl, file).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["tap"])(function () {
-              _this12.postPayload.videoKey = uploadData.videoKey;
-              _this12.uploadedVideoFileName = file.name;
-
-              _this12.toastr.success('Video uploaded successfully');
-            }));
-          }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["finalize"])(function () {
-            _this12.isUploadingVideo = false;
-            input.value = '';
-          })).subscribe({
-            error: function error() {
-              _this12.postPayload.videoKey = '';
-              _this12.uploadedVideoFileName = '';
-
-              _this12.toastr.error('Video upload failed');
-            }
-          });
+          event.preventDefault();
+          event.stopPropagation();
+          this.isDragActive = false;
+          this.handleSelectedFiles(((_a = event.dataTransfer) === null || _a === void 0 ? void 0 : _a.files) || null);
+        }
+      }, {
+        key: "clearAttachment",
+        value: function clearAttachment() {
+          this.postPayload.videoKey = '';
+          this.postPayload.imageKey = '';
+          this.uploadedAttachmentFileName = '';
+          this.uploadedAttachmentType = '';
         }
       }, {
         key: "discardPost",
         value: function discardPost() {
           this.router.navigateByUrl('/');
+        }
+      }, {
+        key: "handleSelectedFiles",
+        value: function handleSelectedFiles(files) {
+          if (!files || files.length === 0) {
+            return;
+          }
+
+          if (files.length > 1) {
+            this.toastr.info('Only one attachment is supported. Using the latest selected file.');
+          }
+
+          var file = files.item(files.length - 1);
+
+          if (!file) {
+            return;
+          }
+
+          var mediaType = this.detectMediaType(file);
+
+          if (!mediaType) {
+            this.toastr.error('Unsupported file type. Use jpg, jpeg, png, gif, webp, heic, mp4, mov, webm, or mkv.');
+            return;
+          }
+
+          if (this.uploadedAttachmentFileName) {
+            this.toastr.info("Replacing previous attachment: ".concat(this.uploadedAttachmentFileName));
+          }
+
+          this.uploadAttachment(file, mediaType);
+        }
+      }, {
+        key: "uploadAttachment",
+        value: function uploadAttachment(file, mediaType) {
+          var _this13 = this;
+
+          this.isUploadingAttachment = true;
+          this.videoUploadService.createMediaUploadUrl(file.name, file.type, mediaType).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["switchMap"])(function (uploadData) {
+            return _this13.videoUploadService.uploadFile(uploadData.uploadUrl, file).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["tap"])(function () {
+              _this13.postPayload.videoKey = '';
+              _this13.postPayload.imageKey = '';
+
+              if (mediaType === 'VIDEO') {
+                _this13.postPayload.videoKey = uploadData.objectKey;
+              } else {
+                _this13.postPayload.imageKey = uploadData.objectKey;
+              }
+
+              _this13.uploadedAttachmentFileName = file.name;
+              _this13.uploadedAttachmentType = mediaType.toLowerCase();
+
+              _this13.toastr.success("".concat(_this13.uploadedAttachmentType, " uploaded successfully"));
+            }));
+          }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["finalize"])(function () {
+            _this13.isUploadingAttachment = false;
+          })).subscribe({
+            error: function error() {
+              _this13.toastr.error('Attachment upload failed');
+            }
+          });
+        }
+      }, {
+        key: "detectMediaType",
+        value: function detectMediaType(file) {
+          var fileType = (file.type || '').toLowerCase();
+
+          if (this.isSupportedImage(fileType, file.name)) {
+            return 'IMAGE';
+          }
+
+          if (this.isSupportedVideo(fileType, file.name)) {
+            return 'VIDEO';
+          }
+
+          return null;
+        }
+      }, {
+        key: "isSupportedImage",
+        value: function isSupportedImage(fileType, fileName) {
+          if (['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'image/heic', 'image/heif'].includes(fileType)) {
+            return true;
+          }
+
+          return /\.(jpe?g|png|gif|webp|heic|heif)$/i.test(fileName || '');
+        }
+      }, {
+        key: "isSupportedVideo",
+        value: function isSupportedVideo(fileType, fileName) {
+          if (['video/mp4', 'video/quicktime', 'video/webm', 'video/x-matroska'].includes(fileType)) {
+            return true;
+          }
+
+          return /\.(mp4|mov|webm|mkv)$/i.test(fileName || '');
         }
       }]);
 
@@ -2867,7 +3015,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = ".view-post-main {\n  max-width: 980px;\n  margin: 0 auto;\n}\n\n.post-title {\n  font-size: 28px;\n  font-weight: bold;\n  opacity: 1;\n}\n\n.post-title:hover {\n  opacity: 0.85;\n}\n\n.subreddit-text {\n  font-weight: bold;\n}\n\n.post-url {\n  color: var(--hf-text);\n}\n\n.username {\n  color: var(--hf-text-muted);\n}\n\n.post-text {\n  margin-top: 10px;\n  color: var(--hf-text-secondary);\n}\n\n.post-video {\n  width: 100%;\n  max-height: 460px;\n  margin-top: 10px;\n  border-radius: 8px;\n  background: #000;\n}\n\n.post-actions {\n  display: flex;\n  justify-content: flex-end;\n  margin-top: 10px;\n}\n\n.post {\n  border: 1px solid var(--hf-border);\n  margin-top: 10px;\n  margin-bottom: 10px;\n  overflow: hidden;\n  background-color: var(--hf-surface);\n  color: var(--hf-text-secondary);\n  position: relative;\n  border-radius: 10px;\n  box-shadow: var(--hf-shadow);\n  padding: 10px;\n}\n\n.comment-submit {\n  border: 1px solid var(--hf-border-strong);\n  border-radius: 999px;\n  background-color: var(--hf-surface-soft);\n  color: var(--hf-text);\n  text-decoration: none;\n  font-size: 12px;\n  font-weight: 700;\n  letter-spacing: .5px;\n  line-height: 24px;\n  text-transform: uppercase;\n  padding: 3px 18px;\n  min-width: 120px;\n  height: 36px;\n}\n\n.comment-submit:hover {\n  background-color: #1b1b28;\n}\n\n.comment {\n  border: 1px solid var(--hf-border);\n  margin-bottom: 10px;\n  overflow: hidden;\n  background-color: var(--hf-surface-soft);\n  color: var(--hf-text-secondary);\n  position: relative;\n  border-radius: 8px;\n  padding: 8px;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcG9zdC92aWV3LXBvc3Qvdmlldy1wb3N0LmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxnQkFBZ0I7RUFDaEIsY0FBYztBQUNoQjs7QUFFQTtFQUNFLGVBQWU7RUFDZixpQkFBaUI7RUFDakIsVUFBVTtBQUNaOztBQUVBO0VBQ0UsYUFBYTtBQUNmOztBQUVBO0VBQ0UsaUJBQWlCO0FBQ25COztBQUVBO0VBQ0UscUJBQXFCO0FBQ3ZCOztBQUVBO0VBQ0UsMkJBQTJCO0FBQzdCOztBQUVBO0VBQ0UsZ0JBQWdCO0VBQ2hCLCtCQUErQjtBQUNqQzs7QUFFQTtFQUNFLFdBQVc7RUFDWCxpQkFBaUI7RUFDakIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixnQkFBZ0I7QUFDbEI7O0FBRUE7RUFDRSxhQUFhO0VBQ2IseUJBQXlCO0VBQ3pCLGdCQUFnQjtBQUNsQjs7QUFFQTtFQUNFLGtDQUFrQztFQUNsQyxnQkFBZ0I7RUFDaEIsbUJBQW1CO0VBQ25CLGdCQUFnQjtFQUNoQixtQ0FBbUM7RUFDbkMsK0JBQStCO0VBQy9CLGtCQUFrQjtFQUNsQixtQkFBbUI7RUFDbkIsNEJBQTRCO0VBQzVCLGFBQWE7QUFDZjs7QUFFQTtFQUNFLHlDQUF5QztFQUN6QyxvQkFBb0I7RUFDcEIsd0NBQXdDO0VBQ3hDLHFCQUFxQjtFQUNyQixxQkFBcUI7RUFDckIsZUFBZTtFQUNmLGdCQUFnQjtFQUNoQixvQkFBb0I7RUFDcEIsaUJBQWlCO0VBQ2pCLHlCQUF5QjtFQUN6QixpQkFBaUI7RUFDakIsZ0JBQWdCO0VBQ2hCLFlBQVk7QUFDZDs7QUFFQTtFQUNFLHlCQUF5QjtBQUMzQjs7QUFFQTtFQUNFLGtDQUFrQztFQUNsQyxtQkFBbUI7RUFDbkIsZ0JBQWdCO0VBQ2hCLHdDQUF3QztFQUN4QywrQkFBK0I7RUFDL0Isa0JBQWtCO0VBQ2xCLGtCQUFrQjtFQUNsQixZQUFZO0FBQ2QiLCJmaWxlIjoic3JjL2FwcC9wb3N0L3ZpZXctcG9zdC92aWV3LXBvc3QuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi52aWV3LXBvc3QtbWFpbiB7XG4gIG1heC13aWR0aDogOTgwcHg7XG4gIG1hcmdpbjogMCBhdXRvO1xufVxuXG4ucG9zdC10aXRsZSB7XG4gIGZvbnQtc2l6ZTogMjhweDtcbiAgZm9udC13ZWlnaHQ6IGJvbGQ7XG4gIG9wYWNpdHk6IDE7XG59XG5cbi5wb3N0LXRpdGxlOmhvdmVyIHtcbiAgb3BhY2l0eTogMC44NTtcbn1cblxuLnN1YnJlZGRpdC10ZXh0IHtcbiAgZm9udC13ZWlnaHQ6IGJvbGQ7XG59XG5cbi5wb3N0LXVybCB7XG4gIGNvbG9yOiB2YXIoLS1oZi10ZXh0KTtcbn1cblxuLnVzZXJuYW1lIHtcbiAgY29sb3I6IHZhcigtLWhmLXRleHQtbXV0ZWQpO1xufVxuXG4ucG9zdC10ZXh0IHtcbiAgbWFyZ2luLXRvcDogMTBweDtcbiAgY29sb3I6IHZhcigtLWhmLXRleHQtc2Vjb25kYXJ5KTtcbn1cblxuLnBvc3QtdmlkZW8ge1xuICB3aWR0aDogMTAwJTtcbiAgbWF4LWhlaWdodDogNDYwcHg7XG4gIG1hcmdpbi10b3A6IDEwcHg7XG4gIGJvcmRlci1yYWRpdXM6IDhweDtcbiAgYmFja2dyb3VuZDogIzAwMDtcbn1cblxuLnBvc3QtYWN0aW9ucyB7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGp1c3RpZnktY29udGVudDogZmxleC1lbmQ7XG4gIG1hcmdpbi10b3A6IDEwcHg7XG59XG5cbi5wb3N0IHtcbiAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0taGYtYm9yZGVyKTtcbiAgbWFyZ2luLXRvcDogMTBweDtcbiAgbWFyZ2luLWJvdHRvbTogMTBweDtcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0taGYtc3VyZmFjZSk7XG4gIGNvbG9yOiB2YXIoLS1oZi10ZXh0LXNlY29uZGFyeSk7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgYm9yZGVyLXJhZGl1czogMTBweDtcbiAgYm94LXNoYWRvdzogdmFyKC0taGYtc2hhZG93KTtcbiAgcGFkZGluZzogMTBweDtcbn1cblxuLmNvbW1lbnQtc3VibWl0IHtcbiAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0taGYtYm9yZGVyLXN0cm9uZyk7XG4gIGJvcmRlci1yYWRpdXM6IDk5OXB4O1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1oZi1zdXJmYWNlLXNvZnQpO1xuICBjb2xvcjogdmFyKC0taGYtdGV4dCk7XG4gIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcbiAgZm9udC1zaXplOiAxMnB4O1xuICBmb250LXdlaWdodDogNzAwO1xuICBsZXR0ZXItc3BhY2luZzogLjVweDtcbiAgbGluZS1oZWlnaHQ6IDI0cHg7XG4gIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XG4gIHBhZGRpbmc6IDNweCAxOHB4O1xuICBtaW4td2lkdGg6IDEyMHB4O1xuICBoZWlnaHQ6IDM2cHg7XG59XG5cbi5jb21tZW50LXN1Ym1pdDpob3ZlciB7XG4gIGJhY2tncm91bmQtY29sb3I6ICMxYjFiMjg7XG59XG5cbi5jb21tZW50IHtcbiAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0taGYtYm9yZGVyKTtcbiAgbWFyZ2luLWJvdHRvbTogMTBweDtcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0taGYtc3VyZmFjZS1zb2Z0KTtcbiAgY29sb3I6IHZhcigtLWhmLXRleHQtc2Vjb25kYXJ5KTtcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xuICBib3JkZXItcmFkaXVzOiA4cHg7XG4gIHBhZGRpbmc6IDhweDtcbn1cbiJdfQ== */";
+    __webpack_exports__["default"] = ".view-post-main {\n  max-width: 980px;\n  margin: 0 auto;\n}\n\n.post-title {\n  font-size: 28px;\n  font-weight: bold;\n  opacity: 1;\n}\n\n.post-title:hover {\n  opacity: 0.85;\n}\n\n.subreddit-text {\n  font-weight: bold;\n}\n\n.post-url {\n  color: var(--hf-text);\n}\n\n.username {\n  color: var(--hf-text-muted);\n}\n\n.post-text {\n  margin-top: 10px;\n  color: var(--hf-text-secondary);\n}\n\n.post-video,\n.post-image {\n  width: 100%;\n  max-height: 460px;\n  margin-top: 10px;\n  border-radius: 8px;\n  background: #000;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n\n.post-actions {\n  display: flex;\n  justify-content: flex-end;\n  margin-top: 10px;\n}\n\n.post {\n  border: 1px solid var(--hf-border);\n  margin-top: 10px;\n  margin-bottom: 10px;\n  overflow: hidden;\n  background-color: var(--hf-surface);\n  color: var(--hf-text-secondary);\n  position: relative;\n  border-radius: 10px;\n  box-shadow: var(--hf-shadow);\n  padding: 10px;\n}\n\n.comment-submit {\n  border: 1px solid var(--hf-border-strong);\n  border-radius: 999px;\n  background-color: var(--hf-surface-soft);\n  color: var(--hf-text);\n  text-decoration: none;\n  font-size: 12px;\n  font-weight: 700;\n  letter-spacing: .5px;\n  line-height: 24px;\n  text-transform: uppercase;\n  padding: 3px 18px;\n  min-width: 120px;\n  height: 36px;\n}\n\n.comment-submit:hover {\n  background-color: #1b1b28;\n}\n\n.comment {\n  border: 1px solid var(--hf-border);\n  margin-bottom: 10px;\n  overflow: hidden;\n  background-color: var(--hf-surface-soft);\n  color: var(--hf-text-secondary);\n  position: relative;\n  border-radius: 8px;\n  padding: 8px;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcG9zdC92aWV3LXBvc3Qvdmlldy1wb3N0LmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxnQkFBZ0I7RUFDaEIsY0FBYztBQUNoQjs7QUFFQTtFQUNFLGVBQWU7RUFDZixpQkFBaUI7RUFDakIsVUFBVTtBQUNaOztBQUVBO0VBQ0UsYUFBYTtBQUNmOztBQUVBO0VBQ0UsaUJBQWlCO0FBQ25COztBQUVBO0VBQ0UscUJBQXFCO0FBQ3ZCOztBQUVBO0VBQ0UsMkJBQTJCO0FBQzdCOztBQUVBO0VBQ0UsZ0JBQWdCO0VBQ2hCLCtCQUErQjtBQUNqQzs7QUFFQTs7RUFFRSxXQUFXO0VBQ1gsaUJBQWlCO0VBQ2pCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLG9CQUFpQjtLQUFqQixpQkFBaUI7QUFDbkI7O0FBRUE7RUFDRSxhQUFhO0VBQ2IseUJBQXlCO0VBQ3pCLGdCQUFnQjtBQUNsQjs7QUFFQTtFQUNFLGtDQUFrQztFQUNsQyxnQkFBZ0I7RUFDaEIsbUJBQW1CO0VBQ25CLGdCQUFnQjtFQUNoQixtQ0FBbUM7RUFDbkMsK0JBQStCO0VBQy9CLGtCQUFrQjtFQUNsQixtQkFBbUI7RUFDbkIsNEJBQTRCO0VBQzVCLGFBQWE7QUFDZjs7QUFFQTtFQUNFLHlDQUF5QztFQUN6QyxvQkFBb0I7RUFDcEIsd0NBQXdDO0VBQ3hDLHFCQUFxQjtFQUNyQixxQkFBcUI7RUFDckIsZUFBZTtFQUNmLGdCQUFnQjtFQUNoQixvQkFBb0I7RUFDcEIsaUJBQWlCO0VBQ2pCLHlCQUF5QjtFQUN6QixpQkFBaUI7RUFDakIsZ0JBQWdCO0VBQ2hCLFlBQVk7QUFDZDs7QUFFQTtFQUNFLHlCQUF5QjtBQUMzQjs7QUFFQTtFQUNFLGtDQUFrQztFQUNsQyxtQkFBbUI7RUFDbkIsZ0JBQWdCO0VBQ2hCLHdDQUF3QztFQUN4QywrQkFBK0I7RUFDL0Isa0JBQWtCO0VBQ2xCLGtCQUFrQjtFQUNsQixZQUFZO0FBQ2QiLCJmaWxlIjoic3JjL2FwcC9wb3N0L3ZpZXctcG9zdC92aWV3LXBvc3QuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi52aWV3LXBvc3QtbWFpbiB7XG4gIG1heC13aWR0aDogOTgwcHg7XG4gIG1hcmdpbjogMCBhdXRvO1xufVxuXG4ucG9zdC10aXRsZSB7XG4gIGZvbnQtc2l6ZTogMjhweDtcbiAgZm9udC13ZWlnaHQ6IGJvbGQ7XG4gIG9wYWNpdHk6IDE7XG59XG5cbi5wb3N0LXRpdGxlOmhvdmVyIHtcbiAgb3BhY2l0eTogMC44NTtcbn1cblxuLnN1YnJlZGRpdC10ZXh0IHtcbiAgZm9udC13ZWlnaHQ6IGJvbGQ7XG59XG5cbi5wb3N0LXVybCB7XG4gIGNvbG9yOiB2YXIoLS1oZi10ZXh0KTtcbn1cblxuLnVzZXJuYW1lIHtcbiAgY29sb3I6IHZhcigtLWhmLXRleHQtbXV0ZWQpO1xufVxuXG4ucG9zdC10ZXh0IHtcbiAgbWFyZ2luLXRvcDogMTBweDtcbiAgY29sb3I6IHZhcigtLWhmLXRleHQtc2Vjb25kYXJ5KTtcbn1cblxuLnBvc3QtdmlkZW8sXG4ucG9zdC1pbWFnZSB7XG4gIHdpZHRoOiAxMDAlO1xuICBtYXgtaGVpZ2h0OiA0NjBweDtcbiAgbWFyZ2luLXRvcDogMTBweDtcbiAgYm9yZGVyLXJhZGl1czogOHB4O1xuICBiYWNrZ3JvdW5kOiAjMDAwO1xuICBvYmplY3QtZml0OiBjb3Zlcjtcbn1cblxuLnBvc3QtYWN0aW9ucyB7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGp1c3RpZnktY29udGVudDogZmxleC1lbmQ7XG4gIG1hcmdpbi10b3A6IDEwcHg7XG59XG5cbi5wb3N0IHtcbiAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0taGYtYm9yZGVyKTtcbiAgbWFyZ2luLXRvcDogMTBweDtcbiAgbWFyZ2luLWJvdHRvbTogMTBweDtcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0taGYtc3VyZmFjZSk7XG4gIGNvbG9yOiB2YXIoLS1oZi10ZXh0LXNlY29uZGFyeSk7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgYm9yZGVyLXJhZGl1czogMTBweDtcbiAgYm94LXNoYWRvdzogdmFyKC0taGYtc2hhZG93KTtcbiAgcGFkZGluZzogMTBweDtcbn1cblxuLmNvbW1lbnQtc3VibWl0IHtcbiAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0taGYtYm9yZGVyLXN0cm9uZyk7XG4gIGJvcmRlci1yYWRpdXM6IDk5OXB4O1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1oZi1zdXJmYWNlLXNvZnQpO1xuICBjb2xvcjogdmFyKC0taGYtdGV4dCk7XG4gIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcbiAgZm9udC1zaXplOiAxMnB4O1xuICBmb250LXdlaWdodDogNzAwO1xuICBsZXR0ZXItc3BhY2luZzogLjVweDtcbiAgbGluZS1oZWlnaHQ6IDI0cHg7XG4gIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XG4gIHBhZGRpbmc6IDNweCAxOHB4O1xuICBtaW4td2lkdGg6IDEyMHB4O1xuICBoZWlnaHQ6IDM2cHg7XG59XG5cbi5jb21tZW50LXN1Ym1pdDpob3ZlciB7XG4gIGJhY2tncm91bmQtY29sb3I6ICMxYjFiMjg7XG59XG5cbi5jb21tZW50IHtcbiAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0taGYtYm9yZGVyKTtcbiAgbWFyZ2luLWJvdHRvbTogMTBweDtcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0taGYtc3VyZmFjZS1zb2Z0KTtcbiAgY29sb3I6IHZhcigtLWhmLXRleHQtc2Vjb25kYXJ5KTtcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xuICBib3JkZXItcmFkaXVzOiA4cHg7XG4gIHBhZGRpbmc6IDhweDtcbn1cbiJdfQ== */";
     /***/
   },
 
@@ -2960,24 +3108,59 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "postComment",
         value: function postComment() {
-          var _this13 = this;
+          var _this14 = this;
 
           this.commentPayload.text = this.commentForm.get('text').value;
           this.commentService.postComment(this.commentPayload).subscribe(function (data) {
-            _this13.commentForm.get('text').setValue('');
+            _this14.commentForm.get('text').setValue('');
 
-            _this13.getCommentsForPost();
+            _this14.getCommentsForPost();
           }, function (error) {
             Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(error);
           });
         }
       }, {
+        key: "hasVideo",
+        value: function hasVideo() {
+          var _a;
+
+          return !!((_a = this.post) === null || _a === void 0 ? void 0 : _a.videoUrl);
+        }
+      }, {
+        key: "getImageUrl",
+        value: function getImageUrl() {
+          if (!this.post) {
+            return null;
+          }
+
+          if (this.post.imageUrl) {
+            return this.post.imageUrl;
+          }
+
+          if (this.post.url && this.isLikelyImageUrl(this.post.url)) {
+            return this.post.url;
+          }
+
+          return null;
+        }
+      }, {
+        key: "isExternalLinkPost",
+        value: function isExternalLinkPost() {
+          var _a;
+
+          if (!((_a = this.post) === null || _a === void 0 ? void 0 : _a.url)) {
+            return false;
+          }
+
+          return !this.isLikelyImageUrl(this.post.url) && !this.post.imageUrl;
+        }
+      }, {
         key: "getPostById",
         value: function getPostById() {
-          var _this14 = this;
+          var _this15 = this;
 
           this.postService.getPost(this.postId).subscribe(function (data) {
-            _this14.post = data;
+            _this15.post = data;
           }, function (error) {
             Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(error);
           });
@@ -2985,13 +3168,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "getCommentsForPost",
         value: function getCommentsForPost() {
-          var _this15 = this;
+          var _this16 = this;
 
           this.commentService.getAllCommentsForPost(this.postId).subscribe(function (data) {
-            _this15.comments = data;
+            _this16.comments = data;
           }, function (error) {
             Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(error);
           });
+        }
+      }, {
+        key: "isLikelyImageUrl",
+        value: function isLikelyImageUrl(url) {
+          return /\.(png|jpe?g|gif|webp|bmp|svg|avif)(\?.*)?$/i.test(url);
         }
       }]);
 
@@ -3115,6 +3303,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "getImageUrl",
         value: function getImageUrl(post) {
+          if (post === null || post === void 0 ? void 0 : post.imageUrl) {
+            return post.imageUrl;
+          }
+
           if (!(post === null || post === void 0 ? void 0 : post.url)) {
             return null;
           }
@@ -3129,7 +3321,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "isExternalLinkPost",
         value: function isExternalLinkPost(post) {
-          return !!(post === null || post === void 0 ? void 0 : post.url) && !this.isLikelyImageUrl(post.url);
+          return !!(post === null || post === void 0 ? void 0 : post.url) && !this.isLikelyImageUrl(post.url) && !(post === null || post === void 0 ? void 0 : post.imageUrl);
         }
       }, {
         key: "sharePost",
@@ -3315,7 +3507,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony import */
 
 
-    var _environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! rxjs/operators */
+    "./node_modules/rxjs/_esm2015/operators/index.js");
+    /* harmony import */
+
+
+    var _environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
     /*! ../../environments/environment */
     "./src/environments/environment.ts");
 
@@ -3324,21 +3522,22 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         _classCallCheck(this, VideoUploadService);
 
         this.http = http;
-        this.apiBaseUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].apiBaseUrl;
+        this.apiBaseUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].apiBaseUrl;
       }
 
       _createClass(VideoUploadService, [{
-        key: "createVideoUploadUrl",
-        value: function createVideoUploadUrl(fileName, contentType) {
+        key: "createMediaUploadUrl",
+        value: function createMediaUploadUrl(fileName, contentType, mediaType) {
           var request = {
             fileName: fileName,
-            contentType: contentType
+            contentType: contentType,
+            mediaType: mediaType
           };
-          return this.http.post("".concat(this.apiBaseUrl, "/api/uploads/video/presign"), request);
+          return this.http.post("".concat(this.apiBaseUrl, "/api/uploads/media/presign"), request);
         }
       }, {
-        key: "uploadVideo",
-        value: function uploadVideo(uploadUrl, file) {
+        key: "uploadFile",
+        value: function uploadFile(uploadUrl, file) {
           var contentType = file.type && file.type.length > 0 ? file.type : 'application/octet-stream';
           return this.http.put(uploadUrl, file, {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
@@ -3346,6 +3545,21 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             }),
             responseType: 'text'
           });
+        }
+      }, {
+        key: "createVideoUploadUrl",
+        value: function createVideoUploadUrl(fileName, contentType) {
+          return this.createMediaUploadUrl(fileName, contentType, 'VIDEO').pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
+            return {
+              uploadUrl: response.uploadUrl,
+              videoKey: response.objectKey
+            };
+          }));
+        }
+      }, {
+        key: "uploadVideo",
+        value: function uploadVideo(uploadUrl, file) {
+          return this.uploadFile(uploadUrl, file);
         }
       }]);
 
@@ -3460,7 +3674,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     var VoteButtonComponent = /*#__PURE__*/function () {
       function VoteButtonComponent(voteService, authService, postService, toastr) {
-        var _this16 = this;
+        var _this17 = this;
 
         _classCallCheck(this, VoteButtonComponent);
 
@@ -3475,7 +3689,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           postId: undefined
         };
         this.authService.loggedIn.subscribe(function (data) {
-          return _this16.isLoggedIn = data;
+          return _this17.isLoggedIn = data;
         });
       }
 
@@ -3499,13 +3713,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "vote",
         value: function vote() {
-          var _this17 = this;
+          var _this18 = this;
 
           this.votePayload.postId = this.post.id;
           this.voteService.vote(this.votePayload).subscribe(function () {
-            _this17.updateVoteDetails();
+            _this18.updateVoteDetails();
           }, function (error) {
-            _this17.toastr.error(error.error.message);
+            _this18.toastr.error(error.error.message);
 
             Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["throwError"])(error);
           });
@@ -3513,10 +3727,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "updateVoteDetails",
         value: function updateVoteDetails() {
-          var _this18 = this;
+          var _this19 = this;
 
           this.postService.getPost(this.post.id).subscribe(function (post) {
-            _this18.post = post;
+            _this19.post = post;
           });
         }
       }]);
@@ -3764,12 +3978,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "createSubreddit",
         value: function createSubreddit() {
-          var _this19 = this;
+          var _this20 = this;
 
           this.subredditModel.name = this.createSubredditForm.get('title').value;
           this.subredditModel.description = this.createSubredditForm.get('description').value;
           this.subredditService.createSubreddit(this.subredditModel).subscribe(function (data) {
-            _this19.router.navigateByUrl('/list-subreddits');
+            _this20.router.navigateByUrl('/list-subreddits');
           }, function (error) {
             Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["throwError"])(error);
           });
@@ -3873,10 +4087,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(ListSubredditsComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this20 = this;
+          var _this21 = this;
 
           this.subredditService.getAllSubreddits().subscribe(function (data) {
-            _this20.subreddits = data;
+            _this21.subreddits = data;
           }, function (error) {
             Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(error);
           });
@@ -4051,7 +4265,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(TokenInterceptor, [{
         key: "intercept",
         value: function intercept(req, next) {
-          var _this21 = this;
+          var _this22 = this;
 
           if (req.url.indexOf('refresh') !== -1 || req.url.indexOf('login') !== -1) {
             return next.handle(req);
@@ -4062,7 +4276,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           if (jwtToken) {
             return next.handle(this.addToken(req, jwtToken)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["catchError"])(function (error) {
               if (error instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpErrorResponse"] && error.status === 403) {
-                return _this21.handleAuthErrors(req, next);
+                return _this22.handleAuthErrors(req, next);
               } else {
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(error);
               }
@@ -4074,23 +4288,23 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "handleAuthErrors",
         value: function handleAuthErrors(req, next) {
-          var _this22 = this;
+          var _this23 = this;
 
           if (!this.isTokenRefreshing) {
             this.isTokenRefreshing = true;
             this.refreshTokenSubject.next(null);
             return this.authService.refreshToken().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["switchMap"])(function (refreshTokenResponse) {
-              _this22.isTokenRefreshing = false;
+              _this23.isTokenRefreshing = false;
 
-              _this22.refreshTokenSubject.next(refreshTokenResponse.authenticationToken);
+              _this23.refreshTokenSubject.next(refreshTokenResponse.authenticationToken);
 
-              return next.handle(_this22.addToken(req, refreshTokenResponse.authenticationToken));
+              return next.handle(_this23.addToken(req, refreshTokenResponse.authenticationToken));
             }));
           } else {
             return this.refreshTokenSubject.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["filter"])(function (result) {
               return result !== null;
             }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["take"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["switchMap"])(function (res) {
-              return next.handle(_this22.addToken(req, _this22.authService.getJwtToken()));
+              return next.handle(_this23.addToken(req, _this23.authService.getJwtToken()));
             }));
           }
         }

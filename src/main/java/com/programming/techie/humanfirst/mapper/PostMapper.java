@@ -42,6 +42,7 @@ public abstract class PostMapper {
     @Mapping(target = "postName", source = "postRequest.postName")
     @Mapping(target = "url", source = "postRequest.url")
     @Mapping(target = "videoKey", source = "postRequest.videoKey")
+    @Mapping(target = "imageKey", source = "postRequest.imageKey")
     @Mapping(target = "subreddit", source = "subreddit")
     @Mapping(target = "voteCount", constant = "0")
     @Mapping(target = "user", source = "user")
@@ -51,12 +52,14 @@ public abstract class PostMapper {
     @Mapping(target = "postName", source = "postName")
     @Mapping(target = "url", source = "url")
     @Mapping(target = "videoUrl", expression = "java(resolveVideoUrl(post))")
+    @Mapping(target = "imageUrl", expression = "java(resolveImageUrl(post))")
     @Mapping(target = "description", source = "description")
     @Mapping(target = "subredditName", source = "subreddit.name")
     @Mapping(target = "userName", source = "user.username")
     @Mapping(target = "voteCount", source = "voteCount")
     @Mapping(target = "commentCount", expression = "java(commentCount(post))")
     @Mapping(target = "duration", expression = "java(getDuration(post))")
+    @Mapping(target = "createdAt", source = "createdDate")
     @Mapping(target = "upVote", expression = "java(isPostUpVoted(post))")
     @Mapping(target = "downVote", expression = "java(isPostDownVoted(post))")
     public abstract PostResponse mapToDto(Post post);
@@ -67,6 +70,10 @@ public abstract class PostMapper {
 
     String resolveVideoUrl(Post post) {
         return videoStorageService.generateViewUrl(post.getVideoKey());
+    }
+
+    String resolveImageUrl(Post post) {
+        return videoStorageService.generateViewUrl(post.getImageKey());
     }
 
     String getDuration(Post post) {
