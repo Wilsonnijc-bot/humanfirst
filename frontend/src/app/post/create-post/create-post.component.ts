@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PostService } from 'src/app/shared/post.service';
@@ -173,10 +174,24 @@ export class CreatePostComponent implements OnInit {
         this.isUploadingAttachment = false;
       })
     ).subscribe({
-      error: () => {
-        this.toastr.error('Attachment upload failed');
+      error: (error: HttpErrorResponse) => {
+        const errorMessage = this.extractUploadErrorMessage(error);
+        this.toastr.error(errorMessage);
       }
     });
+  }
+
+  private extractUploadErrorMessage(error: HttpErrorResponse): string {
+    const backendMessage = error?.error?.message || error?.message;
+    if (backendMessage) {
+      return backendMessage;
+    }
+
+    if (error?.status === 0) {
+      return 'Upload failed. Check network/S3 CORS configuration and try again.';
+    }
+
+    return 'Attachment upload failed';
   }
 
   private detectMediaType(file: File): MediaUploadType | null {

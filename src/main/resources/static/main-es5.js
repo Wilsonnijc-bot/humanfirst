@@ -2932,10 +2932,29 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["finalize"])(function () {
             _this13.isUploadingAttachment = false;
           })).subscribe({
-            error: function error() {
-              _this13.toastr.error('Attachment upload failed');
+            error: function error(_error2) {
+              var errorMessage = _this13.extractUploadErrorMessage(_error2);
+
+              _this13.toastr.error(errorMessage);
             }
           });
+        }
+      }, {
+        key: "extractUploadErrorMessage",
+        value: function extractUploadErrorMessage(error) {
+          var _a;
+
+          var backendMessage = ((_a = error === null || error === void 0 ? void 0 : error.error) === null || _a === void 0 ? void 0 : _a.message) || (error === null || error === void 0 ? void 0 : error.message);
+
+          if (backendMessage) {
+            return backendMessage;
+          }
+
+          if ((error === null || error === void 0 ? void 0 : error.status) === 0) {
+            return 'Upload failed. Check network/S3 CORS configuration and try again.';
+          }
+
+          return 'Attachment upload failed';
         }
       }, {
         key: "detectMediaType",
@@ -4252,6 +4271,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
     /*! rxjs/operators */
     "./node_modules/rxjs/_esm2015/operators/index.js");
+    /* harmony import */
+
+
+    var _environments_environment__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    /*! ../environments/environment */
+    "./src/environments/environment.ts");
 
     var TokenInterceptor = /*#__PURE__*/function () {
       function TokenInterceptor(authService) {
@@ -4267,6 +4292,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         value: function intercept(req, next) {
           var _this22 = this;
 
+          // Presigned S3 uploads must not include app JWT headers.
+          if (!this.isApiRequest(req.url)) {
+            return next.handle(req);
+          }
+
           if (req.url.indexOf('refresh') !== -1 || req.url.indexOf('login') !== -1) {
             return next.handle(req);
           }
@@ -4277,13 +4307,30 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             return next.handle(this.addToken(req, jwtToken)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["catchError"])(function (error) {
               if (error instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpErrorResponse"] && error.status === 403) {
                 return _this22.handleAuthErrors(req, next);
-              } else {
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(error);
               }
+
+              return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(error);
             }));
           }
 
           return next.handle(req);
+        }
+      }, {
+        key: "isApiRequest",
+        value: function isApiRequest(url) {
+          if (!url) {
+            return false;
+          }
+
+          if (url.startsWith('/api/')) {
+            return true;
+          }
+
+          if (_environments_environment__WEBPACK_IMPORTED_MODULE_6__["environment"].apiBaseUrl && _environments_environment__WEBPACK_IMPORTED_MODULE_6__["environment"].apiBaseUrl.length > 0) {
+            return url.startsWith(_environments_environment__WEBPACK_IMPORTED_MODULE_6__["environment"].apiBaseUrl + '/api/');
+          }
+
+          return false;
         }
       }, {
         key: "handleAuthErrors",
@@ -4300,13 +4347,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
               return next.handle(_this23.addToken(req, refreshTokenResponse.authenticationToken));
             }));
-          } else {
-            return this.refreshTokenSubject.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["filter"])(function (result) {
-              return result !== null;
-            }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["take"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["switchMap"])(function (res) {
-              return next.handle(_this23.addToken(req, _this23.authService.getJwtToken()));
-            }));
           }
+
+          return this.refreshTokenSubject.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["filter"])(function (result) {
+            return result !== null;
+          }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["take"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["switchMap"])(function () {
+            return next.handle(_this23.addToken(req, _this23.authService.getJwtToken()));
+          }));
         }
       }, {
         key: "addToken",

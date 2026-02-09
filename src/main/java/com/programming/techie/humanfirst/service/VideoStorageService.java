@@ -41,7 +41,9 @@ public class VideoStorageService {
             "video/mp4",
             "video/quicktime",
             "video/webm",
-            "video/x-matroska"
+            "video/x-matroska",
+            "video/mkv",
+            "application/x-matroska"
     );
 
     private final S3Presigner s3Presigner;
@@ -117,8 +119,12 @@ public class VideoStorageService {
     }
 
     private String normalizeContentType(String fileName, String contentType) {
-        if (contentType != null && !contentType.isBlank()) {
-            return contentType.toLowerCase(Locale.ROOT).split(";")[0].trim();
+        String normalized = contentType == null ? "" : contentType.toLowerCase(Locale.ROOT).split(";")[0].trim();
+
+        if (!normalized.isBlank()
+                && !"application/octet-stream".equals(normalized)
+                && !"binary/octet-stream".equals(normalized)) {
+            return normalized;
         }
 
         String extension = getFileExtension(fileName);
@@ -132,7 +138,7 @@ public class VideoStorageService {
             case "mp4" -> "video/mp4";
             case "mov" -> "video/quicktime";
             case "webm" -> "video/webm";
-            case "mkv" -> "video/x-matroska";
+            case "mkv" -> "application/x-matroska";
             default -> "application/octet-stream";
         };
     }
