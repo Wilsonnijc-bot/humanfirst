@@ -1,27 +1,146 @@
-/* You can add global styles to this file, and also import other style files */
-html{    
-  padding: 0;
-  height: 100%;  
-}
-body{
-  margin-top: 63px;
-  height: 100%; 
+:root {
+  --hf-bg: #0b0b0f;
+  --hf-surface: #12121a;
+  --hf-surface-soft: #111118;
+  --hf-border: #1f1f2a;
+  --hf-border-strong: #2a2a39;
+  --hf-text: #ffffff;
+  --hf-text-secondary: #b8b8c7;
+  --hf-text-muted: #8a8aa0;
+  --hf-link: #cbd5ff;
+  --hf-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --hf-focus-ring: 0 0 0 2px rgba(147, 206, 251, 0.4);
 }
 
-input.ng-invalid.ng-touched {
-  border: 1px solid red;
+html {
+  padding: 0;
+  min-height: 100%;
+  background-color: var(--hf-bg);
+}
+
+body {
+  margin-top: 72px;
+  min-height: 100%;
+  background-color: var(--hf-bg);
+  color: var(--hf-text-secondary);
+}
+
+a {
+  color: var(--hf-link);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: var(--hf-text);
+  text-decoration: underline;
+}
+
+hr {
+  border-top: 1px solid var(--hf-border) !important;
+}
+
+.card,
+.dropdown-menu,
+.modal-content,
+.popover,
+.toast,
+.list-group-item {
+  background: var(--hf-surface);
+  border: 1px solid var(--hf-border);
+  color: var(--hf-text-secondary);
+  box-shadow: var(--hf-shadow);
+}
+
+.card-header,
+.card-footer {
+  background: var(--hf-surface-soft);
+  border-color: var(--hf-border);
+  color: var(--hf-text);
+}
+
+.dropdown-item {
+  color: var(--hf-text-secondary);
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: var(--hf-border);
+  color: var(--hf-text);
+}
+
+.tooltip-inner {
+  background-color: var(--hf-surface);
+  color: var(--hf-text);
+  border: 1px solid var(--hf-border);
+}
+
+.form-control,
+input,
+textarea,
+select {
+  background-color: #0f0f16;
+  border: 1px solid var(--hf-border);
+  color: var(--hf-text);
+}
+
+.form-control::placeholder,
+input::placeholder,
+textarea::placeholder {
+  color: var(--hf-text-muted);
+}
+
+.form-control:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  background-color: #141420;
+  color: var(--hf-text);
+  border-color: #5e678f;
+  box-shadow: var(--hf-focus-ring);
+}
+
+select option {
+  background-color: #111118;
+  color: var(--hf-text);
+}
+
+.btn,
+button {
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.btn-primary {
+  background-color: var(--hf-surface-soft);
+  border-color: var(--hf-border-strong);
+  color: var(--hf-text);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #1c1c28;
+  border-color: #363649;
+}
+
+.btn-outline-primary {
+  background: transparent;
+  border-color: var(--hf-border-strong);
+  color: var(--hf-text-secondary);
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+  background-color: var(--hf-border);
+  color: var(--hf-text);
 }
 
 .login,
 .sign-up {
-  background-color: #0079D3;
-  border-color: #0079D3;
-  color: aliceblue;
-  fill: #0079D3;
-  border: 1px solid;
-  border-radius: 4px;
+  background-color: var(--hf-surface-soft);
+  border: 1px solid var(--hf-border-strong);
+  color: var(--hf-text);
+  border-radius: 6px;
   text-align: center;
-  letter-spacing: 1px;
   text-decoration: none;
   font-size: 12px;
   font-weight: 700;
@@ -30,4 +149,52 @@ input.ng-invalid.ng-touched {
   text-transform: uppercase;
   padding: 3px 16px;
   opacity: 1;
+}
+
+.login:hover,
+.sign-up:hover,
+.login:focus,
+.sign-up:focus {
+  background-color: #1c1c28;
+  color: var(--hf-text);
+  text-decoration: none;
+}
+
+input.ng-invalid.ng-touched {
+  border: 1px solid #ff5c7c;
+}
+
+.text-muted {
+  color: var(--hf-text-muted) !important;
+}
+
+.text-danger {
+  color: #ff8ea1 !important;
+}
+
+.text-success {
+  color: #86decf !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--hf-text);
+}
+
+label,
+.col-form-label {
+  color: var(--hf-text-secondary);
+}
+
+small {
+  color: var(--hf-text-muted);
+}
+
+b,
+strong {
+  color: var(--hf-text);
 }

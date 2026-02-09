@@ -7,7 +7,7 @@
           <h4>Account Verification</h4>
         </div>
         <div class="card-body text-center">
-          <p [ngClass]="isError ? 'text-danger' : 'text-success'">{{ message }}</p>
+          <p class="verification-message" [class.is-error]="isError">{{ message }}</p>
           <a routerLink="/login" class="btn btn-primary mt-2">Go to Login</a>
         </div>
       </div>

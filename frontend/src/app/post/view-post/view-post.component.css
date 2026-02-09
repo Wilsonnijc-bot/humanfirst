@@ -10,7 +10,7 @@
 }
 
 .post-title:hover {
-  opacity: 0.6;
+  opacity: 0.85;
 }
 
 .subreddit-text {
@@ -18,22 +18,23 @@
 }
 
 .post-url {
-  color: black;
+  color: var(--hf-text);
 }
 
 .username {
-  color: gray;
+  color: var(--hf-text-muted);
 }
 
 .post-text {
   margin-top: 10px;
+  color: var(--hf-text-secondary);
 }
 
 .post-video {
   width: 100%;
   max-height: 460px;
   margin-top: 10px;
-  border-radius: 6px;
+  border-radius: 8px;
   background: #000;
 }
 
@@ -44,26 +45,45 @@
 }
 
 .post {
-  --post-line-color: #ccc;
-  border: 1px solid #ccc;
+  border: 1px solid var(--hf-border);
   margin-top: 10px;
   margin-bottom: 10px;
   overflow: hidden;
-  background-color: rgba(255,255,255,0.8);
-  color: #878A8C;
+  background-color: var(--hf-surface);
+  color: var(--hf-text-secondary);
   position: relative;
-  border-radius: 4px;
-  padding: 5px;
+  border-radius: 10px;
+  box-shadow: var(--hf-shadow);
+  padding: 10px;
+}
+
+.comment-submit {
+  border: 1px solid var(--hf-border-strong);
+  border-radius: 999px;
+  background-color: var(--hf-surface-soft);
+  color: var(--hf-text);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  line-height: 24px;
+  text-transform: uppercase;
+  padding: 3px 18px;
+  min-width: 120px;
+  height: 36px;
+}
+
+.comment-submit:hover {
+  background-color: #1b1b28;
 }
 
 .comment {
-  --post-line-color: #ccc;
-  border: 1px solid #ccc;
+  border: 1px solid var(--hf-border);
   margin-bottom: 10px;
   overflow: hidden;
-  background-color: rgba(255,255,255,0.8);
-  color: #878A8C;
+  background-color: var(--hf-surface-soft);
+  color: var(--hf-text-secondary);
   position: relative;
-  border-radius: 4px;
-  padding: 5px;
+  border-radius: 8px;
+  padding: 8px;
 }

@@ -5,9 +5,9 @@
 }
 
 .vote-btn {
-    border: 1px solid #d5d7da;
-    background-color: #ffffff;
-    color: #4f5459;
+    border: 1px solid var(--hf-border-strong);
+    background-color: var(--hf-surface-soft);
+    color: var(--hf-text-secondary);
     border-radius: 18px;
     padding: 5px 9px;
     cursor: pointer;
@@ -17,15 +17,16 @@
 }
 
 .vote-btn:hover {
-    background-color: #f4f6f8;
+    background-color: #1b1b28;
+    color: var(--hf-text);
 }
 
 .vote-btn.active.like-btn {
-    border-color: #2e7d32;
-    color: #2e7d32;
+    border-color: #86decf;
+    color: #86decf;
 }
 
 .vote-btn.active.dislike-btn {
-    border-color: #c62828;
-    color: #c62828;
+    border-color: #f08ca8;
+    color: #f08ca8;
 }

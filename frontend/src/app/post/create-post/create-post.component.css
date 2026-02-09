@@ -18,64 +18,70 @@
 
 .create-post-container {
   margin-top: 10px;
-  --post-line-color: #ccc;
-  border: 1px solid #ccc;
+  border: 1px solid var(--hf-border);
   margin-bottom: 10px;
   overflow: hidden;
-  background-color: rgba(255, 255, 255, 0.8);
-  color: #878A8C;
+  background-color: var(--hf-surface);
+  color: var(--hf-text-secondary);
   position: relative;
-  border-radius: 4px;
-  padding: 5px;
+  border-radius: 10px;
+  box-shadow: var(--hf-shadow);
+  padding: 10px;
 }
 
 .btnDiscard {
-    fill: #0079D3;
-    border: 1px solid;
-    border-radius: 4px;
-    text-align: center;
-    letter-spacing: 1px;
-    text-decoration: none;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: .5px;
-    line-height: 24px;
-    text-transform: uppercase;
-    padding: 3px 16px;
-    opacity: 1;
-    width: 288px;
-    height: 34px;
-    margin-top: 5px;
-    color: #0079D3;
-    background-color: transparent;
-  }
+  border: 1px solid var(--hf-border-strong);
+  border-radius: 999px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  line-height: 24px;
+  text-transform: uppercase;
+  padding: 3px 18px;
+  min-width: 140px;
+  height: 36px;
+  margin-top: 5px;
+  color: var(--hf-text-secondary);
+  background-color: transparent;
+}
+
+.btnDiscard:hover {
+  background-color: #1a1a24;
+  color: var(--hf-text);
+}
 
 .create-post-heading {
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 22px;
-  color: #1c1c1c;
-  -ms-flex: 1;
-  flex: 1;
+  color: var(--hf-text);
 }
 
 .btnCreatePost {
-    background-color: #0079D3;
-    border-color: #0079D3;
-    color: aliceblue;
-    fill: #0079D3;
-    border: 1px solid;
-    border-radius: 4px;
-    text-align: center;
-    letter-spacing: 1px;
-    text-decoration: none;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: .5px;
-    line-height: 24px;
-    text-transform: uppercase;
-    padding: 3px 16px;
-    opacity: 1;
-    width: 288px;
-    height: 34px;
-  }
+  background-color: var(--hf-surface-soft);
+  border-color: var(--hf-border-strong);
+  color: var(--hf-text);
+  border: 1px solid;
+  border-radius: 999px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  line-height: 24px;
+  text-transform: uppercase;
+  padding: 3px 18px;
+  min-width: 140px;
+  height: 36px;
+  margin-left: 8px;
+}
+
+.btnCreatePost:hover {
+  background-color: #1b1b28;
+}
+
+small {
+  color: var(--hf-text-muted);
+}

@@ -1,5 +1,5 @@
 <header>
-    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light hf-navbar">
+    <nav class="navbar fixed-top navbar-expand-lg hf-navbar">
         <div class="hf-navbar-inner">
             <a aria-label="Home" class="logo" routerLink="/">
                 <span class="reddit-text">
@@ -25,8 +25,8 @@
                 </div>
 
                 <div *ngIf="!isLoggedIn" class="auth-links">
-                    <a routerLink="/sign-up" class="sign-up">Sign up</a>
-                    <a routerLink="/login" class="login">Login</a>
+                    <a routerLink="/sign-up" class="hf-auth-link sign-up">Sign up</a>
+                    <a routerLink="/login" class="hf-auth-link login">Login</a>
                 </div>
             </div>
         </div>

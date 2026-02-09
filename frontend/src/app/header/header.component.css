@@ -1,9 +1,9 @@
-header {
-    border-radius: 1px solid;
-}
-
 .hf-navbar {
-    border-bottom: 1px solid #edeff1;
+    border-bottom: 1px solid var(--hf-border);
+    background-color: rgba(10, 10, 10, 0.96);
+    backdrop-filter: blur(8px);
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
 
 .hf-navbar-inner {
@@ -15,10 +15,15 @@ header {
 }
 
 .reddit-text {
-    font-weight: 700;
-    font-size: 32px;
-    line-height: 1.1;
-    color: #1c1c1c;
+    font-weight: 800;
+    font-size: 40px;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    background: linear-gradient(90deg, #86DECF 0%, #93CEFB 45%, #BCB6FB 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
 }
 
 .logo {
@@ -45,12 +50,12 @@ header {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    height: 34px;
+    height: 36px;
     padding: 0 14px;
     border-radius: 999px;
-    border: 1px solid #0079d3;
-    background-color: #0079d3;
-    color: #ffffff;
+    border: 1px solid var(--hf-border-strong);
+    background-color: var(--hf-surface-soft);
+    color: var(--hf-text);
     font-size: 13px;
     font-weight: 700;
     text-decoration: none;
@@ -59,54 +64,41 @@ header {
 
 .create-link:hover,
 .create-link:focus {
-    color: #ffffff;
+    color: var(--hf-text);
     text-decoration: none;
-    opacity: 0.9;
+    background-color: #1a1a24;
 }
 
-.create-link:focus {
-    outline: 2px solid #80bdff;
-    outline-offset: 2px;
+.create-link:focus,
+.userdetails:focus,
+.hf-auth-link:focus {
+    outline: none;
+    box-shadow: var(--hf-focus-ring);
 }
 
-.login,
-.sign-up {
+.hf-auth-link {
+    border-radius: 999px;
+    border: 1px solid var(--hf-border-strong);
+    height: 36px;
+    line-height: 34px;
+    min-width: 88px;
+}
+
+.hf-auth-link.login {
     background-color: transparent;
-    border-color: #0079D3;
-    color: #0079D3;
-    fill: #0079D3;
-    border: 1px solid;
-    border-radius: 4px;
-    box-sizing: border-box;
-    text-align: center;
-    text-decoration: none;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: .5px;
-    line-height: 24px;
-    text-transform: uppercase;
-    padding: 3px 16px;
-    opacity: 1;
+    color: var(--hf-text-secondary);
 }
 
-.sign-up {
-    background-color: #0079D3;
-    border-color: #0079D3;
-    color: aliceblue;
-}
-
-.sign-up:hover {
-    opacity: 0.6;
+.hf-auth-link.sign-up {
+    background-color: var(--hf-surface-soft);
+    color: var(--hf-text);
 }
 
 .userdetails {
     background-color: transparent;
-    border-color: #0079D3;
-    color: #0079D3;
-    fill: #0079D3;
-    border: 1px solid;
-    border-radius: 4px;
-    box-sizing: border-box;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    color: var(--hf-text-secondary);
     text-align: center;
     text-decoration: none;
     font-size: 12px;
@@ -114,17 +106,16 @@ header {
     letter-spacing: .5px;
     line-height: 24px;
     text-transform: uppercase;
-    padding: 3px 16px;
+    padding: 5px 12px;
     opacity: 1;
-    border: 0;
 }
 
 .userdetails:hover {
-    border: 1px solid;
+    border-color: var(--hf-border-strong);
+    background-color: #171722;
 }
 
 .dropdown-item {
-    background-color: #f8f9fa;
     font-size: 14px;
     font-weight: 500;
     line-height: 18px;
@@ -132,24 +123,22 @@ header {
     vertical-align: middle;
 }
 
-.dropdown-item:hover {
-    background-color: #0079D3;
-}
-
-.dropdown-menu {
-    background-color: #f8f9fa;
-}
-
 .account-icon {
-    border-radius: 4px;
-    margin-right: 5px;
+    border-radius: 999px;
+    margin-right: 6px;
     max-height: 24px;
     max-width: 24px;
 }
 
+@media (max-width: 991px) {
+    .reddit-text {
+        font-size: 32px;
+    }
+}
+
 @media (max-width: 767px) {
     .reddit-text {
-        font-size: 24px;
+        font-size: 30px;
     }
 
     .create-link {
@@ -160,8 +149,8 @@ header {
         display: none;
     }
 
-    .login,
-    .sign-up {
-        padding: 3px 10px;
+    .hf-auth-link {
+        min-width: auto;
+        padding: 0 10px;
     }
 }

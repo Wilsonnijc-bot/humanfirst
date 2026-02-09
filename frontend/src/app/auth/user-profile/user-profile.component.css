@@ -1,0 +1,31 @@
+.profile-wrapper {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.profile-summary {
+  border: 1px solid var(--hf-border);
+  border-radius: 10px;
+  background: var(--hf-surface);
+  color: var(--hf-text-secondary);
+  padding: 14px;
+  box-shadow: var(--hf-shadow);
+}
+
+.profile-section-title {
+  color: var(--hf-text);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.profile-comment {
+  border: 1px solid var(--hf-border);
+  border-radius: 8px;
+  background: var(--hf-surface-soft);
+  color: var(--hf-text-secondary);
+  padding: 10px;
+}
+
+.username {
+  color: var(--hf-text-muted);
+}

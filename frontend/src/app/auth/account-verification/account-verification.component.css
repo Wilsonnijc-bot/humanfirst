@@ -1,3 +1,11 @@
 .verification-section {
   margin-top: 30px;
 }
+
+.verification-message {
+  color: #86decf;
+}
+
+.verification-message.is-error {
+  color: #ff8ea1;
+}
