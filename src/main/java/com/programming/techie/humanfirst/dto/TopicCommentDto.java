@@ -22,6 +22,7 @@ public class TopicCommentDto {
     private String duration;
     private Integer upvoteCount;
     private boolean upVotedByCurrentUser;
+    private boolean ownedByCurrentUser;
     private TopicStance stance;
 
     @Builder.Default

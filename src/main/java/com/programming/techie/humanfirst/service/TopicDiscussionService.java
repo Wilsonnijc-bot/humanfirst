@@ -122,7 +122,7 @@ public class TopicDiscussionService {
 
         TopicComment saved = topicCommentRepository.save(comment);
         registerCommentStanceVote(topicWeek, currentUser, stance);
-        return mapComment(saved, Collections.emptySet());
+        return mapComment(saved, Collections.emptySet(), currentUser);
     }
 
     public TopicCommentUpvoteResponse toggleCommentUpvote(Long commentId) {
@@ -194,7 +194,7 @@ public class TopicDiscussionService {
                 .orElseGet(HashSet::new);
 
         List<TopicComment> allComments = topicCommentRepository.findAllByTopicWeekOrderByCreatedDateAsc(topicWeek);
-        CommentSplit commentSplit = buildCommentTree(allComments, upvotedCommentIds);
+        CommentSplit commentSplit = buildCommentTree(allComments, upvotedCommentIds, currentUser.orElse(null));
 
         List<TopicSubdivisionDto> subdivisions = topicWeek.getSubdivisions() == null
                 ? Collections.emptyList()
@@ -220,12 +220,14 @@ public class TopicDiscussionService {
                 .build();
     }
 
-    private CommentSplit buildCommentTree(List<TopicComment> comments, Set<Long> upvotedCommentIds) {
+    private CommentSplit buildCommentTree(List<TopicComment> comments,
+                                          Set<Long> upvotedCommentIds,
+                                          User currentUser) {
         Map<Long, TopicCommentDto> dtoById = new LinkedHashMap<>();
         List<TopicCommentDto> proRoots = new ArrayList<>();
         List<TopicCommentDto> conRoots = new ArrayList<>();
 
-        comments.forEach(comment -> dtoById.put(comment.getTopicCommentId(), mapComment(comment, upvotedCommentIds)));
+        comments.forEach(comment -> dtoById.put(comment.getTopicCommentId(), mapComment(comment, upvotedCommentIds, currentUser)));
 
         comments.forEach(comment -> {
             TopicCommentDto dto = dtoById.get(comment.getTopicCommentId());
@@ -259,8 +261,13 @@ public class TopicDiscussionService {
         comments.forEach(comment -> sortCommentTree(comment.getReplies(), comparator));
     }
 
-    private TopicCommentDto mapComment(TopicComment comment, Set<Long> upvotedCommentIds) {
+    private TopicCommentDto mapComment(TopicComment comment,
+                                       Set<Long> upvotedCommentIds,
+                                       User currentUser) {
         Long commentId = comment.getTopicCommentId();
+        boolean ownedByCurrentUser = currentUser != null
+                && comment.getUser() != null
+                && Objects.equals(comment.getUser().getUserId(), currentUser.getUserId());
         return TopicCommentDto.builder()
                 .id(commentId)
                 .text(comment.getText())
@@ -269,6 +276,7 @@ public class TopicDiscussionService {
                 .duration(getDuration(comment.getCreatedDate()))
                 .upvoteCount(comment.getUpvoteCount() == null ? 0 : comment.getUpvoteCount())
                 .upVotedByCurrentUser(commentId != null && upvotedCommentIds.contains(commentId))
+                .ownedByCurrentUser(ownedByCurrentUser)
                 .stance(comment.getStance())
                 .replies(new ArrayList<>())
                 .build();

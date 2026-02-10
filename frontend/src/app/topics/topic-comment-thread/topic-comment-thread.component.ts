@@ -119,6 +119,10 @@ export class TopicCommentThreadComponent {
   }
 
   canDeleteComment(comment: TopicComment): boolean {
+    if (typeof comment?.ownedByCurrentUser === 'boolean') {
+      return comment.ownedByCurrentUser;
+    }
+
     const current = (this.currentUsername || '').trim().toLowerCase();
     const author = (comment?.userName || '').trim().toLowerCase();
     return !!current && current === author;

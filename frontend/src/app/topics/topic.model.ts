@@ -25,6 +25,7 @@ export interface TopicComment {
   duration: string;
   upvoteCount: number;
   upVotedByCurrentUser: boolean;
+  ownedByCurrentUser?: boolean;
   stance: TopicStance;
   replies: TopicComment[];
 }
