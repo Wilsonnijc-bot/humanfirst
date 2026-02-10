@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -51,6 +52,7 @@ public class AuthService {
         String normalizedUsername = registerRequest.getUsername() == null ? "" : registerRequest.getUsername().trim();
         String normalizedEmail = registerRequest.getEmail() == null ? "" : registerRequest.getEmail().trim();
 
+        cleanupAllPendingRegistrations();
         cleanupPendingConflicts(normalizedUsername, normalizedEmail);
 
         if (userRepository.existsByUsernameIgnoreCase(normalizedUsername)) {
@@ -148,6 +150,19 @@ public class AuthService {
             return "https://humanfirst-0dc0273c37c7.herokuapp.com";
         }
         return rawBaseUrl.endsWith("/") ? rawBaseUrl.substring(0, rawBaseUrl.length() - 1) : rawBaseUrl;
+    }
+
+    private void cleanupAllPendingRegistrations() {
+        List<User> pendingUsers = userRepository.findAllByEnabledFalseOrderByCreatedAsc();
+        if (pendingUsers.isEmpty()) {
+            return;
+        }
+
+        pendingUsers.stream()
+                .map(User::getUserId)
+                .forEach(this::deletePendingRegistrationByUserId);
+
+        log.info("Deleted {} pending registrations before processing a new signup", pendingUsers.size());
     }
 
     private void cleanupPendingConflicts(String username, String email) {

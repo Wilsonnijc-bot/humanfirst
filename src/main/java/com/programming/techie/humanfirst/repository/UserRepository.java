@@ -32,6 +32,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     boolean existsByEmailIgnoreCase(String email);
 
+    List<User> findAllByEnabledFalseOrderByCreatedAsc();
+
     @Query("select u from User u where u.enabled = false and (u.created is null or u.created < :cutoff)")
     List<User> findStalePendingUsers(@Param("cutoff") Instant cutoff);
 }
