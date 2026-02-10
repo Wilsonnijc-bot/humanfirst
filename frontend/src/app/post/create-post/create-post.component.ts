@@ -9,6 +9,8 @@ import { MediaUploadType, VideoUploadService } from 'src/app/shared/video-upload
 import { finalize, switchMap, tap } from 'rxjs/operators';
 import { CommunityService } from 'src/app/community/community.service';
 import { CommunitySummary } from 'src/app/community/community.model';
+import { SubredditService } from 'src/app/subreddit/subreddit.service';
+import { SubredditModel } from 'src/app/subreddit/subreddit-response';
 
 @Component({
   selector: 'app-create-post',
@@ -20,7 +22,9 @@ export class CreatePostComponent implements OnInit {
   createPostForm: FormGroup;
   postPayload: CreatePostPayload;
   communityOptions: CommunitySummary[] = [];
+  subredditOptions: SubredditModel[] = [];
   isLoadingCommunities = false;
+  isLoadingSubreddits = false;
   isUploadingAttachment = false;
   isDragActive = false;
   uploadedAttachmentFileName = '';
@@ -33,7 +37,8 @@ export class CreatePostComponent implements OnInit {
     private postService: PostService,
     private toastr: ToastrService,
     private videoUploadService: VideoUploadService,
-    private communityService: CommunityService
+    private communityService: CommunityService,
+    private subredditService: SubredditService
   ) {
     this.postPayload = {
       postName: '',
@@ -41,7 +46,7 @@ export class CreatePostComponent implements OnInit {
       videoKey: '',
       imageKey: '',
       description: '',
-      subredditName: '',
+      subredditName: undefined,
       communityId: undefined
     };
   }
@@ -49,12 +54,14 @@ export class CreatePostComponent implements OnInit {
   ngOnInit() {
     this.createPostForm = new FormGroup({
       postName: new FormControl('', Validators.required),
-      communityId: new FormControl(null, Validators.required),
+      communityId: new FormControl(null),
+      subredditName: new FormControl(''),
       url: new FormControl(''),
       description: new FormControl('', Validators.required),
     });
 
     this.loadCommunities();
+    this.loadSubreddits();
   }
 
   createPost() {
@@ -62,20 +69,21 @@ export class CreatePostComponent implements OnInit {
       this.toastr.error('Please fill in all required fields');
       return;
     }
+
     if (this.isUploadingAttachment) {
       this.toastr.info('Media upload is still in progress. Please wait.');
       return;
     }
 
-    const communityId = Number(this.createPostForm.get('communityId')?.value);
-    if (!communityId) {
-      this.toastr.error('Please select a community before posting');
-      return;
-    }
+    const rawCommunityId = this.createPostForm.get('communityId')?.value;
+    const communityId = rawCommunityId === null || rawCommunityId === '' ? null : Number(rawCommunityId);
+
+    const subredditNameRaw = (this.createPostForm.get('subredditName')?.value || '').trim();
+    const subredditName = subredditNameRaw.length > 0 ? subredditNameRaw : null;
 
     this.postPayload.postName = this.createPostForm.get('postName')?.value;
-    this.postPayload.communityId = communityId;
-    this.postPayload.subredditName = '';
+    this.postPayload.communityId = Number.isFinite(communityId as number) ? (communityId as number) : undefined;
+    this.postPayload.subredditName = subredditName || undefined;
     this.postPayload.url = (this.createPostForm.get('url')?.value || '').trim();
     this.postPayload.description = this.createPostForm.get('description')?.value;
 
@@ -136,16 +144,29 @@ export class CreatePostComponent implements OnInit {
       })
     ).subscribe({
       next: (communities) => {
-        this.communityOptions = communities || [];
-        if (this.communityOptions.length > 0) {
-          this.createPostForm.get('communityId')?.setValue(this.communityOptions[0].id);
-        } else {
-          this.toastr.info('No communities available yet. Create one first.');
-        }
+        this.communityOptions = (communities || []).sort((a, b) => (a?.name || '').localeCompare(b?.name || ''));
       },
       error: () => {
         this.communityOptions = [];
         this.toastr.error('Failed to load communities');
+      }
+    });
+  }
+
+  private loadSubreddits() {
+    this.isLoadingSubreddits = true;
+
+    this.subredditService.getAllSubreddits().pipe(
+      finalize(() => {
+        this.isLoadingSubreddits = false;
+      })
+    ).subscribe({
+      next: (subreddits) => {
+        this.subredditOptions = (subreddits || []).sort((a, b) => (a?.name || '').localeCompare(b?.name || ''));
+      },
+      error: () => {
+        this.subredditOptions = [];
+        this.toastr.error('Failed to load branches');
       }
     });
   }

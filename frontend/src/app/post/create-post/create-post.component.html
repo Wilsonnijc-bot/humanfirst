@@ -61,13 +61,22 @@
               </div>
             </div>
 
-            <select class="form-control" style="margin-top: 10px" [formControlName]="'communityId'" [disabled]="isLoadingCommunities || communityOptions.length === 0">
-              <option [ngValue]="null" disabled>Select a community</option>
+            <label style="margin-top: 12px; margin-bottom: 4px;">Communities (optional)</label>
+            <select class="form-control" [formControlName]="'communityId'" [disabled]="isLoadingCommunities">
+              <option [ngValue]="null">None</option>
               <option *ngFor="let community of communityOptions" [ngValue]="community.id">{{community.name}}</option>
             </select>
-
             <small *ngIf="communityOptions.length === 0 && !isLoadingCommunities" class="text-muted" style="display: block; margin-top: 6px;">
-              No communities are available yet. Create one from "Start a community" first.
+              No communities available right now.
+            </small>
+
+            <label style="margin-top: 12px; margin-bottom: 4px;">Branches (optional)</label>
+            <select class="form-control" [formControlName]="'subredditName'" [disabled]="isLoadingSubreddits">
+              <option value="">None</option>
+              <option *ngFor="let subreddit of subredditOptions" [value]="subreddit.name">{{subreddit.name}}</option>
+            </select>
+            <small *ngIf="subredditOptions.length === 0 && !isLoadingSubreddits" class="text-muted" style="display: block; margin-top: 6px;">
+              No branches available right now.
             </small>
 
             <editor [formControlName]="'description'" [init]="{
@@ -88,7 +97,7 @@
             <span>
               <div style="margin-top: 5px" class="float-right">
                 <button type="button" (click)="discardPost()" class="btnDiscard">Discard</button>
-                <button type="submit" class="btnCreatePost" [disabled]="isUploadingAttachment || isLoadingCommunities || communityOptions.length === 0">Post</button>
+                <button type="submit" class="btnCreatePost" [disabled]="isUploadingAttachment">Post</button>
               </div>
             </span>
           </div>

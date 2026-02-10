@@ -41,11 +41,7 @@ public class PostService {
 
     public void save(PostRequest postRequest) {
         Community community = resolveCommunity(postRequest);
-        Subreddit subreddit = resolveSubreddit(postRequest, community);
-
-        if (community == null && subreddit == null) {
-            throw new HumanfirstException("A community must be selected before posting");
-        }
+        Subreddit subreddit = resolveSubreddit(postRequest);
 
         postRepository.save(postMapper.map(postRequest, subreddit, community, authService.getCurrentUser()));
     }
@@ -97,16 +93,13 @@ public class PostService {
         if (postRequest.getCommunityId() == null) {
             return null;
         }
+
         return communityRepository.findById(postRequest.getCommunityId())
                 .orElseThrow(() -> new HumanfirstException("Selected community does not exist"));
     }
 
-    private Subreddit resolveSubreddit(PostRequest postRequest, Community community) {
+    private Subreddit resolveSubreddit(PostRequest postRequest) {
         if (postRequest.getSubredditName() == null || postRequest.getSubredditName().isBlank()) {
-            // Existing subreddit support remains optional for backward compatibility.
-            if (community != null) {
-                return null;
-            }
             return null;
         }
 
