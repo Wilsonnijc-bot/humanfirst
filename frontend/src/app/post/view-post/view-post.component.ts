@@ -22,7 +22,7 @@ export class ViewPostComponent implements OnInit, OnDestroy {
   private routeSubscription?: Subscription;
 
   constructor(private postService: PostService, private activateRoute: ActivatedRoute,
-    private commentService: CommentService, private router: Router) {
+              private commentService: CommentService, private router: Router) {
 
     this.commentForm = new FormGroup({
       text: new FormControl('', Validators.required)
@@ -82,6 +82,14 @@ export class ViewPostComponent implements OnInit, OnDestroy {
     }
 
     return null;
+  }
+
+  getCommunityLabel(): string {
+    return this.post?.communityName || this.post?.subredditName || 'community';
+  }
+
+  getCommunitySlug(): string | null {
+    return this.post?.communitySlug || null;
   }
 
   isExternalLinkPost(): boolean {

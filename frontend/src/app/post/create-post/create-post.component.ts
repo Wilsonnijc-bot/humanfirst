@@ -7,6 +7,8 @@ import { CreatePostPayload } from './create-post.payload';
 import { ToastrService } from 'ngx-toastr';
 import { MediaUploadType, VideoUploadService } from 'src/app/shared/video-upload.service';
 import { finalize, switchMap, tap } from 'rxjs/operators';
+import { CommunityService } from 'src/app/community/community.service';
+import { CommunitySummary } from 'src/app/community/community.model';
 
 @Component({
   selector: 'app-create-post',
@@ -17,23 +19,21 @@ export class CreatePostComponent implements OnInit {
 
   createPostForm: FormGroup;
   postPayload: CreatePostPayload;
+  communityOptions: CommunitySummary[] = [];
+  isLoadingCommunities = false;
   isUploadingAttachment = false;
   isDragActive = false;
   uploadedAttachmentFileName = '';
   uploadedAttachmentType = '';
 
   readonly acceptedFileTypes = '.jpg,.jpeg,.png,.gif,.webp,.heic,.heif,.mp4,.mov,.webm,.mkv';
-  readonly domainOptions = [
-    { value: 'all', label: 'all' },
-    { value: 'discussions', label: 'discussions' },
-    { value: 'AI prospects', label: 'AI prospects' },
-  ];
 
   constructor(
     private router: Router,
     private postService: PostService,
     private toastr: ToastrService,
-    private videoUploadService: VideoUploadService
+    private videoUploadService: VideoUploadService,
+    private communityService: CommunityService
   ) {
     this.postPayload = {
       postName: '',
@@ -41,17 +41,20 @@ export class CreatePostComponent implements OnInit {
       videoKey: '',
       imageKey: '',
       description: '',
-      subredditName: ''
+      subredditName: '',
+      communityId: undefined
     };
   }
 
   ngOnInit() {
     this.createPostForm = new FormGroup({
       postName: new FormControl('', Validators.required),
-      subredditName: new FormControl('all', Validators.required),
+      communityId: new FormControl(null, Validators.required),
       url: new FormControl(''),
       description: new FormControl('', Validators.required),
     });
+
+    this.loadCommunities();
   }
 
   createPost() {
@@ -64,16 +67,17 @@ export class CreatePostComponent implements OnInit {
       return;
     }
 
-    const subredditName = this.createPostForm.get('subredditName').value;
-    if (subredditName === 'all') {
-      this.toastr.error('Please choose discussions or AI prospects before posting');
+    const communityId = Number(this.createPostForm.get('communityId')?.value);
+    if (!communityId) {
+      this.toastr.error('Please select a community before posting');
       return;
     }
 
-    this.postPayload.postName = this.createPostForm.get('postName').value;
-    this.postPayload.subredditName = subredditName;
-    this.postPayload.url = (this.createPostForm.get('url').value || '').trim();
-    this.postPayload.description = this.createPostForm.get('description').value;
+    this.postPayload.postName = this.createPostForm.get('postName')?.value;
+    this.postPayload.communityId = communityId;
+    this.postPayload.subredditName = '';
+    this.postPayload.url = (this.createPostForm.get('url')?.value || '').trim();
+    this.postPayload.description = this.createPostForm.get('description')?.value;
 
     this.postService.createPost(this.postPayload).subscribe(() => {
       this.toastr.success('Post created successfully');
@@ -121,6 +125,29 @@ export class CreatePostComponent implements OnInit {
 
   discardPost() {
     this.router.navigateByUrl('/');
+  }
+
+  private loadCommunities() {
+    this.isLoadingCommunities = true;
+
+    this.communityService.getAllCommunities().pipe(
+      finalize(() => {
+        this.isLoadingCommunities = false;
+      })
+    ).subscribe({
+      next: (communities) => {
+        this.communityOptions = communities || [];
+        if (this.communityOptions.length > 0) {
+          this.createPostForm.get('communityId')?.setValue(this.communityOptions[0].id);
+        } else {
+          this.toastr.info('No communities available yet. Create one first.');
+        }
+      },
+      error: () => {
+        this.communityOptions = [];
+        this.toastr.error('Failed to load communities');
+      }
+    });
   }
 
   private handleSelectedFiles(files: FileList | null) {

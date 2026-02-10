@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { SignupComponent } from './auth/signup/signup.component';
 import { LoginComponent } from './auth/login/login.component';
 import { HomeComponent } from './home/home.component';
@@ -12,6 +12,9 @@ import { AuthGuard } from './auth/auth.guard';
 import { AccountVerificationComponent } from './auth/account-verification/account-verification.component';
 import { TopicDiscussionComponent } from './topics/topic-discussion.component';
 import { TopicsArchiveComponent } from './topics/topics-archive/topics-archive.component';
+import { CommunityPageComponent } from './community/community-page/community-page.component';
+import { CommunityDirectoryComponent } from './community/community-directory/community-directory.component';
+import { MyCommunitiesComponent } from './community/my-communities/my-communities.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,6 +25,9 @@ const routes: Routes = [
   { path: 'topics/archive', component: TopicsArchiveComponent },
   { path: 'topics/:slug', component: TopicDiscussionComponent },
   { path: 'topics', component: TopicDiscussionComponent },
+  { path: 'communities/:slug', component: CommunityPageComponent },
+  { path: 'communities', component: CommunityDirectoryComponent },
+  { path: 'my-communities', component: MyCommunitiesComponent, canActivate: [AuthGuard] },
   { path: 'list-subreddits', component: ListSubredditsComponent },
   { path: 'create', component: CreatePostComponent, canActivate: [AuthGuard] },
   { path: 'create-post', redirectTo: '/create', pathMatch: 'full' },
@@ -36,4 +42,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

@@ -1,0 +1,73 @@
+<div class="community-page" *ngIf="!loading; else communityLoading">
+  <div class="community-not-found" *ngIf="notFound">
+    <h2>Community Not Found</h2>
+    <p>The community you requested does not exist.</p>
+    <button type="button" class="btn btn-outline-primary" routerLink="/communities">Back to Communities</button>
+  </div>
+
+  <ng-container *ngIf="!notFound && community as currentCommunity">
+    <section class="community-hero" [style.background-image]="currentCommunity.headerImageUrl ? 'linear-gradient(rgba(11,11,15,0.55), rgba(11,11,15,0.82)), url(' + currentCommunity.headerImageUrl + ')' : 'none'">
+      <div class="community-hero-inner">
+        <h1>{{currentCommunity.name}}</h1>
+        <p>{{currentCommunity.description || 'No community description yet.'}}</p>
+
+        <div class="community-actions">
+          <button
+            *ngIf="isLoggedIn && !communityDetail?.member"
+            type="button"
+            class="btn btn-primary"
+            [disabled]="joinInProgress"
+            (click)="joinCommunity()">
+            Join
+          </button>
+
+          <button
+            *ngIf="isLoggedIn && communityDetail?.member && !communityDetail?.creator"
+            type="button"
+            class="btn btn-outline-primary"
+            [disabled]="joinInProgress"
+            (click)="leaveCommunity()">
+            Leave
+          </button>
+
+          <button
+            *ngIf="communityDetail?.canEdit"
+            type="button"
+            class="btn btn-outline-primary"
+            (click)="toggleEditMode()">
+            {{editMode ? 'Cancel Edit' : 'Edit Community'}}
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="community-edit" *ngIf="editMode">
+      <h3>Edit Community</h3>
+
+      <label for="community-description">Description</label>
+      <textarea id="community-description" rows="4" [formControl]="editForm.controls.description"></textarea>
+
+      <label for="community-banner">Header Image URL</label>
+      <input id="community-banner" type="text" [formControl]="editForm.controls.headerImageUrl" placeholder="https://...">
+
+      <div class="community-edit-actions">
+        <button type="button" class="btn btn-primary" [disabled]="saveInProgress" (click)="saveCommunityChanges()">Save</button>
+      </div>
+    </section>
+
+    <section class="community-feed">
+      <h3>Community Posts</h3>
+
+      <p class="text-muted" *ngIf="postsLoading">Loading posts...</p>
+      <p class="text-muted" *ngIf="!postsLoading && posts.length === 0">No posts in this community yet.</p>
+
+      <app-post-tile *ngIf="!postsLoading && posts.length > 0" [posts]="posts"></app-post-tile>
+    </section>
+  </ng-container>
+</div>
+
+<ng-template #communityLoading>
+  <div class="community-page">
+    <p class="text-muted">Loading community...</p>
+  </div>
+</ng-template>

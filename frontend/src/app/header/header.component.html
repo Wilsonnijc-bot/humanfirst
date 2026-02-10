@@ -13,6 +13,16 @@
                     <span>Create</span>
                 </a>
 
+                <button
+                    *ngIf="isLoggedIn"
+                    type="button"
+                    aria-label="My Communities"
+                    class="create-link secondary-link"
+                    (click)="goToMyCommunities()">
+                    <fa-icon [icon]="faUsers"></fa-icon>
+                    <span>My Communities</span>
+                </button>
+
                 <div *ngIf="isLoggedIn" ngbDropdown class="user-menu">
                     <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                         <button (click)="goToUserProfile()" ngbDropdownItem>Profile</button>

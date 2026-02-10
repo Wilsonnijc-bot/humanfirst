@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { SubredditModel } from '../subreddit-response';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SubredditService } from '../subreddit.service';
+import { ToastrService } from 'ngx-toastr';
+import { CommunityService } from 'src/app/community/community.service';
 
 @Component({
   selector: 'app-create-subreddit',
@@ -11,19 +11,17 @@ import { SubredditService } from '../subreddit.service';
 })
 export class CreateSubredditComponent implements OnInit {
   createSubredditForm: FormGroup;
-  subredditModel: SubredditModel;
-  title = new FormControl('');
-  description = new FormControl('');
 
-  constructor(private router: Router, private subredditService: SubredditService) {
+  constructor(
+    private router: Router,
+    private toastr: ToastrService,
+    private communityService: CommunityService
+  ) {
     this.createSubredditForm = new FormGroup({
       title: new FormControl('', Validators.required),
-      description: new FormControl('', Validators.required)
+      description: new FormControl('', Validators.required),
+      headerImageUrl: new FormControl('')
     });
-    this.subredditModel = {
-      name: '',
-      description: ''
-    };
   }
 
   ngOnInit(): void {
@@ -39,12 +37,19 @@ export class CreateSubredditComponent implements OnInit {
       return;
     }
 
-    this.subredditModel.name = (this.createSubredditForm.get('title')?.value || '').trim();
-    this.subredditModel.description = (this.createSubredditForm.get('description')?.value || '').trim();
+    const payload = {
+      name: (this.createSubredditForm.get('title')?.value || '').trim(),
+      description: (this.createSubredditForm.get('description')?.value || '').trim(),
+      headerImageUrl: (this.createSubredditForm.get('headerImageUrl')?.value || '').trim()
+    };
 
-    this.subredditService.createSubreddit(this.subredditModel).subscribe({
-      next: () => {
-        this.router.navigateByUrl('/list-subreddits');
+    this.communityService.createCommunity(payload).subscribe({
+      next: (community) => {
+        this.toastr.success('Community created');
+        this.router.navigate(['/communities', community.slug]);
+      },
+      error: (error) => {
+        this.toastr.error(error?.error?.message || 'Failed to create community');
       }
     });
   }

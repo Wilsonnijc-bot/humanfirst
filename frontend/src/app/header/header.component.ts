@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from '../auth/shared/auth.service';
 import { Router } from '@angular/router';
 
@@ -10,10 +10,12 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
   readonly faPlus = faPlus;
+  readonly faUsers = faUsers;
   isLoggedIn: boolean;
   username: string;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) {
+  }
 
   ngOnInit() {
     this.authService.loggedIn.subscribe((data: boolean) => this.isLoggedIn = data);
@@ -24,6 +26,10 @@ export class HeaderComponent implements OnInit {
 
   goToUserProfile() {
     this.router.navigateByUrl('/user-profile/' + this.username);
+  }
+
+  goToMyCommunities() {
+    this.router.navigateByUrl('/my-communities');
   }
 
   logout() {

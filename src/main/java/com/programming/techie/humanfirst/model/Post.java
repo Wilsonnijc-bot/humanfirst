@@ -1,16 +1,21 @@
 package com.programming.techie.humanfirst.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import java.time.Instant;
 
-import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Data
@@ -22,24 +27,37 @@ public class Post {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long postId;
+
     @NotBlank(message = "Post Name cannot be empty or Null")
     private String postName;
+
     @Nullable
     private String url;
+
     @Nullable
     private String videoKey;
+
     @Nullable
     private String imageKey;
+
     @Nullable
     @Lob
     private String description;
+
     @Builder.Default
     private Integer voteCount = 0;
-    @ManyToOne(fetch = LAZY)
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", referencedColumnName = "userId")
     private User user;
+
     private Instant createdDate;
-    @ManyToOne(fetch = LAZY)
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id", referencedColumnName = "id")
     private Subreddit subreddit;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "community_id", referencedColumnName = "id")
+    private Community community;
 }

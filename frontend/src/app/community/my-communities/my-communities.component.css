@@ -1,0 +1,49 @@
+.my-communities-page {
+  padding: 14px 20px 16px;
+  max-width: 980px;
+}
+
+.my-communities-page h2 {
+  margin-bottom: 12px;
+}
+
+.my-community-sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.my-community-card {
+  border: 1px solid var(--hf-border);
+  border-radius: 12px;
+  background: var(--hf-surface);
+  box-shadow: var(--hf-shadow);
+  padding: 14px;
+}
+
+.my-community-card h3 {
+  margin: 0 0 10px;
+  font-size: 17px;
+}
+
+.my-community-item {
+  display: block;
+  border: 1px solid var(--hf-border);
+  border-radius: 8px;
+  padding: 9px 10px;
+  margin-bottom: 8px;
+  color: var(--hf-text-secondary);
+  text-decoration: none;
+}
+
+.my-community-item:hover {
+  border-color: var(--hf-border-strong);
+  color: var(--hf-text);
+  text-decoration: none;
+}
+
+@media (max-width: 1023px) {
+  .my-communities-page {
+    padding: 12px;
+  }
+}

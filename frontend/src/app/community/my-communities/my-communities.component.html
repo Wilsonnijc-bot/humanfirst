@@ -1,0 +1,31 @@
+<div class="my-communities-page">
+  <h2>My Communities</h2>
+
+  <p class="text-muted" *ngIf="loading">Loading your communities...</p>
+
+  <div class="my-community-sections" *ngIf="!loading">
+    <section class="my-community-card">
+      <h3>Joined Communities</h3>
+      <p class="text-muted" *ngIf="myCommunities.joinedCommunities.length === 0">You haven’t joined any communities yet.</p>
+
+      <a
+        class="my-community-item"
+        *ngFor="let community of myCommunities.joinedCommunities"
+        [routerLink]="['/communities', community.slug]">
+        {{community.name}}
+      </a>
+    </section>
+
+    <section class="my-community-card">
+      <h3>Created Communities</h3>
+      <p class="text-muted" *ngIf="myCommunities.createdCommunities.length === 0">You haven’t created any communities yet.</p>
+
+      <a
+        class="my-community-item"
+        *ngFor="let community of myCommunities.createdCommunities"
+        [routerLink]="['/communities', community.slug]">
+        {{community.name}}
+      </a>
+    </section>
+  </div>
+</div>

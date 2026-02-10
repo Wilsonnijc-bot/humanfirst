@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PostModel } from '../shared/post-model';
-import { PostService } from '../shared/post.service';
-import { SubredditService } from '../subreddit/subreddit.service';
-import { SubredditModel } from '../subreddit/subreddit-response';
-import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import {
   faChevronDown,
   faComments,
@@ -14,7 +10,13 @@ import {
   faPlus,
   faUsers
 } from '@fortawesome/free-solid-svg-icons';
+import { PostModel } from '../shared/post-model';
+import { PostService } from '../shared/post.service';
+import { SubredditService } from '../subreddit/subreddit.service';
+import { SubredditModel } from '../subreddit/subreddit-response';
 import { TopicDiscussionService } from '../topics/topic-discussion.service';
+import { CommunityService } from '../community/community.service';
+import { CommunitySummary } from '../community/community.model';
 
 @Component({
   selector: 'app-home',
@@ -25,16 +27,15 @@ export class HomeComponent implements OnInit {
 
   posts: Array<PostModel> = [];
   selectedDomain = 'all';
+  communityItems: CommunitySummary[] = [];
+
   readonly primaryNavItems = [
     { key: 'home', label: 'Home', icon: faHome, domain: 'all' }
   ];
+
   readonly homeSubItems = [
     { key: 'discussions', label: 'discussions', icon: faComments, domain: 'discussions' },
     { key: 'ai-prospects', label: 'AI prospects', icon: faLayerGroup, domain: 'ai-prospects' }
-  ];
-  readonly communityItems = [
-    { key: 'ai-agent-community', label: 'AI agent community', icon: faUsers, domain: 'ai-agent-community' },
-    { key: 'medical-science-community', label: 'Medical Science community', icon: faLayerGroup, domain: 'medical-science-community' }
   ];
 
   monthlyTopicLabel = 'Topic of the month - (manually change each month)';
@@ -43,19 +44,19 @@ export class HomeComponent implements OnInit {
   readonly faCompass = faCompass;
   readonly faPlus = faPlus;
   readonly faChevronDown = faChevronDown;
+  readonly faUsers = faUsers;
 
   private currentTopicSlug: string | null = null;
   private subredditIdByDomain = new Map<string, number>();
   private readonly domainAliases: Record<string, string[]> = {
     discussions: ['discussions'],
-    'ai-prospects': ['ai prospects', 'ai-prospects'],
-    'ai-agent-community': ['ai agent community', 'ai-agent-community'],
-    'medical-science-community': ['medical science community', 'medical-science-community']
+    'ai-prospects': ['ai prospects', 'ai-prospects']
   };
 
   constructor(
     private postService: PostService,
     private subredditService: SubredditService,
+    private communityService: CommunityService,
     private toastr: ToastrService,
     private router: Router,
     private topicDiscussionService: TopicDiscussionService
@@ -65,12 +66,14 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.loadDomainMapping();
     this.loadTopicLabels();
+    this.loadCommunities();
   }
 
   selectDomain(domainKey: string) {
     if (this.selectedDomain === domainKey) {
       return;
     }
+
     this.selectedDomain = domainKey;
     this.loadPosts();
   }
@@ -87,10 +90,12 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  handleCommunityClick(item: { domain?: string }) {
-    if (item.domain) {
-      this.selectDomain(item.domain);
+  handleCommunityClick(item: CommunitySummary) {
+    if (!item?.slug) {
+      return;
     }
+
+    this.router.navigate(['/communities', item.slug]);
   }
 
   isItemActive(item: { domain?: string }) {
@@ -106,11 +111,16 @@ export class HomeComponent implements OnInit {
       this.router.navigate(['/topics', this.currentTopicSlug]);
       return;
     }
+
     this.router.navigateByUrl('/topics');
   }
 
   goToTopicArchive() {
     this.router.navigateByUrl('/topics/archive');
+  }
+
+  goToCommunityDirectory() {
+    this.router.navigateByUrl('/communities');
   }
 
   private loadTopicLabels() {
@@ -120,6 +130,18 @@ export class HomeComponent implements OnInit {
       this.currentTopicSlug = topic.slug || null;
     }, () => {
       this.currentTopicSlug = null;
+    });
+  }
+
+  private loadCommunities() {
+    this.communityService.getAllCommunities().subscribe({
+      next: (communities) => {
+        this.communityItems = communities || [];
+      },
+      error: () => {
+        this.communityItems = [];
+        this.toastr.error('Failed to load communities');
+      }
     });
   }
 

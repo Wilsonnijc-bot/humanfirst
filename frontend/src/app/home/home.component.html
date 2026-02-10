@@ -61,10 +61,14 @@
           *ngFor="let item of communityItems"
           type="button"
           class="hf-row"
-          [class.active]="isItemActive(item)"
           (click)="handleCommunityClick(item)">
-          <fa-icon class="hf-icon" [icon]="item.icon"></fa-icon>
-          <span>{{item.label}}</span>
+          <fa-icon class="hf-icon" [icon]="faUsers"></fa-icon>
+          <span>{{item.name}}</span>
+        </button>
+
+        <button type="button" class="hf-row hf-action-row" (click)="goToCommunityDirectory()">
+          <fa-icon class="hf-icon" [icon]="faCompass"></fa-icon>
+          <span>Discover More Communities</span>
         </button>
       </section>
     </aside>

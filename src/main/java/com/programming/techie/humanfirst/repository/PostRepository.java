@@ -1,5 +1,6 @@
 package com.programming.techie.humanfirst.repository;
 
+import com.programming.techie.humanfirst.model.Community;
 import com.programming.techie.humanfirst.model.Post;
 import com.programming.techie.humanfirst.model.Subreddit;
 import com.programming.techie.humanfirst.model.User;
@@ -13,6 +14,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findAllByOrderByCreatedDateDesc();
 
     List<Post> findAllBySubredditOrderByCreatedDateDesc(Subreddit subreddit);
+
+    List<Post> findAllByCommunityOrderByCreatedDateDesc(Community community);
 
     List<Post> findByUserOrderByCreatedDateDesc(User user);
 }

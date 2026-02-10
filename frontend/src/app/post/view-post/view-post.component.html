@@ -5,7 +5,12 @@
       <div class="row post">
         <div class="col-md-12">
           <span>
-            <span class="subreddit-text"><a class="post-url" href="">{{post.subredditName}}</a></span>
+            <span class="subreddit-text" *ngIf="getCommunitySlug() as communitySlug; else communityLabelOnly">
+              <a class="post-url" [routerLink]="['/communities', communitySlug]">{{getCommunityLabel()}}</a>
+            </span>
+            <ng-template #communityLabelOnly>
+              <span class="subreddit-text">{{getCommunityLabel()}}</span>
+            </ng-template>
             <span> . Posted
               <span> {{post.duration}} </span>
               by

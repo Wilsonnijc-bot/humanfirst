@@ -1,0 +1,16 @@
+<div class="community-directory">
+  <div class="community-directory-header">
+    <h2>Discover Communities</h2>
+    <p class="text-muted">Browse all communities.</p>
+  </div>
+
+  <p class="text-muted" *ngIf="loading">Loading communities...</p>
+  <p class="text-muted" *ngIf="!loading && communities.length === 0">No communities available yet.</p>
+
+  <div class="community-list" *ngIf="!loading && communities.length > 0">
+    <a class="community-item" *ngFor="let community of communities" [routerLink]="['/communities', community.slug]">
+      <div class="community-item-title">{{community.name}}</div>
+      <div class="community-item-description">{{community.description || 'No description yet.'}}</div>
+    </a>
+  </div>
+</div>

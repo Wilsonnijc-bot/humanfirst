@@ -2,6 +2,7 @@ package com.programming.techie.humanfirst.mapper;
 
 import com.programming.techie.humanfirst.dto.PostRequest;
 import com.programming.techie.humanfirst.dto.PostResponse;
+import com.programming.techie.humanfirst.model.Community;
 import com.programming.techie.humanfirst.model.Post;
 import com.programming.techie.humanfirst.model.Subreddit;
 import com.programming.techie.humanfirst.model.User;
@@ -44,9 +45,10 @@ public abstract class PostMapper {
     @Mapping(target = "videoKey", source = "postRequest.videoKey")
     @Mapping(target = "imageKey", source = "postRequest.imageKey")
     @Mapping(target = "subreddit", source = "subreddit")
+    @Mapping(target = "community", source = "community")
     @Mapping(target = "voteCount", constant = "0")
     @Mapping(target = "user", source = "user")
-    public abstract Post map(PostRequest postRequest, Subreddit subreddit, User user);
+    public abstract Post map(PostRequest postRequest, Subreddit subreddit, Community community, User user);
 
     @Mapping(target = "id", source = "postId")
     @Mapping(target = "postName", source = "postName")
@@ -55,6 +57,9 @@ public abstract class PostMapper {
     @Mapping(target = "imageUrl", expression = "java(resolveImageUrl(post))")
     @Mapping(target = "description", source = "description")
     @Mapping(target = "subredditName", source = "subreddit.name")
+    @Mapping(target = "communityId", source = "community.id")
+    @Mapping(target = "communityName", source = "community.name")
+    @Mapping(target = "communitySlug", source = "community.slug")
     @Mapping(target = "userName", source = "user.username")
     @Mapping(target = "voteCount", source = "voteCount")
     @Mapping(target = "commentCount", expression = "java(commentCount(post))")
@@ -69,10 +74,16 @@ public abstract class PostMapper {
     }
 
     String resolveVideoUrl(Post post) {
+        if (post == null || post.getVideoKey() == null || post.getVideoKey().isBlank()) {
+            return null;
+        }
         return videoStorageService.generateViewUrl(post.getVideoKey());
     }
 
     String resolveImageUrl(Post post) {
+        if (post == null || post.getImageKey() == null || post.getImageKey().isBlank()) {
+            return null;
+        }
         return videoStorageService.generateViewUrl(post.getImageKey());
     }
 

@@ -23,7 +23,21 @@
     color: var(--hf-text-muted);
 }
 
-.hf-community,
+.hf-community-link {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    font-weight: 600;
+    color: var(--hf-text-secondary);
+    cursor: pointer;
+}
+
+.hf-community-link:hover {
+    color: var(--hf-text);
+    text-decoration: underline;
+}
+
 .hf-author {
     font-weight: 600;
     color: var(--hf-text-secondary);

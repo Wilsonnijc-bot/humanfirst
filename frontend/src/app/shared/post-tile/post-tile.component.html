@@ -1,7 +1,7 @@
 <div class="hf-post-card" *ngFor="let post of posts">
   <div class="hf-post-header">
     <div class="hf-post-meta">
-      <span class="hf-community">h/{{post.subredditName}}</span>
+      <button type="button" class="hf-community-link" (click)="goToCommunity(post)">h/{{getCommunityLabel(post)}}</button>
       <span class="hf-dot">•</span>
       <span class="hf-author">u/{{post.userName}}</span>
       <span class="hf-dot">•</span>

@@ -12,7 +12,8 @@ export class PostService {
 
   private readonly apiBaseUrl = environment.apiBaseUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getAllPosts(): Observable<Array<PostModel>> {
     return this.http.get<Array<PostModel>>(`${this.apiBaseUrl}/api/posts/`);
@@ -28,6 +29,10 @@ export class PostService {
 
   getPostsBySubreddit(id: number): Observable<PostModel[]> {
     return this.http.get<PostModel[]>(`${this.apiBaseUrl}/api/posts/by-subreddit/${id}`);
+  }
+
+  getPostsByCommunity(slug: string): Observable<PostModel[]> {
+    return this.http.get<PostModel[]>(`${this.apiBaseUrl}/api/posts/by-community/${slug}`);
   }
 
   getAllPostsByUser(name: string): Observable<PostModel[]> {

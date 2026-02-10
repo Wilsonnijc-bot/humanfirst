@@ -27,6 +27,9 @@ import { AccountVerificationComponent } from './auth/account-verification/accoun
 import { TopicDiscussionComponent } from './topics/topic-discussion.component';
 import { TopicsArchiveComponent } from './topics/topics-archive/topics-archive.component';
 import { TopicCommentThreadComponent } from './topics/topic-comment-thread/topic-comment-thread.component';
+import { CommunityPageComponent } from './community/community-page/community-page.component';
+import { CommunityDirectoryComponent } from './community/community-directory/community-directory.component';
+import { MyCommunitiesComponent } from './community/my-communities/my-communities.component';
 
 
 @NgModule({
@@ -46,7 +49,10 @@ import { TopicCommentThreadComponent } from './topics/topic-comment-thread/topic
     AccountVerificationComponent,
     TopicDiscussionComponent,
     TopicsArchiveComponent,
-    TopicCommentThreadComponent
+    TopicCommentThreadComponent,
+    CommunityPageComponent,
+    CommunityDirectoryComponent,
+    MyCommunitiesComponent
   ],
   imports: [
     BrowserModule,
@@ -73,4 +79,5 @@ import { TopicCommentThreadComponent } from './topics/topic-comment-thread/topic
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

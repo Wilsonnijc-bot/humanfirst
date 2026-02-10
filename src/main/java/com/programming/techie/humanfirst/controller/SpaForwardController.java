@@ -22,7 +22,10 @@ public class SpaForwardController {
             "/account-verification/{token}",
             "/topics",
             "/topics/archive",
-            "/topics/{slug}"
+            "/topics/{slug}",
+            "/communities",
+            "/communities/{slug}",
+            "/my-communities"
     })
     public String forwardToIndex() {
         return "forward:/index.html";

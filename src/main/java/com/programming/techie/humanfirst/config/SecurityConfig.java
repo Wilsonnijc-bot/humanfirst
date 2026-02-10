@@ -30,17 +30,22 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/index.html", "/favicon.ico").permitAll()
-                        .requestMatchers("/login", "/sign-up", "/list-subreddits",
+                        .requestMatchers(
+                                "/login", "/sign-up", "/list-subreddits",
                                 "/create", "/create-post", "/create-subreddit", "/view-post/**", "/r/**",
-                                "/user-profile/**", "/account-verification/**", "/signup", "/topics", "/topics/**").permitAll()
+                                "/user-profile/**", "/account-verification/**", "/signup", "/topics", "/topics/**",
+                                "/communities", "/communities/**", "/my-communities"
+                        ).permitAll()
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/*.js", "/*.css", "/*.map").permitAll()
                         .requestMatchers("/tinymce/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/communities/mine").authenticated()
                         .requestMatchers("/error").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/subreddit", "/api/subreddit/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/posts", "/api/posts/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/topics", "/api/topics/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/communities", "/api/communities/**").permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated()
                 )

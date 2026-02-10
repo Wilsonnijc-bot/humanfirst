@@ -19,7 +19,8 @@ export class PostTileComponent implements OnInit {
   faVolumeMute = faVolumeMute;
   @Input() posts: PostModel[];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {
+  }
 
   ngOnInit(): void {
   }
@@ -28,8 +29,17 @@ export class PostTileComponent implements OnInit {
     this.router.navigateByUrl(this.getPostPath(post));
   }
 
+  goToCommunity(post: PostModel): void {
+    const slug = post?.communitySlug;
+    if (!slug) {
+      return;
+    }
+
+    this.router.navigate(['/communities', slug]);
+  }
+
   getPostPath(post: PostModel): string {
-    const safeSubreddit = this.slugify(post?.subredditName || 'community');
+    const safeSubreddit = this.slugify(post?.communitySlug || post?.communityName || post?.subredditName || 'community');
     const safeTitle = this.slugify(post?.postName || 'post');
     return `/r/${safeSubreddit}/comments/${post.id}/${safeTitle}`;
   }
@@ -70,6 +80,10 @@ export class PostTileComponent implements OnInit {
       webNavigator.clipboard.writeText(shareUrl).catch(() => {
       });
     }
+  }
+
+  getCommunityLabel(post: PostModel): string {
+    return post?.communityName || post?.subredditName || 'community';
   }
 
   private slugify(value: string): string {
