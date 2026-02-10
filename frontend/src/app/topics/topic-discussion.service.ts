@@ -34,6 +34,10 @@ export class TopicDiscussionService {
     return this.http.get<TopicWeekSummary[]>(`${this.apiBaseUrl}/api/topics/archive`);
   }
 
+  getMyComments(): Observable<TopicComment[]> {
+    return this.http.get<TopicComment[]>(`${this.apiBaseUrl}/api/topics/comments/mine`);
+  }
+
   voteOnTopic(topicId: number, request: TopicVoteRequest): Observable<TopicVoteSummary> {
     return this.http.post<TopicVoteSummary>(`${this.apiBaseUrl}/api/topics/${topicId}/vote`, request);
   }

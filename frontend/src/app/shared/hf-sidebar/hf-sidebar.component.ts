@@ -42,6 +42,7 @@ export class HfSidebarComponent implements OnInit, OnChanges {
 
   readonly faCompass = faCompass;
   readonly faPlus = faPlus;
+  readonly faComments = faComments;
   readonly faChevronDown = faChevronDown;
 
   private currentTopicSlug: string | null = null;
@@ -122,6 +123,10 @@ export class HfSidebarComponent implements OnInit, OnChanges {
 
   goToCommunityDirectory() {
     this.router.navigateByUrl('/communities');
+  }
+
+  goToMyComments() {
+    this.router.navigateByUrl('/my-comments');
   }
 
   private selectDomain(domain: string) {

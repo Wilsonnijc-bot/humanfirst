@@ -36,6 +36,10 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl('/my-likes');
   }
 
+  goToMyComments() {
+    this.router.navigateByUrl('/my-comments');
+  }
+
   goToMyCommunities() {
     this.router.navigateByUrl('/my-communities');
   }

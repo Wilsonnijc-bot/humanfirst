@@ -26,6 +26,9 @@ export interface TopicComment {
   upvoteCount: number;
   upVotedByCurrentUser: boolean;
   ownedByCurrentUser?: boolean;
+  topicSlug?: string;
+  weekTitle?: string;
+  monthTitle?: string;
   stance: TopicStance;
   replies: TopicComment[];
 }

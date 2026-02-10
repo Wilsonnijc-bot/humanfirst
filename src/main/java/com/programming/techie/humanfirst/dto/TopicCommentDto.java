@@ -23,6 +23,9 @@ public class TopicCommentDto {
     private Integer upvoteCount;
     private boolean upVotedByCurrentUser;
     private boolean ownedByCurrentUser;
+    private String topicSlug;
+    private String weekTitle;
+    private String monthTitle;
     private TopicStance stance;
 
     @Builder.Default

@@ -28,6 +28,11 @@ public class TopicDiscussionController {
         return ResponseEntity.status(OK).body(topicDiscussionService.getArchivedTopics());
     }
 
+    @GetMapping("/comments/mine")
+    public ResponseEntity<List<TopicCommentDto>> getMyComments() {
+        return ResponseEntity.status(OK).body(topicDiscussionService.getMyComments());
+    }
+
     @GetMapping("/{slug}")
     public ResponseEntity<TopicWeekDetailDto> getTopicBySlug(@PathVariable String slug) {
         return ResponseEntity.status(OK).body(topicDiscussionService.getTopicDetailBySlug(slug));

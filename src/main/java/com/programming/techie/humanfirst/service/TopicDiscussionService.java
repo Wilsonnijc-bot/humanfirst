@@ -58,6 +58,15 @@ public class TopicDiscussionService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public List<TopicCommentDto> getMyComments() {
+        User currentUser = authService.getCurrentUser();
+        return topicCommentRepository.findAllByUserOrderByCreatedDateDesc(currentUser)
+                .stream()
+                .map(comment -> mapComment(comment, Collections.emptySet(), currentUser))
+                .collect(Collectors.toList());
+    }
+
     public TopicVoteSummaryDto voteOnTopic(Long topicId, TopicVoteRequest request) {
         if (request == null || request.getStance() == null) {
             throw new HumanfirstException("Topic stance is required");
@@ -265,6 +274,7 @@ public class TopicDiscussionService {
                                        Set<Long> upvotedCommentIds,
                                        User currentUser) {
         Long commentId = comment.getTopicCommentId();
+        TopicWeek topicWeek = comment.getTopicWeek();
         boolean ownedByCurrentUser = currentUser != null
                 && comment.getUser() != null
                 && Objects.equals(comment.getUser().getUserId(), currentUser.getUserId());
@@ -277,6 +287,9 @@ public class TopicDiscussionService {
                 .upvoteCount(comment.getUpvoteCount() == null ? 0 : comment.getUpvoteCount())
                 .upVotedByCurrentUser(commentId != null && upvotedCommentIds.contains(commentId))
                 .ownedByCurrentUser(ownedByCurrentUser)
+                .topicSlug(topicWeek == null ? null : topicWeek.getSlug())
+                .weekTitle(topicWeek == null ? null : topicWeek.getWeekTitle())
+                .monthTitle(topicWeek == null ? null : topicWeek.getMonthTitle())
                 .stance(comment.getStance())
                 .replies(new ArrayList<>())
                 .build();

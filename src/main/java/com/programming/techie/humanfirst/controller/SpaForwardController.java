@@ -27,7 +27,8 @@ public class SpaForwardController {
             "/communities/{slug}",
             "/my-communities",
             "/my-posts",
-            "/my-likes"
+            "/my-likes",
+            "/my-comments"
     })
     public String forwardToIndex() {
         return "forward:/index.html";

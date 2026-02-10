@@ -17,6 +17,7 @@ import { CommunityDirectoryComponent } from './community/community-directory/com
 import { MyCommunitiesComponent } from './community/my-communities/my-communities.component';
 import { MyPostsComponent } from './post/my-posts/my-posts.component';
 import { MyLikesComponent } from './post/my-likes/my-likes.component';
+import { MyCommentsComponent } from './topics/my-comments/my-comments.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -37,6 +38,7 @@ const routes: Routes = [
   { path: 'my-communities', component: MyCommunitiesComponent, canActivate: [AuthGuard] },
   { path: 'my-posts', component: MyPostsComponent, canActivate: [AuthGuard] },
   { path: 'my-likes', component: MyLikesComponent, canActivate: [AuthGuard] },
+  { path: 'my-comments', component: MyCommentsComponent, canActivate: [AuthGuard] },
   { path: 'list-subreddits', component: ListSubredditsComponent },
   { path: 'create', component: CreatePostComponent, canActivate: [AuthGuard] },
   { path: 'create-post', redirectTo: '/create', pathMatch: 'full' },

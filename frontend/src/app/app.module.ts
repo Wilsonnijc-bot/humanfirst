@@ -32,6 +32,7 @@ import { CommunityDirectoryComponent } from './community/community-directory/com
 import { MyCommunitiesComponent } from './community/my-communities/my-communities.component';
 import { MyPostsComponent } from './post/my-posts/my-posts.component';
 import { MyLikesComponent } from './post/my-likes/my-likes.component';
+import { MyCommentsComponent } from './topics/my-comments/my-comments.component';
 import { HfSidebarComponent } from './shared/hf-sidebar/hf-sidebar.component';
 import { AppShellComponent } from './shared/app-shell/app-shell.component';
 
@@ -59,6 +60,7 @@ import { AppShellComponent } from './shared/app-shell/app-shell.component';
     MyCommunitiesComponent,
     MyPostsComponent,
     MyLikesComponent,
+    MyCommentsComponent,
     HfSidebarComponent,
     AppShellComponent
   ],
