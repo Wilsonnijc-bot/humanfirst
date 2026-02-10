@@ -10,6 +10,8 @@ import java.util.Optional;
 @Repository
 public interface TopicWeekRepository extends JpaRepository<TopicWeek, Long> {
 
+    boolean existsByActiveTrue();
+
     Optional<TopicWeek> findFirstByActiveTrueOrderByCreatedDateDesc();
 
     Optional<TopicWeek> findBySlugIgnoreCase(String slug);

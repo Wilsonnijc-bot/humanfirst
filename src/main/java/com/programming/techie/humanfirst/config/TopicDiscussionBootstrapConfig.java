@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.Instant;
-import java.util.Optional;
 
 @Configuration
 @RequiredArgsConstructor
@@ -20,13 +19,7 @@ public class TopicDiscussionBootstrapConfig {
     @Bean
     CommandLineRunner topicDiscussionBootstrapRunner() {
         return args -> {
-            Optional<TopicWeek> activeTopicOptional = topicWeekRepository.findFirstByActiveTrueOrderByCreatedDateDesc();
-            if (activeTopicOptional.isPresent()) {
-                TopicWeek activeTopic = activeTopicOptional.get();
-                if (isBlank(activeTopic.getWeeklyTopicBody())) {
-                    activeTopic.setWeeklyTopicBody(buildDefaultWeeklyTopicBody(activeTopic.getWeekTitle(), activeTopic.getMonthTitle()));
-                    topicWeekRepository.save(activeTopic);
-                }
+            if (topicWeekRepository.existsByActiveTrue()) {
                 return;
             }
 
