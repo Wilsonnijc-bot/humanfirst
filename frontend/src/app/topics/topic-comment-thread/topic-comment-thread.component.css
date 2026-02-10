@@ -112,6 +112,21 @@
   color: var(--hf-text);
 }
 
+.comment-btn.danger {
+  border-color: rgba(255, 142, 161, 0.5);
+  color: #ffd1dc;
+}
+
+.comment-btn.danger:hover,
+.comment-btn.danger:focus {
+  background: rgba(255, 142, 161, 0.16);
+}
+
+.comment-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
 .reply-editor {
   margin-top: 8px;
   display: flex;

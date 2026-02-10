@@ -22,6 +22,14 @@
         <button type="button" class="comment-btn" (click)="toggleReply(comment.id)">
           Reply
         </button>
+        <button
+          *ngIf="canDeleteComment(comment)"
+          type="button"
+          class="comment-btn danger"
+          [disabled]="isDeletingComment(comment.id)"
+          (click)="deleteComment(comment)">
+          {{isDeletingComment(comment.id) ? 'Deleting...' : 'Delete'}}
+        </button>
       </div>
 
       <div class="reply-editor" *ngIf="replyOpenMap[comment.id]">
@@ -62,6 +70,7 @@
       [topicId]="topicId"
       [comments]="comment.replies"
       [isLoggedIn]="isLoggedIn"
+      [currentUsername]="currentUsername"
       (threadUpdated)="onNestedThreadUpdated()">
     </app-topic-comment-thread>
   </li>

@@ -11,4 +11,6 @@ import java.util.List;
 public interface TopicCommentRepository extends JpaRepository<TopicComment, Long> {
 
     List<TopicComment> findAllByTopicWeekOrderByCreatedDateAsc(TopicWeek topicWeek);
+
+    List<TopicComment> findAllByParentComment(TopicComment parentComment);
 }

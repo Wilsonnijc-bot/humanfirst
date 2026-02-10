@@ -18,6 +18,7 @@ export class TopicDiscussionComponent implements OnInit, OnDestroy {
   loading = false;
   errorMessage = '';
   isLoggedIn = false;
+  currentUsername = '';
 
   commentText = '';
   selectedCommentStance: TopicStance = 'PRO';
@@ -39,8 +40,10 @@ export class TopicDiscussionComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.isLoggedIn();
+    this.currentUsername = this.authService.getUserName() || '';
     this.authSubscription = this.authService.loggedIn.subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
+      this.currentUsername = loggedIn ? (this.authService.getUserName() || '') : '';
     });
 
     this.routeSubscription = this.activatedRoute.paramMap.subscribe((params) => {

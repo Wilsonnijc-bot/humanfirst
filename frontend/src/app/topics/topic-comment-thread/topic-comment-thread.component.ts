@@ -13,12 +13,14 @@ export class TopicCommentThreadComponent {
   @Input() topicId: number;
   @Input() comments: TopicComment[] = [];
   @Input() isLoggedIn = false;
+  @Input() currentUsername = '';
 
   @Output() threadUpdated = new EventEmitter<void>();
 
   replyOpenMap: { [commentId: number]: boolean } = {};
   replyTextMap: { [commentId: number]: string } = {};
   replyStanceMap: { [commentId: number]: TopicStance } = {};
+  deletingCommentMap: { [commentId: number]: boolean } = {};
 
   constructor(
     private topicDiscussionService: TopicDiscussionService,
@@ -79,13 +81,51 @@ export class TopicCommentThreadComponent {
     }
 
     this.topicDiscussionService.toggleCommentUpvote(comment.id).subscribe({
-      next: () => {
-        this.threadUpdated.emit();
+      next: (response) => {
+        comment.upvoteCount = response?.upvoteCount ?? comment.upvoteCount;
+        comment.upVotedByCurrentUser = !!response?.upVotedByCurrentUser;
+        this.sortComments(this.comments);
       },
       error: (error) => {
         this.toastr.error(error?.error?.message || 'Failed to update upvote');
       }
     });
+  }
+
+  deleteComment(comment: TopicComment): void {
+    if (!this.isLoggedIn) {
+      this.toastr.warning('Please log in to delete comments');
+      return;
+    }
+    if (!this.canDeleteComment(comment)) {
+      this.toastr.error('You can only delete your own comment');
+      return;
+    }
+    if (this.deletingCommentMap[comment.id]) {
+      return;
+    }
+
+    this.deletingCommentMap[comment.id] = true;
+    this.topicDiscussionService.deleteComment(comment.id).subscribe({
+      next: () => {
+        this.removeCommentLocally(comment);
+        this.deletingCommentMap[comment.id] = false;
+      },
+      error: (error) => {
+        this.deletingCommentMap[comment.id] = false;
+        this.toastr.error(error?.error?.message || 'Failed to delete comment');
+      }
+    });
+  }
+
+  canDeleteComment(comment: TopicComment): boolean {
+    const current = (this.currentUsername || '').trim().toLowerCase();
+    const author = (comment?.userName || '').trim().toLowerCase();
+    return !!current && current === author;
+  }
+
+  isDeletingComment(commentId: number): boolean {
+    return !!this.deletingCommentMap[commentId];
   }
 
   onNestedThreadUpdated(): void {
@@ -98,5 +138,32 @@ export class TopicCommentThreadComponent {
 
   getStanceClass(stance: TopicStance | null | undefined): 'pro' | 'con' {
     return stance === 'CON' ? 'con' : 'pro';
+  }
+
+  private removeCommentLocally(comment: TopicComment): void {
+    const index = this.comments.findIndex((item) => item.id === comment.id);
+    if (index < 0) {
+      return;
+    }
+
+    const promotedReplies = [...(comment.replies || [])];
+    this.comments.splice(index, 1, ...promotedReplies);
+    this.sortComments(this.comments);
+  }
+
+  private sortComments(comments: TopicComment[]): void {
+    comments.sort((first, second) => {
+      const upvoteDifference = (second?.upvoteCount || 0) - (first?.upvoteCount || 0);
+      if (upvoteDifference !== 0) {
+        return upvoteDifference;
+      }
+
+      return this.getCommentTimestamp(second) - this.getCommentTimestamp(first);
+    });
+  }
+
+  private getCommentTimestamp(comment: TopicComment): number {
+    const parsed = Date.parse(comment?.createdDate || '');
+    return Number.isNaN(parsed) ? 0 : parsed;
   }
 }

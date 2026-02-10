@@ -20,4 +20,6 @@ public interface TopicCommentUpvoteRepository extends JpaRepository<TopicComment
     @Query("select upvote from TopicCommentUpvote upvote where upvote.user = :user and upvote.topicComment.topicWeek = :topicWeek")
     List<TopicCommentUpvote> findAllByUserAndTopicWeek(@Param("user") User user,
                                                        @Param("topicWeek") TopicWeek topicWeek);
+
+    void deleteAllByTopicComment(TopicComment topicComment);
 }

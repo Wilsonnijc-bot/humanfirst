@@ -45,4 +45,8 @@ export class TopicDiscussionService {
   toggleCommentUpvote(commentId: number): Observable<TopicCommentUpvoteResponse> {
     return this.http.post<TopicCommentUpvoteResponse>(`${this.apiBaseUrl}/api/topics/comments/${commentId}/upvote`, {});
   }
+
+  deleteComment(commentId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiBaseUrl}/api/topics/comments/${commentId}`);
+  }
 }

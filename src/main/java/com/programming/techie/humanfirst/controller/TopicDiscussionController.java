@@ -49,4 +49,10 @@ public class TopicDiscussionController {
     public ResponseEntity<TopicCommentUpvoteResponse> toggleCommentUpvote(@PathVariable Long commentId) {
         return ResponseEntity.status(OK).body(topicDiscussionService.toggleCommentUpvote(commentId));
     }
+
+    @DeleteMapping("/comments/{commentId}")
+    public ResponseEntity<Void> deleteComment(@PathVariable Long commentId) {
+        topicDiscussionService.deleteComment(commentId);
+        return ResponseEntity.noContent().build();
+    }
 }

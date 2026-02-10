@@ -10,11 +10,14 @@ import com.programming.techie.humanfirst.repository.TopicWeekRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 @Service
 @RequiredArgsConstructor
@@ -154,6 +157,28 @@ public class TopicDiscussionService {
                 .upvoteCount(saved.getUpvoteCount())
                 .upVotedByCurrentUser(upVoted)
                 .build();
+    }
+
+    public void deleteComment(Long commentId) {
+        TopicComment comment = topicCommentRepository.findById(commentId)
+                .orElseThrow(() -> new HumanfirstException("Comment not found with id: " + commentId));
+        User currentUser = authService.getCurrentUser();
+
+        if (!Objects.equals(comment.getUser().getUserId(), currentUser.getUserId())) {
+            throw new ResponseStatusException(FORBIDDEN, "You can only delete your own comments");
+        }
+
+        TopicComment parentComment = comment.getParentComment();
+        List<TopicComment> directReplies = topicCommentRepository.findAllByParentComment(comment);
+        for (TopicComment reply : directReplies) {
+            reply.setParentComment(parentComment);
+        }
+        if (!directReplies.isEmpty()) {
+            topicCommentRepository.saveAll(directReplies);
+        }
+
+        topicCommentUpvoteRepository.deleteAllByTopicComment(comment);
+        topicCommentRepository.delete(comment);
     }
 
     @Transactional(readOnly = true)
