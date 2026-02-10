@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../auth/shared/auth.service';
 import { TopicDiscussionService } from './topic-discussion.service';
-import { TopicStance, TopicWeekDetail } from './topic.model';
+import { TopicComment, TopicStance, TopicWeekDetail } from './topic.model';
 
 @Component({
   selector: 'app-topic-discussion',
@@ -14,12 +14,13 @@ import { TopicStance, TopicWeekDetail } from './topic.model';
 export class TopicDiscussionComponent implements OnInit, OnDestroy {
 
   topic: TopicWeekDetail | null = null;
+  unifiedComments: TopicComment[] = [];
   loading = false;
   errorMessage = '';
   isLoggedIn = false;
 
-  proCommentText = '';
-  conCommentText = '';
+  commentText = '';
+  selectedCommentStance: TopicStance = 'PRO';
   viewMode: 'month' | 'week' = 'month';
   selectedDomain = 'all';
 
@@ -75,7 +76,11 @@ export class TopicDiscussionComponent implements OnInit, OnDestroy {
     });
   }
 
-  submitTopLevelComment(stance: TopicStance): void {
+  setCommentStance(stance: TopicStance): void {
+    this.selectedCommentStance = stance;
+  }
+
+  submitTopLevelComment(): void {
     if (!this.topic) {
       return;
     }
@@ -84,20 +89,18 @@ export class TopicDiscussionComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const rawText = stance === 'PRO' ? this.proCommentText : this.conCommentText;
-    const normalizedText = (rawText || '').trim();
+    const normalizedText = (this.commentText || '').trim();
     if (!normalizedText) {
       this.toastr.warning('Comment cannot be empty');
       return;
     }
 
-    this.topicDiscussionService.addComment(this.topic.id, { text: normalizedText, stance }).subscribe({
+    this.topicDiscussionService.addComment(this.topic.id, {
+      text: normalizedText,
+      stance: this.selectedCommentStance
+    }).subscribe({
       next: () => {
-        if (stance === 'PRO') {
-          this.proCommentText = '';
-        } else {
-          this.conCommentText = '';
-        }
+        this.commentText = '';
         this.loadTopic();
       },
       error: (error) => {
@@ -181,10 +184,12 @@ export class TopicDiscussionComponent implements OnInit, OnDestroy {
     request$.subscribe({
       next: (topic) => {
         this.topic = topic;
+        this.unifiedComments = this.buildUnifiedCommentFeed(topic);
         this.loading = false;
       },
       error: (error) => {
         this.topic = null;
+        this.unifiedComments = [];
         this.loading = false;
         this.errorMessage = error?.error?.message || 'Unable to load topic';
         this.toastr.error(this.errorMessage);
@@ -192,7 +197,52 @@ export class TopicDiscussionComponent implements OnInit, OnDestroy {
     });
   }
 
+  private buildUnifiedCommentFeed(topic: TopicWeekDetail | null): TopicComment[] {
+    if (!topic) {
+      return [];
+    }
+
+    const roots = [
+      ...(topic.proComments || []),
+      ...(topic.conComments || [])
+    ].map((comment) => this.cloneCommentTree(comment));
+
+    return this.sortCommentTree(roots);
+  }
+
+  private cloneCommentTree(comment: TopicComment): TopicComment {
+    return {
+      ...comment,
+      replies: (comment.replies || []).map((reply) => this.cloneCommentTree(reply))
+    };
+  }
+
+  private sortCommentTree(comments: TopicComment[]): TopicComment[] {
+    const sorted = [...(comments || [])];
+    sorted.sort((first, second) => this.compareComments(first, second));
+    sorted.forEach((comment) => {
+      comment.replies = this.sortCommentTree(comment.replies || []);
+    });
+    return sorted;
+  }
+
+  private compareComments(first: TopicComment, second: TopicComment): number {
+    const upvoteDifference = (second?.upvoteCount || 0) - (first?.upvoteCount || 0);
+    if (upvoteDifference !== 0) {
+      return upvoteDifference;
+    }
+
+    const firstTimestamp = this.getCommentTimestamp(first);
+    const secondTimestamp = this.getCommentTimestamp(second);
+    return secondTimestamp - firstTimestamp;
+  }
+
+  private getCommentTimestamp(comment: TopicComment): number {
+    const parsed = Date.parse(comment?.createdDate || '');
+    return Number.isNaN(parsed) ? 0 : parsed;
+  }
+
   private buildExtendedWeeklyTopicRead(weekTitle: string, monthTitle: string): string {
-    return `Start by framing the decision: what should AI systems be allowed to recommend, and what must stay under direct human authority? In medical settings, speed and consistency can improve outcomes, but clinical context often includes edge cases that are hard to encode. As you read this topic, compare ideal workflows with real-world constraints like incomplete records, overloaded staff, and uneven access to specialist review.\n\nThen examine accountability pathways. If an AI-supported decision contributes to patient harm, responsibility is rarely singular. Consider how responsibility may be distributed across model developers, hospital leadership, care teams, and regulators. For "${weekTitle}", discuss what documentation, escalation rules, and override protocols should exist before deployment. Strong governance is not only about preventing failure; it also protects clinicians from unclear liability in high-pressure moments.\n\nA second lens is evidence quality. Ask what level of validation should be required before using AI tools for triage, diagnostics, and treatment planning. Should performance be measured only on benchmark datasets, or also on longitudinal outcomes across diverse populations? In the context of "${monthTitle}", evaluate whether explainability should be mandatory for high-impact decisions, and how to balance explainability with raw predictive performance.\n\nFinally, evaluate human factors. Even accurate systems can fail when teams over-trust outputs or under-trust useful recommendations. Discuss training expectations, user interface design, and how confidence scores should be communicated. The strongest proposals usually combine technical safeguards, clinical workflow fit, and clear ownership of final decisions. Use the Pro and Con threads below to argue which safeguards are essential now versus which can be phased in over time.`;
+    return `Start by framing the decision: what should AI systems be allowed to recommend, and what must stay under direct human authority? In medical settings, speed and consistency can improve outcomes, but clinical context often includes edge cases that are hard to encode. As you read this topic, compare ideal workflows with real-world constraints like incomplete records, overloaded staff, and uneven access to specialist review.\n\nThen examine accountability pathways. If an AI-supported decision contributes to patient harm, responsibility is rarely singular. Consider how responsibility may be distributed across model developers, hospital leadership, care teams, and regulators. For "${weekTitle}", discuss what documentation, escalation rules, and override protocols should exist before deployment. Strong governance is not only about preventing failure; it also protects clinicians from unclear liability in high-pressure moments.\n\nA second lens is evidence quality. Ask what level of validation should be required before using AI tools for triage, diagnostics, and treatment planning. Should performance be measured only on benchmark datasets, or also on longitudinal outcomes across diverse populations? In the context of "${monthTitle}", evaluate whether explainability should be mandatory for high-impact decisions, and how to balance explainability with raw predictive performance.\n\nFinally, evaluate human factors. Even accurate systems can fail when teams over-trust outputs or under-trust useful recommendations. Discuss training expectations, user interface design, and how confidence scores should be communicated. The strongest proposals usually combine technical safeguards, clinical workflow fit, and clear ownership of final decisions. Use the comment section below and mark your stance to argue which safeguards are essential now versus which can be phased in over time.`;
   }
 }

@@ -1,10 +1,11 @@
-<div class="thread-empty" *ngIf="!comments || comments.length === 0">No comments yet.</div>
-
 <ul class="thread-list" *ngIf="comments && comments.length > 0">
   <li class="thread-item" *ngFor="let comment of comments; trackBy: trackByComment">
-    <article class="comment-card">
+    <article class="comment-card" [ngClass]="getStanceClass(comment.stance)">
       <header>
-        <span class="comment-user">{{comment.userName}}</span>
+        <div class="comment-head-left">
+          <span class="comment-user">{{comment.userName}}</span>
+          <span class="comment-stance" [ngClass]="getStanceClass(comment.stance)">{{comment.stance}}</span>
+        </div>
         <span class="comment-time">{{comment.duration}}</span>
       </header>
 
@@ -24,6 +25,27 @@
       </div>
 
       <div class="reply-editor" *ngIf="replyOpenMap[comment.id]">
+        <div class="reply-stance-selector" role="radiogroup" aria-label="Select your reply stance">
+          <button
+            type="button"
+            class="comment-btn stance pro"
+            [class.active]="replyStanceMap[comment.id] === 'PRO'"
+            [attr.aria-checked]="replyStanceMap[comment.id] === 'PRO'"
+            role="radio"
+            (click)="setReplyStance(comment.id, 'PRO')">
+            Pro
+          </button>
+          <button
+            type="button"
+            class="comment-btn stance con"
+            [class.active]="replyStanceMap[comment.id] === 'CON'"
+            [attr.aria-checked]="replyStanceMap[comment.id] === 'CON'"
+            role="radio"
+            (click)="setReplyStance(comment.id, 'CON')">
+            Con
+          </button>
+        </div>
+
         <textarea
           [value]="replyTextMap[comment.id] || ''"
           (input)="replyTextMap[comment.id] = $any($event.target).value"
@@ -39,7 +61,6 @@
       *ngIf="comment.replies && comment.replies.length > 0"
       [topicId]="topicId"
       [comments]="comment.replies"
-      [stance]="stance"
       [isLoggedIn]="isLoggedIn"
       (threadUpdated)="onNestedThreadUpdated()">
     </app-topic-comment-thread>

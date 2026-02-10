@@ -115,9 +115,6 @@ public class TopicDiscussionService {
             if (!Objects.equals(parentComment.getTopicWeek().getTopicWeekId(), topicWeek.getTopicWeekId())) {
                 throw new HumanfirstException("Parent comment does not belong to this topic");
             }
-
-            // Replies inherit the parent stance so the thread stays in one side column.
-            stance = parentComment.getStance();
         }
 
         if (stance == null) {

@@ -33,7 +33,6 @@
         <section class="topic-hero">
           <p class="topic-kicker">Topic of the week</p>
           <h1 class="topic-title">{{topic.weekTitle}}</h1>
-          <p class="topic-month">Topic of the month - {{topic.monthTitle}}</p>
         </section>
 
         <section class="topic-passage">
@@ -43,48 +42,54 @@
           </div>
         </section>
 
-        <section class="topic-comments-grid">
-          <article class="topic-column pro-column">
-            <h3>Pro comments</h3>
-            <p class="topic-column-meta">Highest upvoted comments are displayed first.</p>
+        <section class="topic-comments-section">
+          <h3>Comments</h3>
+          <p class="topic-column-meta">Top comments by upvotes, newest first when scores match.</p>
 
-            <div class="topic-comment-editor">
-              <textarea
-                [value]="proCommentText"
-                (input)="proCommentText = $any($event.target).value"
-                placeholder="Share your pro argument"></textarea>
-              <button type="button" class="topic-btn" (click)="submitTopLevelComment('PRO')">Post Pro Comment</button>
+          <div class="topic-comment-editor">
+            <p class="topic-comment-editor-label">Join the conversation</p>
+
+            <div class="topic-stance-selector" role="radiogroup" aria-label="Select your stance">
+              <button
+                type="button"
+                class="topic-stance-btn pro"
+                [class.active]="selectedCommentStance === 'PRO'"
+                [attr.aria-checked]="selectedCommentStance === 'PRO'"
+                role="radio"
+                (click)="setCommentStance('PRO')">
+                Pro
+              </button>
+              <button
+                type="button"
+                class="topic-stance-btn con"
+                [class.active]="selectedCommentStance === 'CON'"
+                [attr.aria-checked]="selectedCommentStance === 'CON'"
+                role="radio"
+                (click)="setCommentStance('CON')">
+                Con
+              </button>
             </div>
 
-            <app-topic-comment-thread
-              [topicId]="topic.id"
-              [comments]="topic.proComments"
-              [stance]="'PRO'"
-              [isLoggedIn]="isLoggedIn"
-              (threadUpdated)="onThreadUpdated()">
-            </app-topic-comment-thread>
-          </article>
+            <textarea
+              [value]="commentText"
+              (input)="commentText = $any($event.target).value"
+              placeholder="Add a comment"></textarea>
+            <button type="button" class="topic-btn" (click)="submitTopLevelComment()">Post Comment</button>
+          </div>
 
-          <article class="topic-column con-column">
-            <h3>Con comments</h3>
-            <p class="topic-column-meta">Highest upvoted comments are displayed first.</p>
+          <section class="topic-empty-state" *ngIf="unifiedComments.length === 0">
+            <div class="topic-empty-icon" aria-hidden="true">...</div>
+            <h4>Be the first to comment</h4>
+            <p>Nobody’s responded to this topic yet. Add your thoughts and get the conversation going.</p>
+          </section>
 
-            <div class="topic-comment-editor">
-              <textarea
-                [value]="conCommentText"
-                (input)="conCommentText = $any($event.target).value"
-                placeholder="Share your con argument"></textarea>
-              <button type="button" class="topic-btn" (click)="submitTopLevelComment('CON')">Post Con Comment</button>
-            </div>
-
-            <app-topic-comment-thread
-              [topicId]="topic.id"
-              [comments]="topic.conComments"
-              [stance]="'CON'"
-              [isLoggedIn]="isLoggedIn"
-              (threadUpdated)="onThreadUpdated()">
-            </app-topic-comment-thread>
-          </article>
+          <app-topic-comment-thread
+            *ngIf="unifiedComments.length > 0"
+            [topicId]="topic.id"
+            [comments]="unifiedComments"
+            [isLoggedIn]="isLoggedIn"
+            (threadUpdated)="onThreadUpdated()">
+          </app-topic-comment-thread>
         </section>
       </ng-template>
     </div>

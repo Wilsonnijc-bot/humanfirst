@@ -53,7 +53,7 @@
 .topic-subdivisions h2,
 .topic-voting h2,
 .topic-passage h2,
-.topic-column h3 {
+.topic-comments-section h3 {
   margin: 0 0 10px;
   color: var(--hf-text);
   font-size: 18px;
@@ -198,14 +198,8 @@
   margin-top: 0;
 }
 
-.topic-comments-grid {
+.topic-comments-section {
   margin-top: 12px;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 14px;
-}
-
-.topic-column {
   border: 1px solid var(--hf-border);
   border-radius: 14px;
   background: var(--hf-surface);
@@ -223,7 +217,50 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+}
+
+.topic-comment-editor-label {
+  margin: 0;
+  color: var(--hf-text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.topic-stance-selector {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.topic-stance-btn {
+  border: 1px solid var(--hf-border-strong);
+  border-radius: 999px;
+  background: #171722;
+  color: var(--hf-text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.topic-stance-btn:hover,
+.topic-stance-btn:focus {
+  background: #1f1f2b;
+  color: var(--hf-text);
+  outline: none;
+  box-shadow: var(--hf-focus-ring);
+}
+
+.topic-stance-btn.pro.active {
+  border-color: #93cefb;
+  background: rgba(147, 206, 251, 0.18);
+  color: #d9f1ff;
+}
+
+.topic-stance-btn.con.active {
+  border-color: #ff8ea1;
+  background: rgba(255, 142, 161, 0.16);
+  color: #ffd2dc;
 }
 
 .topic-comment-editor textarea {
@@ -235,6 +272,41 @@
   background: #0f0f16;
   border: 1px solid var(--hf-border);
   color: var(--hf-text);
+}
+
+.topic-empty-state {
+  border: 1px dashed var(--hf-border-strong);
+  border-radius: 12px;
+  padding: 18px 14px;
+  margin-bottom: 8px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.topic-empty-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--hf-border-strong);
+  color: var(--hf-text-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 8px;
+  letter-spacing: 0.1em;
+}
+
+.topic-empty-state h4 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  color: var(--hf-text);
+}
+
+.topic-empty-state p {
+  margin: 0;
+  color: var(--hf-text-muted);
+  font-size: 13px;
+  line-height: 1.45;
 }
 
 .topic-state {

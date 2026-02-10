@@ -12,13 +12,13 @@ export class TopicCommentThreadComponent {
 
   @Input() topicId: number;
   @Input() comments: TopicComment[] = [];
-  @Input() stance: TopicStance;
   @Input() isLoggedIn = false;
 
   @Output() threadUpdated = new EventEmitter<void>();
 
   replyOpenMap: { [commentId: number]: boolean } = {};
   replyTextMap: { [commentId: number]: string } = {};
+  replyStanceMap: { [commentId: number]: TopicStance } = {};
 
   constructor(
     private topicDiscussionService: TopicDiscussionService,
@@ -27,7 +27,18 @@ export class TopicCommentThreadComponent {
   }
 
   toggleReply(commentId: number): void {
-    this.replyOpenMap[commentId] = !this.replyOpenMap[commentId];
+    const isOpen = !this.replyOpenMap[commentId];
+    this.replyOpenMap[commentId] = isOpen;
+    if (!isOpen) {
+      return;
+    }
+
+    const targetComment = this.comments.find((comment) => comment.id === commentId);
+    this.replyStanceMap[commentId] = targetComment?.stance || 'PRO';
+  }
+
+  setReplyStance(commentId: number, stance: TopicStance): void {
+    this.replyStanceMap[commentId] = stance;
   }
 
   submitReply(comment: TopicComment): void {
@@ -43,13 +54,15 @@ export class TopicCommentThreadComponent {
       return;
     }
 
+    const stance = this.replyStanceMap[comment.id] || comment.stance || 'PRO';
     this.topicDiscussionService.addComment(this.topicId, {
       text,
-      stance: this.stance,
+      stance,
       parentCommentId: comment.id
     }).subscribe({
       next: () => {
         this.replyTextMap[comment.id] = '';
+        this.replyStanceMap[comment.id] = comment.stance || 'PRO';
         this.replyOpenMap[comment.id] = false;
         this.threadUpdated.emit();
       },
@@ -81,5 +94,9 @@ export class TopicCommentThreadComponent {
 
   trackByComment(index: number, item: TopicComment): number {
     return item.id || index;
+  }
+
+  getStanceClass(stance: TopicStance | null | undefined): 'pro' | 'con' {
+    return stance === 'CON' ? 'con' : 'pro';
   }
 }
