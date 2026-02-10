@@ -1,21 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import {
-  faChevronDown,
-  faComments,
-  faCompass,
-  faHome,
-  faLayerGroup,
-  faPlus
-} from '@fortawesome/free-solid-svg-icons';
 import { PostModel } from '../shared/post-model';
 import { PostService } from '../shared/post.service';
 import { SubredditService } from '../subreddit/subreddit.service';
 import { SubredditModel } from '../subreddit/subreddit-response';
-import { TopicDiscussionService } from '../topics/topic-discussion.service';
-import { CommunityService } from '../community/community.service';
-import { CommunitySummary } from '../community/community.model';
+import { sortPostsByNewest } from '../shared/post-sort.util';
 
 @Component({
   selector: 'app-home',
@@ -26,25 +16,7 @@ export class HomeComponent implements OnInit {
 
   posts: Array<PostModel> = [];
   selectedDomain = 'all';
-  communityItems: CommunitySummary[] = [];
 
-  readonly primaryNavItems = [
-    { key: 'home', label: 'Home', icon: faHome, domain: 'all' }
-  ];
-
-  readonly homeSubItems = [
-    { key: 'discussions', label: 'discussions', icon: faComments, domain: 'discussions' },
-    { key: 'ai-prospects', label: 'AI prospects', icon: faLayerGroup, domain: 'ai-prospects' }
-  ];
-
-  monthlyTopicLabel = 'Topic of the month - (manually change each month)';
-  weeklyTopicLabel = 'Topic of the week - (manually change each week)';
-
-  readonly faCompass = faCompass;
-  readonly faPlus = faPlus;
-  readonly faChevronDown = faChevronDown;
-
-  private currentTopicSlug: string | null = null;
   private subredditIdByDomain = new Map<string, number>();
   private readonly domainAliases: Record<string, string[]> = {
     discussions: ['discussions'],
@@ -54,11 +26,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private postService: PostService,
     private subredditService: SubredditService,
-    private communityService: CommunityService,
     private toastr: ToastrService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private topicDiscussionService: TopicDiscussionService
+    private route: ActivatedRoute
   ) {
   }
 
@@ -69,93 +38,19 @@ export class HomeComponent implements OnInit {
     }
 
     this.loadDomainMapping();
-    this.loadTopicLabels();
-    this.loadCommunities();
   }
 
-  selectDomain(domainKey: string) {
+  onSidebarDomainSelected(domainKey: string) {
+    this.selectDomain(domainKey);
+  }
+
+  private selectDomain(domainKey: string) {
     if (this.selectedDomain === domainKey) {
       return;
     }
 
     this.selectedDomain = domainKey;
     this.loadPosts();
-  }
-
-  handlePrimaryNavClick(item: { domain?: string }) {
-    if (item.domain) {
-      this.selectDomain(item.domain);
-    }
-  }
-
-  handleHomeSubItemClick(item: { domain?: string }) {
-    if (item.domain) {
-      this.selectDomain(item.domain);
-    }
-  }
-
-  handleCommunityClick(item: CommunitySummary) {
-    if (!item?.slug) {
-      return;
-    }
-
-    this.router.navigate(['/communities', item.slug]);
-  }
-
-  isItemActive(item: { domain?: string }) {
-    return !!item.domain && this.selectedDomain === item.domain;
-  }
-
-  hasCommunityAvatar(item: CommunitySummary): boolean {
-    return !!item?.avatarImageUrl;
-  }
-
-  getCommunityInitial(item: CommunitySummary): string {
-    const name = item?.name || '';
-    return name.trim().charAt(0).toUpperCase() || 'C';
-  }
-
-  goToCreateSubreddit() {
-    this.router.navigateByUrl('/create-subreddit');
-  }
-
-  goToCurrentTopic() {
-    if (this.currentTopicSlug) {
-      this.router.navigate(['/topics', this.currentTopicSlug]);
-      return;
-    }
-
-    this.router.navigateByUrl('/topics');
-  }
-
-  goToTopicArchive() {
-    this.router.navigateByUrl('/topics/archive');
-  }
-
-  goToCommunityDirectory() {
-    this.router.navigateByUrl('/communities');
-  }
-
-  private loadTopicLabels() {
-    this.topicDiscussionService.getCurrentTopic().subscribe((topic) => {
-      this.monthlyTopicLabel = `Topic of the month - ${topic.monthTitle}`;
-      this.weeklyTopicLabel = `Topic of the week - ${topic.weekTitle}`;
-      this.currentTopicSlug = topic.slug || null;
-    }, () => {
-      this.currentTopicSlug = null;
-    });
-  }
-
-  private loadCommunities() {
-    this.communityService.getAllCommunities().subscribe({
-      next: (communities) => {
-        this.communityItems = communities || [];
-      },
-      error: () => {
-        this.communityItems = [];
-        this.toastr.error('Failed to load communities');
-      }
-    });
   }
 
   private loadDomainMapping() {
@@ -192,8 +87,8 @@ export class HomeComponent implements OnInit {
 
   private loadPosts() {
     if (this.selectedDomain === 'all') {
-      this.postService.getAllPosts().subscribe((post) => {
-        this.posts = this.sortPostsByNewest(post);
+      this.postService.getAllPosts().subscribe((posts) => {
+        this.posts = sortPostsByNewest(posts);
       }, () => {
         this.posts = [];
         this.toastr.error('Failed to load posts');
@@ -208,33 +103,12 @@ export class HomeComponent implements OnInit {
       return;
     }
 
-    this.postService.getPostsBySubreddit(subredditId).subscribe((post) => {
-      this.posts = this.sortPostsByNewest(post);
+    this.postService.getPostsBySubreddit(subredditId).subscribe((posts) => {
+      this.posts = sortPostsByNewest(posts);
     }, () => {
       this.posts = [];
       this.toastr.error('Failed to load posts for selected domain');
     });
-  }
-
-  private sortPostsByNewest(posts: PostModel[]): PostModel[] {
-    return [...(posts || [])].sort((a, b) => {
-      const createdTimeA = this.parseTimestamp(a?.createdAt);
-      const createdTimeB = this.parseTimestamp(b?.createdAt);
-
-      if (createdTimeA !== createdTimeB) {
-        return createdTimeB - createdTimeA;
-      }
-
-      return (b?.id || 0) - (a?.id || 0);
-    });
-  }
-
-  private parseTimestamp(value: string | undefined): number {
-    if (!value) {
-      return 0;
-    }
-    const parsed = new Date(value).getTime();
-    return Number.isNaN(parsed) ? 0 : parsed;
   }
 
   private normalizeDomainKey(value: string | null): string | null {

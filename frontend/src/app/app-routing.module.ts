@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'r/:subreddit/comments/:id/:slug', component: ViewPostComponent },
   { path: 'r/:subreddit/comments/:id', component: ViewPostComponent },
-  { path: 'view-post/:id', component: ViewPostComponent },
+  { path: 'view-post/:id', redirectTo: 'r/post/comments/:id', pathMatch: 'full' },
   { path: 'user-profile/:name', component: UserProfileComponent, canActivate: [AuthGuard] },
   { path: 'topics/archive', component: TopicsArchiveComponent },
   { path: 'topics/:slug', component: TopicDiscussionComponent },

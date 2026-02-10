@@ -1,80 +1,10 @@
 <div class="humanfirst-body">
   <div class="hf-layout community-shell">
-    <aside class="hf-sidebar">
-      <nav class="hf-nav">
-        <button
-          *ngFor="let item of primaryNavItems"
-          type="button"
-          class="hf-row"
-          [class.active]="isItemActive(item)"
-          (click)="handlePrimaryNavClick(item)">
-          <fa-icon class="hf-icon" [icon]="item.icon"></fa-icon>
-          <span>{{item.label}}</span>
-        </button>
-      </nav>
-
-      <div class="hf-home-subitems">
-        <button
-          *ngFor="let item of homeSubItems"
-          type="button"
-          class="hf-row hf-sub-row"
-          [class.active]="isItemActive(item)"
-          (click)="handleHomeSubItemClick(item)">
-          <fa-icon class="hf-icon" [icon]="item.icon"></fa-icon>
-          <span>{{item.label}}</span>
-        </button>
-      </div>
-
-      <hr class="hf-divider" />
-
-      <section class="hf-section">
-        <div class="hf-section-header">
-          <span>TOPICS</span>
-        </div>
-        <div class="hf-row hf-static-row">
-          <span>{{monthlyTopicLabel}}</span>
-        </div>
-        <button type="button" class="hf-row hf-action-row" (click)="goToCurrentTopic()">
-          <span>{{weeklyTopicLabel}}</span>
-        </button>
-        <button type="button" class="hf-row hf-action-row" (click)="goToTopicArchive()">
-          <fa-icon class="hf-icon" [icon]="faCompass"></fa-icon>
-          <span>Discover previous</span>
-        </button>
-      </section>
-
-      <hr class="hf-divider" />
-
-      <button type="button" class="hf-row hf-action-row" (click)="goToCreateSubreddit()">
-        <fa-icon class="hf-icon" [icon]="faPlus"></fa-icon>
-        <span>Start a community</span>
-      </button>
-
-      <hr class="hf-divider" />
-
-      <section class="hf-section">
-        <div class="hf-section-header">
-          <span>COMMUNITIES</span>
-          <fa-icon [icon]="faChevronDown"></fa-icon>
-        </div>
-        <button
-          *ngFor="let item of sidebarCommunities"
-          type="button"
-          class="hf-row"
-          (click)="handleCommunityClick(item)">
-          <span class="hf-community-avatar" [class.placeholder]="!hasCommunityAvatar(item)">
-            <img *ngIf="hasCommunityAvatar(item)" [src]="item.avatarImageUrl" [alt]="item.name">
-            <span *ngIf="!hasCommunityAvatar(item)">{{getSidebarCommunityInitial(item)}}</span>
-          </span>
-          <span>{{item.name}}</span>
-        </button>
-
-        <button type="button" class="hf-row hf-action-row" (click)="goToCommunityDirectory()">
-          <fa-icon class="hf-icon" [icon]="faCompass"></fa-icon>
-          <span>Discover More Communities</span>
-        </button>
-      </section>
-    </aside>
+    <app-hf-sidebar
+      [selectedDomain]="selectedDomain"
+      [reloadToken]="sidebarReloadToken"
+      (domainSelected)="onSidebarDomainSelected($event)">
+    </app-hf-sidebar>
 
     <main class="community-main-col">
       <div class="community-main-feed">

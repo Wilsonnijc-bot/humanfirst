@@ -1,6 +1,7 @@
 package com.programming.techie.humanfirst.repository;
 
 import com.programming.techie.humanfirst.model.Community;
+import com.programming.techie.humanfirst.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -17,4 +18,6 @@ public interface CommunityRepository extends JpaRepository<Community, Long> {
     boolean existsByNameIgnoreCase(String name);
 
     List<Community> findAllByOrderByCreatedAtDesc();
+
+    List<Community> findAllByCreatedByOrderByCreatedAtDesc(User user);
 }

@@ -4,22 +4,14 @@ import { Subscription } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-import {
-  faChevronDown,
-  faComments,
-  faCompass,
-  faHome,
-  faLayerGroup,
-  faPlus
-} from '@fortawesome/free-solid-svg-icons';
 import { finalize, switchMap, tap } from 'rxjs/operators';
 import { CommunityDetail, CommunitySummary } from '../community.model';
 import { CommunityService } from '../community.service';
 import { PostService } from '../../shared/post.service';
 import { PostModel } from '../../shared/post-model';
 import { AuthService } from '../../auth/shared/auth.service';
-import { TopicDiscussionService } from '../../topics/topic-discussion.service';
 import { VideoUploadService } from '../../shared/video-upload.service';
+import { sortPostsByNewest } from '../../shared/post-sort.util';
 
 @Component({
   selector: 'app-community-page',
@@ -43,7 +35,7 @@ export class CommunityPageComponent implements OnInit, OnDestroy {
   descriptionExpanded = false;
 
   selectedDomain = 'all';
-  sidebarCommunities: CommunitySummary[] = [];
+  sidebarReloadToken = 0;
 
   avatarPreviewUrl: string | null = null;
   bannerPreviewUrl: string | null = null;
@@ -56,22 +48,6 @@ export class CommunityPageComponent implements OnInit, OnDestroy {
 
   readonly acceptedCommunityImageTypes = '.jpg,.jpeg,.png,.webp,.gif';
 
-  readonly primaryNavItems = [
-    { key: 'home', label: 'Home', icon: faHome, domain: 'all' }
-  ];
-
-  readonly homeSubItems = [
-    { key: 'discussions', label: 'discussions', icon: faComments, domain: 'discussions' },
-    { key: 'ai-prospects', label: 'AI prospects', icon: faLayerGroup, domain: 'ai-prospects' }
-  ];
-
-  monthlyTopicLabel = 'Topic of the month - (manually change each month)';
-  weeklyTopicLabel = 'Topic of the week - (manually change each week)';
-
-  readonly faCompass = faCompass;
-  readonly faPlus = faPlus;
-  readonly faChevronDown = faChevronDown;
-
   editForm = new FormGroup({
     description: new FormControl(''),
     avatarImageUrl: new FormControl(''),
@@ -81,7 +57,6 @@ export class CommunityPageComponent implements OnInit, OnDestroy {
   private routeSubscription?: Subscription;
   private readonly descriptionPreviewLimit = 220;
   private readonly maxCommunityImageBytes = 8 * 1024 * 1024;
-  private currentTopicSlug: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -90,7 +65,6 @@ export class CommunityPageComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private communityService: CommunityService,
     private postService: PostService,
-    private topicDiscussionService: TopicDiscussionService,
     private videoUploadService: VideoUploadService
   ) {
   }
@@ -100,9 +74,6 @@ export class CommunityPageComponent implements OnInit, OnDestroy {
       this.isLoggedIn = loggedIn;
     });
     this.isLoggedIn = this.authService.isLoggedIn();
-
-    this.loadTopicLabels();
-    this.loadSidebarCommunities();
 
     this.routeSubscription = this.route.paramMap.subscribe((params) => {
       const slug = params.get('slug') || '';
@@ -123,50 +94,8 @@ export class CommunityPageComponent implements OnInit, OnDestroy {
     this.routeSubscription?.unsubscribe();
   }
 
-  handlePrimaryNavClick(item: { domain?: string }) {
-    if (item.domain) {
-      this.navigateToHomeDomain(item.domain);
-    }
-  }
-
-  handleHomeSubItemClick(item: { domain?: string }) {
-    if (item.domain) {
-      this.navigateToHomeDomain(item.domain);
-    }
-  }
-
-  isItemActive(item: { domain?: string }) {
-    return !!item.domain && this.selectedDomain === item.domain;
-  }
-
-  handleCommunityClick(item: CommunitySummary) {
-    if (!item?.slug) {
-      return;
-    }
-
-    this.router.navigate(['/communities', item.slug]);
-  }
-
-  hasCommunityAvatar(item: CommunitySummary): boolean {
-    return !!item?.avatarImageUrl;
-  }
-
-  getSidebarCommunityInitial(item: CommunitySummary): string {
-    const name = item?.name || '';
-    return name.trim().charAt(0).toUpperCase() || 'C';
-  }
-
-  goToCreateSubreddit() {
-    this.router.navigateByUrl('/create-subreddit');
-  }
-
-  goToCurrentTopic() {
-    if (this.currentTopicSlug) {
-      this.router.navigate(['/topics', this.currentTopicSlug]);
-      return;
-    }
-
-    this.router.navigateByUrl('/topics');
+  onSidebarDomainSelected(domain: string) {
+    this.navigateToHomeDomain(domain);
   }
 
   goToTopicArchive() {
@@ -234,8 +163,8 @@ export class CommunityPageComponent implements OnInit, OnDestroy {
         this.editMode = false;
         this.saveInProgress = false;
         this.resetMediaEditState();
+        this.sidebarReloadToken++;
         this.toastr.success('Community updated');
-        this.loadSidebarCommunities();
       },
       error: (error: HttpErrorResponse) => {
         this.saveInProgress = false;
@@ -549,28 +478,6 @@ export class CommunityPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  private loadTopicLabels() {
-    this.topicDiscussionService.getCurrentTopic().subscribe((topic) => {
-      this.monthlyTopicLabel = `Topic of the month - ${topic.monthTitle}`;
-      this.weeklyTopicLabel = `Topic of the week - ${topic.weekTitle}`;
-      this.currentTopicSlug = topic.slug || null;
-    }, () => {
-      this.currentTopicSlug = null;
-    });
-  }
-
-  private loadSidebarCommunities() {
-    this.communityService.getAllCommunities().subscribe({
-      next: (communities) => {
-        this.sidebarCommunities = communities || [];
-      },
-      error: () => {
-        this.sidebarCommunities = [];
-        this.toastr.error('Failed to load communities');
-      }
-    });
-  }
-
   private loadCommunityAndPosts() {
     this.loading = true;
     this.postsLoading = true;
@@ -599,7 +506,7 @@ export class CommunityPageComponent implements OnInit, OnDestroy {
   private loadCommunityPosts() {
     this.postService.getPostsByCommunity(this.slug).subscribe({
       next: (posts) => {
-        this.posts = this.sortPostsByNewest(posts || []);
+        this.posts = sortPostsByNewest(posts);
         this.postsLoading = false;
       },
       error: (error: HttpErrorResponse) => {
@@ -610,19 +517,6 @@ export class CommunityPageComponent implements OnInit, OnDestroy {
         }
         this.toastr.error(error?.error?.message || 'Failed to load posts');
       }
-    });
-  }
-
-  private sortPostsByNewest(posts: PostModel[]): PostModel[] {
-    return [...posts].sort((a, b) => {
-      const createdA = new Date(a?.createdAt || 0).getTime();
-      const createdB = new Date(b?.createdAt || 0).getTime();
-
-      if (createdA !== createdB) {
-        return createdB - createdA;
-      }
-
-      return (b?.id || 0) - (a?.id || 0);
     });
   }
 

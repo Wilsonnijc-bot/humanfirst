@@ -146,8 +146,7 @@ public class CommunityService {
     public MyCommunitiesDto getMyCommunities() {
         User currentUser = authService.getCurrentUser();
 
-        List<CommunitySummaryDto> createdCommunities = communityRepository.findAllByOrderByCreatedAtDesc().stream()
-                .filter(community -> community.getCreatedBy() != null && currentUser.getUserId().equals(community.getCreatedBy().getUserId()))
+        List<CommunitySummaryDto> createdCommunities = communityRepository.findAllByCreatedByOrderByCreatedAtDesc(currentUser).stream()
                 .map(this::toSummary)
                 .toList();
 
@@ -177,6 +176,37 @@ public class CommunityService {
                 .build();
 
         communityRepository.save(community);
+    }
+
+    public void ensureSeedCommunityCreator(String slug, String creatorEmail) {
+        String normalizedCreatorEmail = normalizeNullable(creatorEmail);
+        if (normalizedCreatorEmail == null) {
+            return;
+        }
+
+        Optional<Community> communityOptional = communityRepository.findBySlugIgnoreCase(slug);
+        Optional<User> creatorOptional = userRepository.findFirstByEmailIgnoreCaseAndEnabledTrueOrderByUserIdDesc(normalizedCreatorEmail);
+
+        if (communityOptional.isEmpty() || creatorOptional.isEmpty()) {
+            return;
+        }
+
+        Community community = communityOptional.get();
+        User creator = creatorOptional.get();
+
+        if (community.getCreatedBy() == null || !creator.getUserId().equals(community.getCreatedBy().getUserId())) {
+            community.setCreatedBy(creator);
+            community.setUpdatedAt(Instant.now());
+            communityRepository.save(community);
+        }
+
+        communityMembershipRepository.findByUserAndCommunity(creator, community)
+                .ifPresentOrElse(membership -> {
+                    if (membership.getRole() != CommunityMembershipRole.CREATOR) {
+                        membership.setRole(CommunityMembershipRole.CREATOR);
+                        communityMembershipRepository.save(membership);
+                    }
+                }, () -> saveMembership(creator, community, CommunityMembershipRole.CREATOR));
     }
 
     private Community findBySlugOrThrow(String slug) {

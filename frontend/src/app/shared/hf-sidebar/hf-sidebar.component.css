@@ -1,0 +1,139 @@
+:host {
+  display: block;
+}
+
+.hf-sidebar {
+  border: 1px solid var(--hf-border);
+  border-radius: 12px;
+  background: var(--hf-surface);
+  padding: 16px 10px 14px;
+  box-shadow: var(--hf-shadow);
+  position: static;
+}
+
+.hf-nav,
+.hf-home-subitems,
+.hf-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hf-home-subitems {
+  margin-top: 2px;
+}
+
+.hf-divider {
+  border: 0;
+  border-top: 1px solid var(--hf-border);
+  margin: 10px 0;
+}
+
+.hf-section {
+  margin-bottom: 10px;
+}
+
+.hf-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--hf-text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 6px 8px;
+}
+
+.hf-row {
+  width: 100%;
+  border: 1px solid transparent;
+  border-radius: 18px;
+  background: transparent;
+  color: var(--hf-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  padding: 9px 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.hf-sub-row {
+  margin-left: 24px;
+  width: calc(100% - 24px);
+  font-size: 13px;
+}
+
+.hf-row:hover {
+  background: #181824;
+  color: var(--hf-text);
+}
+
+.hf-row.active {
+  background: #1b1b28;
+  border-color: var(--hf-border-strong);
+  color: var(--hf-text);
+  font-weight: 600;
+}
+
+.hf-icon {
+  width: 16px;
+  color: var(--hf-text-muted);
+}
+
+.hf-community-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid #2e2f3e;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #1d2130;
+  color: #dbe8ff;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.hf-community-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hf-community-avatar.placeholder {
+  background: linear-gradient(140deg, #1f2f3f, #253248);
+}
+
+.hf-row:hover .hf-icon,
+.hf-row.active .hf-icon {
+  color: var(--hf-text-secondary);
+}
+
+.hf-action-row {
+  margin: 2px 0;
+}
+
+.hf-static-row {
+  cursor: default;
+  background: transparent;
+  color: var(--hf-text-secondary);
+}
+
+.hf-static-row:hover {
+  background: transparent;
+  color: var(--hf-text-secondary);
+}
+
+@media (min-width: 1024px) {
+  .hf-sidebar {
+    width: 280px;
+    position: sticky;
+    top: 12px;
+  }
+}

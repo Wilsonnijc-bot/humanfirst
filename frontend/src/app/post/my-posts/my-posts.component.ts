@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { PostModel } from '../../shared/post-model';
 import { PostService } from '../../shared/post.service';
+import { sortPostsByNewest } from '../../shared/post-sort.util';
 
 @Component({
   selector: 'app-my-posts',
@@ -52,24 +53,13 @@ export class MyPostsComponent implements OnInit {
   private loadMyPosts(): void {
     this.postService.getMyPosts().subscribe({
       next: (posts) => {
-        this.posts = this.sortPostsByNewest(posts || []);
+        this.posts = sortPostsByNewest(posts);
         this.loading = false;
       },
       error: (error: HttpErrorResponse) => {
         this.loading = false;
         this.toastr.error(error?.error?.message || 'Failed to load your posts');
       }
-    });
-  }
-
-  private sortPostsByNewest(posts: PostModel[]): PostModel[] {
-    return [...posts].sort((a, b) => {
-      const createdA = new Date(a?.createdAt || 0).getTime();
-      const createdB = new Date(b?.createdAt || 0).getTime();
-      if (createdA !== createdB) {
-        return createdB - createdA;
-      }
-      return (b?.id || 0) - (a?.id || 0);
     });
   }
 }
