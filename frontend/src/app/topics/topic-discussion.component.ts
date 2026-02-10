@@ -136,13 +136,16 @@ export class TopicDiscussionComponent implements OnInit, OnDestroy {
   }
 
   getWeeklyTopicBody(): string {
+    const fallbackTitle = (this.topic?.weekTitle || 'this week topic').trim();
+    const monthTitle = (this.topic?.monthTitle || 'this month topic').trim();
     const body = (this.topic?.weeklyTopicBody || '').trim();
-    if (body) {
-      return body;
+
+    const baseBody = body || `This discussion explores "${fallbackTitle}" within "${monthTitle}". Review the context, trade-offs, and practical implications before choosing a Pro or Con stance.`;
+    if (baseBody.length >= 1200) {
+      return baseBody;
     }
 
-    const fallbackTitle = (this.topic?.weekTitle || 'this week topic').trim();
-    return `Use this space to add a longer background passage for "${fallbackTitle}". It should cover context, key trade-offs, and what to consider before joining the Pro vs Con debate.`;
+    return `${baseBody}\n\n${this.buildExtendedWeeklyTopicRead(fallbackTitle, monthTitle)}`;
   }
 
   trackBySubdivision(index: number, item: { id: number }): number {
@@ -169,5 +172,9 @@ export class TopicDiscussionComponent implements OnInit, OnDestroy {
         this.toastr.error(this.errorMessage);
       }
     });
+  }
+
+  private buildExtendedWeeklyTopicRead(weekTitle: string, monthTitle: string): string {
+    return `Start by framing the decision: what should AI systems be allowed to recommend, and what must stay under direct human authority? In medical settings, speed and consistency can improve outcomes, but clinical context often includes edge cases that are hard to encode. As you read this topic, compare ideal workflows with real-world constraints like incomplete records, overloaded staff, and uneven access to specialist review.\n\nThen examine accountability pathways. If an AI-supported decision contributes to patient harm, responsibility is rarely singular. Consider how responsibility may be distributed across model developers, hospital leadership, care teams, and regulators. For "${weekTitle}", discuss what documentation, escalation rules, and override protocols should exist before deployment. Strong governance is not only about preventing failure; it also protects clinicians from unclear liability in high-pressure moments.\n\nA second lens is evidence quality. Ask what level of validation should be required before using AI tools for triage, diagnostics, and treatment planning. Should performance be measured only on benchmark datasets, or also on longitudinal outcomes across diverse populations? In the context of "${monthTitle}", evaluate whether explainability should be mandatory for high-impact decisions, and how to balance explainability with raw predictive performance.\n\nFinally, evaluate human factors. Even accurate systems can fail when teams over-trust outputs or under-trust useful recommendations. Discuss training expectations, user interface design, and how confidence scores should be communicated. The strongest proposals usually combine technical safeguards, clinical workflow fit, and clear ownership of final decisions. Use the Pro and Con threads below to argue which safeguards are essential now versus which can be phased in over time.`;
   }
 }
